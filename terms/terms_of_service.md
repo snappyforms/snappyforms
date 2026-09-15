@@ -1,53 +1,43 @@
-Terms of Service
+Below is a tailored draft for the Terms of Service for SnappyForms, tailored specifically to address its functionality as a form and data platform for managing SNAP and Medicare compliance workflows.
 
-Effective Date: September 3, 2026
+Terms of Service for SnappyForms
+
+Effective Date: September 14, 2026
 
 1. Acceptance of Terms
-By accessing or using this platform ("Platform"), provided by SnappyForms ("we," "us," or "our"), you agree to comply with and be bound by these Terms of Service ("Terms"). If you do not agree, do not access or use the Platform.
+By accessing or using the SnappyForms platform, website, or associated services ("Platform"), provided by SnappyForms ("we," "us," or "our"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, you may not access or use the Platform.
 
-2. Purpose of the Platform
-The Platform is a collaborative tool designed to assist individual beneficiaries ("Beneficiaries") and community partner organizations ("Organizations") in tracking, documenting, and submitting volunteer and work activity hours to satisfy public benefit requirements, including SNAP and Medicare guidelines.
+2. Description of Platform
+SnappyForms provides software and digital tooling designed to assist beneficiaries and community partner organizations in documenting, tracking, and submitting required work and volunteer hours to satisfy public benefit requirements, including SNAP and Medicare rules.
 
-3. Disclaimer of Government Affiliation
+3. Government Non-Affiliation Disclaimer
 
-Independent Tool: This Platform is an independent, non-profit initiative. It is not affiliated with, endorsed by, or operated by the U.S. Department of Agriculture (USDA), the Centers for Medicare & Medicaid Services (CMS), or any state/local human services agency.
+Independent Platform: SnappyForms is a private service and is not affiliated with, endorsed by, or operated by the U.S. Department of Agriculture (USDA), the Centers for Medicare & Medicaid Services (CMS), or any state or local human services agency.
 
-No Guarantee of Eligibility: Logging or submitting hours through this Platform does not guarantee approval by state agencies or the preservation of government benefits. Users are solely responsible for ensuring official compliance with their respective caseworker or benefit office.
+No Guarantee of Benefits: Using SnappyForms to log or submit activity hours does not guarantee approval by state agencies or the preservation of government benefits. You remain solely responsible for ensuring your compliance with your official caseworker or state benefit office.
 
-4. User Roles and Account Responsibilities
+4. User Accounts and Responsibilities
 
-Beneficiary Accounts: Beneficiaries must provide accurate, truthful information regarding their volunteer hours and activity details.
+Beneficiaries: You agree to provide truthful, accurate, and complete information regarding all logged volunteer or work hours and supporting documentation.
 
-Organization Accounts: Partner organizations agree to verify activity hours accurately and in good faith.
+Partner Organizations: Organizations utilizing SnappyForms to verify hours agree to audit and validate user submissions in good faith and with reasonable accuracy.
 
-Account Security: Users are responsible for maintaining the confidentiality of their credentials and for all activities conducted through their accounts.
+Account Security: You are responsible for maintaining the confidentiality of your login credentials and for all actions that occur under your account.
 
-5. Data Privacy and Sensitive Information
+5. Acceptable Use
+You agree not to:
 
-Handling Personal Data: Platform utilization involves handling Personal Identifiable Information (PII) and potentially health- or benefit-related data. Our use of this data is governed by our Privacy Policy.
+Submit false, misleading, or fraudulent work or volunteer records.
 
-Consent to Share: By linking an account between a Beneficiary and an Organization, the Beneficiary grants explicit permission for that Organization to view and verify logged hours and submitted activity documentation.
+Use the Platform to impersonate any individual, organization, or government agency.
 
-6. User Conduct and Acceptable Use
-Users agree not to:
+Attempt to disrupt, compromise, or bypass the platform’s security or database integrity.
 
-Submit fraudulent, falsified, or misleading volunteer or work logs.
+6. Limitation of Liability
+To the maximum extent permitted by law, SnappyForms shall not be liable for any indirect, incidental, consequential, or punitive damages, including any loss or reduction of government benefits (SNAP, Medicare, or otherwise), technical service interruptions, or errors in data transmission to state authorities.
 
-Impersonate any individual, organization, or government official.
+7. Termination
+We reserve the right to suspend or terminate your access to SnappyForms at any time, with or without notice, for violations of these Terms or misuse of the Platform.
 
-Attempt to gain unauthorized access to other user accounts, system databases, or network infrastructure.
-
-7. Limitation of Liability
-To the maximum extent permitted by applicable law, SnappyForms shall not be liable for any direct, indirect, incidental, or consequential damages resulting from:
-
-Any loss or alteration of benefit eligibility (SNAP, Medicare, or otherwise).
-
-Technical errors, service interruptions, or delayed transmission of activity logs.
-
-Actions taken by state or federal agencies regarding submitted documentation.
-
-8. Termination and Modification
-We reserve the right to suspend or terminate access to the Platform at our discretion for violations of these Terms. We may update these Terms periodically, and continued use of the Platform constitutes acceptance of the revised Terms.
-
-9. Contact Us
-For questions regarding these Terms, please contact us at hello@snappyforms.org.
+8. Contact Information
+For support or questions regarding these Terms, please contact us at hello@snappyforms.org.
