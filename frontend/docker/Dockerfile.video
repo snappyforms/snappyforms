@@ -1,0 +1,32 @@
+# Records short app tours as video, using shot-scraper's storyboard format:
+#   https://shot-scraper.datasette.io/en/stable/video.html
+#
+# Mirrors Dockerfile.pw, but shot-scraper is Python — so this uses the Python
+# Playwright image rather than the Node one, which brings Chromium with it.
+#
+# NOTE: as with Dockerfile.pw, storyboards are COPIED IN, not mounted. Editing a
+# storyboard means rebuilding: `docker compose up --build ... tour`.
+FROM mcr.microsoft.com/playwright/python:v1.61.0-noble
+
+WORKDIR /tours
+
+# A REAL ffmpeg, not the one Playwright bundles. `--mp4` shells out to `ffmpeg`
+# on PATH with `-movflags`, and Playwright's stripped build rejects that option
+# ("Unrecognized option 'movflags'"), leaving you with WebM and an error.
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends ffmpeg \
+ && rm -rf /var/lib/apt/lists/*
+
+# shot-scraper >=1.10 is what ships the `video` command; it needs playwright
+# >=1.61.0, which is why the base image tag cannot move backwards.
+#
+# playwright is pinned to the base image's version: left to shot-scraper's
+# ">=1.61.0", pip pulls the newest Playwright, whose browser builds are not in
+# this image ("Executable doesn't exist at /ms-playwright/..."). Bump the two
+# together.
+RUN pip install --no-cache-dir --break-system-packages shot-scraper==1.11 playwright==1.61.0
+
+COPY e2e/tours ./
+COPY docker/entrypoint-tour.sh /entrypoint-tour.sh
+
+ENTRYPOINT ["/entrypoint-tour.sh"]

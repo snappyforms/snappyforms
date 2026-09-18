@@ -24,6 +24,7 @@
     "test:e2e:stories": "docker compose up --build --exit-code-from demo-stories demo-stories",
     "test:e2e:shift": "docker compose up --build --exit-code-from shift-story shift-story",
     "test:e2e:maya": "docker compose up --build --exit-code-from maya-story maya-story",
+    "tour:maya": "docker compose up --build --exit-code-from tour tour",
     "e2e:stories": "node e2e/demo-stories.mjs",
     "e2e:maya": "node e2e/maya-confirmation-story.mjs",
     "e2e:shift": "node e2e/shift-qr-story.mjs",

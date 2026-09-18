@@ -174,11 +174,32 @@ integration).
 npm run test:e2e     # build + run Postgres + app + Playwright; exits with the test result
 npm run docker:up    # just the app + Postgres at http://localhost:3000 (no tests)
 npm run docker:down  # stop everything and drop the Postgres volume
+npm run tour:maya    # record the partner-facing video tour (see "App tours" below)
 ```
+
+Run these from the repo root — `docker-compose.yml` lives there, not in `frontend/`.
 
 - `docker/Dockerfile.app` — builds and serves the Next app (the `webapp` service); applies migrations and seeds on start.
 - `docker/Dockerfile.pw` — official `mcr.microsoft.com/playwright` image (browsers + system libs baked in), pinned to the project's Playwright version.
-- `docker-compose.yml` — wires the three services together with health-gated startup.
+- `docker/Dockerfile.video` — the Python Playwright image plus `shot-scraper`, for recording app tours.
+- `docker-compose.yml` — wires the services together with health-gated startup: `db`, `webapp`, `pw-tests`, the three demo-story runners (`demo-stories`, `shift-story`, `maya-story`, which write stills to `frontend/e2e/screenshots/`), and `tour`.
 
 Two test entry points: `npm run smoke` (browserless `fetch`, runs anywhere against a
 live server) and the containerized `pw-smoke.mjs` (real Chromium, driven via `npm run test:e2e`).
+
+## App tours
+
+Short videos of real flows, for partners who want to see how the app works without
+signing in. A tour is a **storyboard** — one YAML file in `frontend/e2e/tours/` that
+[shot-scraper](https://shot-scraper.datasette.io/en/stable/video.html) plays through
+Playwright while recording. The YAML is the source; the MP4 is build output.
+
+```bash
+docker compose down -v                                  # fresh seed: the tour needs one
+docker compose up --build --exit-code-from tour tour
+```
+
+Video and per-beat stills land in `frontend/e2e/tours/output/`. Selectors are taken
+from the story scripts that already assert on them (`frontend/e2e/*.mjs`) — fix those
+first when the UI moves. Writing a new tour: see `.claude/skills/app-tour/SKILL.md`;
+background and tool choice: `docs/spikes/41-app-tours.md`.

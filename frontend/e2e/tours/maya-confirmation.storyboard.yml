@@ -1,0 +1,197 @@
+# "Maya Requests Confirmation" — the partner-facing tour, recorded as video.
+#
+# This is the same walkthrough as e2e/maya-confirmation-story.mjs, cut down to
+# the four beats a partner needs to see. That script is the source of truth for
+# every selector below: if a selector here stops working, fix it there first,
+# where the assertions will tell you what actually changed.
+#
+# Record it (from the repo root, against a FRESH stack — see the note on the
+# activity title below):
+#
+#   docker compose down -v
+#   docker compose up --build --exit-code-from tour tour
+#
+# Output lands in e2e/tours/output/ as .webm and .mp4.
+#
+# Requires DEMO_MODE=true and (baked in at build) NEXT_PUBLIC_DEMO_MODE=true on
+# the target, against a seeded database. No --auth file is needed: in demo mode
+# the persona picker signs you in with a single click.
+
+output: output/maya-confirmation.webm
+
+# The BASE_URL and ACTIVITY_DATE placeholders below are substituted at record
+# time by docker/entrypoint-tour.sh.
+# /demo, not / — the root is the marketing landing page, and "Explore the
+# Demo" lives on the demo landing.
+url: ${BASE_URL}/demo
+
+# Phone-shaped, because that is how a participant actually uses this. shot-scraper
+# has no device emulation (viewport takes width/height only — no is_mobile, no
+# has_touch, no DPR), so this is the app's responsive layout driven by real mouse
+# events, not a true touch emulation. See docs/spikes/41-app-tours.md.
+# If the mobile nav hides a control this tour needs, 1280x720 is the fallback.
+viewport:
+  width: 390
+  height: 844
+
+# visible: false suppresses the mouse dot, but click rings still fire — so every
+# interaction reads as a finger tap rather than a desktop pointer.
+cursor:
+  visible: false
+  clicks: true
+  color: "#ff4f00"
+  click_size: 60
+
+wait_for: 'a:has-text("Explore the Demo")'
+wait: 1
+
+scenes:
+
+# ---- Beat 1: Maya asks an organization to confirm what she did --------------
+- name: Maya opens the demo
+  do:
+  - pause: 1
+  - click: 'a:has-text("Explore the Demo") >> nth=0'
+  - wait_for_url: "**/login"
+  - wait_for: 'button:has-text("Maya Johnson")'
+  - screenshot: output/tour-01-persona-picker.png
+  - pause: 1.5
+
+- name: Maya signs in
+  do:
+  - click: 'button:has-text("Maya Johnson") >> nth=0'
+  - wait_for_url: "**/dashboard"
+  - pause: 1.5
+
+- name: Maya finds the organization
+  do:
+  - click: 'a:has-text("Find an organization") >> nth=0'
+  - wait_for_url: "**/search"
+  - pause: 0.5
+  # Typed rather than filled, so the results narrowing is visible on camera.
+  - type:
+      into: 'input[placeholder*="Search handles"]'
+      text: "Northside"
+      delay_ms: 90
+  - wait_for: 'a:has-text("Northside Community Resource Center")'
+  - pause: 1
+  - click: 'a:has-text("Northside Community Resource Center") >> nth=0'
+  - wait_for_url: "**/o/northside-center"
+  - screenshot: output/tour-02-org-profile.png
+  - pause: 1.5
+
+- name: Maya requests verification
+  do:
+  - click: 'a:has-text("Request verification") >> nth=0'
+  - wait_for_url: "**/activity/new**"   # carries ?orgId=&orgName=
+  - pause: 0.5
+  # A fixed title, unlike the .mjs story's per-run unique one: a video wants a
+  # legible label, which is why this must record against a freshly seeded DB.
+  - type:
+      into: 'input[placeholder*="Weekend food pantry volunteer"]'
+      text: "Neighborhood meal delivery"
+      delay_ms: 45
+  # Substituted by the entrypoint — yesterday, so the record always lands inside
+  # the Sunday-Saturday week the PA 1895 covers.
+  - fill:
+      into: 'input[type="date"] >> nth=0'
+      text: "${ACTIVITY_DATE}"
+  - fill:
+      into: 'input[type="number"] >> nth=0'
+      text: "5"
+  - screenshot: output/tour-03-request-form.png
+  - pause: 1
+  - click: 'button:has-text("Submit request") >> nth=0'
+  - wait_for: 'text=Awaiting organization >> nth=0'
+  - pause: 2
+
+# ---- Beat 2: the organization confirms it ----------------------------------
+- name: Maya signs out
+  open: ${BASE_URL}/settings
+  do:
+  - click: 'button:has-text("Sign out") >> nth=0'
+  - pause: 1
+  # Sign-out lands on the marketing page; the persona picker is behind /demo.
+  - open: ${BASE_URL}/demo
+  - wait_for: 'a:has-text("Explore the Demo")'
+  - pause: 1
+
+- name: Northside signs in
+  do:
+  - click: 'a:has-text("Explore the Demo") >> nth=0'
+  - wait_for_url: "**/login"
+  - click: 'button:has-text("Northside Admin") >> nth=0'
+  - wait_for_url: "**/dashboard"
+  - pause: 1.5
+
+- name: Northside works the queue
+  do:
+  - click: 'a:has-text("Verification queue") >> nth=0'
+  - wait_for: 'a:has-text("Neighborhood meal delivery") >> nth=0'
+  - screenshot: output/tour-04-verification-queue.png
+  - pause: 1.5
+  - click: 'a:has-text("Neighborhood meal delivery") >> nth=0'
+  # The record's own heading, not "Maya Johnson" — that also appears on every
+  # queue row, so it matches before the click has even navigated.
+  - wait_for: 'role=heading[name=/Neighborhood meal delivery/i] >> nth=0'
+  - pause: 1.5
+
+- name: Northside confirms the record
+  do:
+  - click: 'button:has-text("Confirm Record") >> nth=0'
+  # The acknowledgement gates the confirm — the button below is disabled until
+  # this is ticked, which is the point worth showing.
+  - wait_for: "role=checkbox >> nth=0"
+  - pause: 1
+  - click: "role=checkbox >> nth=0"
+  - pause: 0.5
+  - screenshot: output/tour-05-confirm-panel.png
+  - click: 'button:has-text("Confirm Record") >> nth=-1'
+  - wait_for: 'text=Confirmed >> nth=0'
+  - pause: 2
+
+# ---- Beat 3: Maya sees it confirmed ----------------------------------------
+- name: Maya sees the confirmation
+  open: ${BASE_URL}/settings
+  do:
+  - click: 'button:has-text("Sign out") >> nth=0'
+  - pause: 1
+  - open: ${BASE_URL}/demo
+  - wait_for: 'a:has-text("Explore the Demo")'
+  - click: 'a:has-text("Explore the Demo") >> nth=0'
+  - wait_for_url: "**/login"
+  - click: 'button:has-text("Maya Johnson") >> nth=0'
+  - wait_for_url: "**/dashboard"
+  - click: 'a:has-text("Activity records") >> nth=0'
+  - wait_for_url: "**/activity*"
+  - pause: 1
+  - click: 'role=tab[name="Confirmed"i]'
+  - wait_for: 'a:has-text("Neighborhood meal delivery") >> nth=0'
+  - screenshot: output/tour-06-maya-confirmed.png
+  - pause: 2
+
+# ---- Beat 4: the paper rail, which is the partner-facing punchline ----------
+- name: Maya fills the PA 1895
+  open: ${BASE_URL}/forms
+  do:
+  - wait_for: '[data-testid="template-PA_1895"]'
+  - pause: 1
+  - click: '[data-testid="choose-PA_1895"]'
+  - wait_for: '[data-testid="record-option"] >> nth=0'
+  - pause: 0.5
+  - click: '[data-testid="record-option"]:has-text("Neighborhood meal delivery") >> role=checkbox'
+  - pause: 0.5
+  - click: '[data-testid="generate-form"]'
+  - wait_for: '[data-testid="form-ready"]'
+  - screenshot: output/tour-07-pa1895-ready.png
+  - pause: 2
+
+- name: And faxes it to her caseworker
+  do:
+  - click: '[data-testid="open-fax"]'
+  - wait_for: '[data-testid="fax-destination"]'
+  - pause: 1.5
+  - click: '[data-testid="send-fax"]'
+  - wait_for: '[data-testid="fax-receipt"]'
+  - screenshot: output/tour-08-fax-receipt.png
+  - pause: 3

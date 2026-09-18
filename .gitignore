@@ -30,3 +30,8 @@ CLAUDE.local.md
 .claude/stats-cache.json
 .claude/mcp-needs-auth-cache.json
 .claude.json
+
+# Recorded app tours: the MP4 is committed (the team watches it without running
+# Docker), the intermediate WebM and per-beat stills are regenerated on demand.
+frontend/e2e/tours/output/*.webm
+frontend/e2e/tours/output/*.png

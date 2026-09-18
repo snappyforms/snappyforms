@@ -118,5 +118,25 @@ services:
       webapp:
         condition: service_healthy
 
+  # The partner-facing video tour: the Maya walkthrough recorded as WebM + MP4
+  # via shot-scraper's storyboard format. Run explicitly, against a FRESH stack
+  # (the storyboard uses a fixed activity title, so a warm database stacks
+  # duplicates and makes the queue scene ambiguous):
+  #   docker compose down -v
+  #   docker compose up --build --exit-code-from tour tour
+  # Video and per-beat stills land in ./frontend/e2e/tours/output on the host.
+  tour:
+    build:
+      context: ./frontend
+      dockerfile: docker/Dockerfile.video
+    environment:
+      BASE_URL: http://webapp:3000
+      STORYBOARD: maya-confirmation.storyboard.yml
+    volumes:
+      - ./frontend/e2e/tours/output:/tours/output
+    depends_on:
+      webapp:
+        condition: service_healthy
+
 volumes:
   pgdata:
