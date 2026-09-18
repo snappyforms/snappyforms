@@ -21,7 +21,9 @@ output: output/maya-confirmation.webm
 
 # The BASE_URL and ACTIVITY_DATE placeholders below are substituted at record
 # time by docker/entrypoint-tour.sh.
-url: ${BASE_URL}/
+# /demo, not / — the root is the marketing landing page, and "Explore the
+# Demo" lives on the demo landing.
+url: ${BASE_URL}/demo
 
 # Phone-shaped, because that is how a participant actually uses this. shot-scraper
 # has no device emulation (viewport takes width/height only — no is_mobile, no
@@ -81,7 +83,7 @@ scenes:
 - name: Maya requests verification
   do:
   - click: 'a:has-text("Request verification") >> nth=0'
-  - wait_for_url: "**/activity/new"
+  - wait_for_url: "**/activity/new**"   # carries ?orgId=&orgName=
   - pause: 0.5
   # A fixed title, unlike the .mjs story's per-run unique one: a video wants a
   # legible label, which is why this must record against a freshly seeded DB.
@@ -100,7 +102,7 @@ scenes:
   - screenshot: output/tour-03-request-form.png
   - pause: 1
   - click: 'button:has-text("Submit request") >> nth=0'
-  - wait_for: 'text=Awaiting organization'
+  - wait_for: 'text=Awaiting organization >> nth=0'
   - pause: 2
 
 # ---- Beat 2: the organization confirms it ----------------------------------
@@ -108,6 +110,9 @@ scenes:
   open: ${BASE_URL}/settings
   do:
   - click: 'button:has-text("Sign out") >> nth=0'
+  - pause: 1
+  # Sign-out lands on the marketing page; the persona picker is behind /demo.
+  - open: ${BASE_URL}/demo
   - wait_for: 'a:has-text("Explore the Demo")'
   - pause: 1
 
@@ -122,11 +127,13 @@ scenes:
 - name: Northside works the queue
   do:
   - click: 'a:has-text("Verification queue") >> nth=0'
-  - wait_for: 'a:has-text("Neighborhood meal delivery")'
+  - wait_for: 'a:has-text("Neighborhood meal delivery") >> nth=0'
   - screenshot: output/tour-04-verification-queue.png
   - pause: 1.5
   - click: 'a:has-text("Neighborhood meal delivery") >> nth=0'
-  - wait_for: 'text=Maya Johnson'
+  # The record's own heading, not "Maya Johnson" — that also appears on every
+  # queue row, so it matches before the click has even navigated.
+  - wait_for: 'role=heading[name=/Neighborhood meal delivery/i] >> nth=0'
   - pause: 1.5
 
 - name: Northside confirms the record
@@ -134,7 +141,7 @@ scenes:
   - click: 'button:has-text("Confirm Record") >> nth=0'
   # The acknowledgement gates the confirm — the button below is disabled until
   # this is ticked, which is the point worth showing.
-  - wait_for: "role=checkbox"
+  - wait_for: "role=checkbox >> nth=0"
   - pause: 1
   - click: "role=checkbox >> nth=0"
   - pause: 0.5
@@ -148,16 +155,18 @@ scenes:
   open: ${BASE_URL}/settings
   do:
   - click: 'button:has-text("Sign out") >> nth=0'
+  - pause: 1
+  - open: ${BASE_URL}/demo
   - wait_for: 'a:has-text("Explore the Demo")'
   - click: 'a:has-text("Explore the Demo") >> nth=0'
   - wait_for_url: "**/login"
   - click: 'button:has-text("Maya Johnson") >> nth=0'
   - wait_for_url: "**/dashboard"
   - click: 'a:has-text("Activity records") >> nth=0'
-  - wait_for_url: "**/activity"
+  - wait_for_url: "**/activity*"
   - pause: 1
   - click: 'role=tab[name="Confirmed"i]'
-  - wait_for: 'a:has-text("Neighborhood meal delivery")'
+  - wait_for: 'a:has-text("Neighborhood meal delivery") >> nth=0'
   - screenshot: output/tour-06-maya-confirmed.png
   - pause: 2
 
@@ -168,7 +177,7 @@ scenes:
   - wait_for: '[data-testid="template-PA_1895"]'
   - pause: 1
   - click: '[data-testid="choose-PA_1895"]'
-  - wait_for: '[data-testid="record-option"]'
+  - wait_for: '[data-testid="record-option"] >> nth=0'
   - pause: 0.5
   - click: '[data-testid="record-option"]:has-text("Neighborhood meal delivery") >> role=checkbox'
   - pause: 0.5

@@ -19,7 +19,12 @@ RUN apt-get update \
 
 # shot-scraper >=1.10 is what ships the `video` command; it needs playwright
 # >=1.61.0, which is why the base image tag cannot move backwards.
-RUN pip install --no-cache-dir --break-system-packages shot-scraper==1.11
+#
+# playwright is pinned to the base image's version: left to shot-scraper's
+# ">=1.61.0", pip pulls the newest Playwright, whose browser builds are not in
+# this image ("Executable doesn't exist at /ms-playwright/..."). Bump the two
+# together.
+RUN pip install --no-cache-dir --break-system-packages shot-scraper==1.11 playwright==1.61.0
 
 COPY e2e/tours ./
 COPY docker/entrypoint-tour.sh /entrypoint-tour.sh
