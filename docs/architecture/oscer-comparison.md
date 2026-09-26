@@ -37,6 +37,14 @@ Every citation below points at one of these fixed commits, so line numbers stay 
   - Not at all for PII handling.
   - The lesson worth copying is enforcement. Pundit's after-action check makes a missing authorization call fail at runtime ([rails-conventions.md:15-30][o-r-pundit]), which is what #26 item 3's proposed route check would do for us.
   - Their AI rules have also drifted from their own code (§5, C5), so whatever rules we write need an automated check.
+- **Does OSCER do what Nava's H.R. 1 page says? (§9)**
+  - The case-management core is real.
+  - The automation and integration claims go further than the code. Four of the 11 feature-list labels are overstated, and "no code changes", "employment data" and "vendor-agnostic" are not supported.
+  - The "no action from the beneficiary" path works only if the state already holds verified data. That gap is exactly what SnappyForms fills.
+- **Nava's other GitHub repos (§10).**
+  - Only `oscer` is OSCER-specific. Around it sit 12 public Strata repos and 4 private ones.
+  - The most useful one for us is `template-application-nextjs`: it's our stack, with CI, `jest-axe` and typed i18n ready to copy.
+  - The one to ask Nava about is their private TypeScript case-management SDK.
 
 ### The same goals, reached differently
 
@@ -397,7 +405,7 @@ flowchart LR
 | # | Item | Borrowed from | Effort | Why now |
 |---|---|---|:-:|---|
 | 1 | Default-deny handler wrapper, plus a CI check that fails on unwrapped routes | Pundit verify hooks | M | #26 item 3; 73 hand-written session checks |
-| 2 | CI baseline: typecheck, unit tests, fix the stale middleware test | OSCER CI | S | There is no CI at all |
+| 2 | CI baseline: typecheck, unit tests, fix the stale middleware test | OSCER CI; the job list in Nava's Next.js template (§10) | S | There is no CI at all |
 | 3 | Typed env/config checked at boot; production refuses the fallback key and `DEMO_MODE` | `configuration.md` + boot validation | S | Early flags 1 and 3 |
 | 4 | Transition tables, updates guarded on current status, audit written in the same transaction | `BusinessProcess` | M | Race-prone check-then-update |
 | 5 | ADRs (status, deciders, date) plus a dated `CLAUDE.md` with a review cadence | `docs/decisions` | S | #26 item 9 |
@@ -405,7 +413,7 @@ flowchart LR
 | 7 | Form-definition registry (fields, steps, AcroForm map, workflow), validated at boot | `ApplicationForm` + `config/custom` | M–L | #27; certification only works for PA 1938 |
 | 8 | Rules that return reasons (fraud flags, hour thresholds) | Strata rules engine | M | Decisions we can explain |
 | 9 | DataSource-style contract for outbound integrations | `Verification::DataSource` | S–M | Before fax or Compass partners |
-| 10 | An i18n library, CI failing on missing keys, axe checks in e2e | OSCER i18n layout, axe spec | M | #27; C3 |
+| 10 | An i18n library, CI failing on missing keys, axe checks in e2e | OSCER i18n layout; `next-intl` + `jest-axe` in Nava's Next.js template (§10) | M | #27; C3 |
 | 11 | #47 screener built as config plus steps that store no state | Exemption screener v2 | S | #47 |
 | 12 | An OSCER data-source adapter backed by our agency API (D4) | DataSource registry | M | Needs a partner that is adopting OSCER |
 
@@ -439,6 +447,104 @@ flowchart LR
 - PR #37 assumes `ROADMAP.md` and `.github/` still exist at the repo root ([plan:35-37][p37-layout]).
 - `docker-compose.yml` commits a local session secret and encryption key ([docker-compose.yml:35-36][s-compose]). Fine for a local stack, but #26 item 8 should say so explicitly.
 
+## 9. Claims check: Nava's H.R. 1 Medicaid page vs the code
+
+**Source:** [navapbc.com/hr1/medicaid](https://www.navapbc.com/hr1/medicaid), text captured 2026-09-26. Claims are quoted verbatim, and the code is read at `b1a7561`.
+
+**Verdicts:**
+- ✅ supported
+- 🟡 partly (caveat in the evidence column)
+- ❌ not supported by the code
+- ⚪ can't be verified from the code
+
+**Bottom line.** The case-management core is real, but the automation and integration claims go further than the code:
+- In the page's 11-row "Full feature list", the code backs 7 of Nava's status labels and overstates 4:
+  - ex parte verification;
+  - external data;
+  - Document AI;
+  - notifications that integrate with a state's own system.
+- Three claims in the page body aren't supported by the code at all:
+  - that states don't need code changes;
+  - that it connects employment data;
+  - that it's vendor-agnostic.
+
+### "Full feature list" (Nava's status in parentheses)
+
+| Feature | Verdict | Evidence |
+|---|---|---|
+| Rules engine (Available) | ✅ | Strata's rules engine plus `Rules::ExclusionRuleset` ([exclusion_ruleset.rb:5-19][o-ruleset], [rules_engine.rb:53][t-rules]). Configurability is covered in the next table. |
+| Ex parte verification using state data (Available) | 🟡 | Works from the verified fields in the API payload: exemptions, activities, income ([creation_service.rb:46-52][o-c-creation]). The batch CSV loses `work_hours` and `other_income_sources`: the importer maps them ([unified_record_processor.rb:133-139][o-c-importer]), but the filtered create drops fields the model doesn't define ([json.rb:22-26][o-c-json]). The docs list a `quarterly_wage_data` source ([income-data.md:190-200][o-c-income-types]) that the code doesn't allow ([external_activity.rb:39-43][o-c-sourcetypes]). |
+| External data integration (VA available, others planned) | 🟡 label overstated | A real VA Lighthouse client exists ([veteran_affairs_adapter.rb:6-18][o-c-va]). But:<br>- OSCER registers no data sources by default ([loader:43-45][o-c-defaults]), and the shipped YAML doesn't register VA.<br>- The `va_icn` the client needs is in neither the batch CSV template ([template:1][o-c-csv]) nor the API schema.<br>- It only fires at a 100% disability rating ([va_disability_rating.rb:20-27][o-c-va-rating]).<br>- VA production access "requires either VA employment or a specific VA agreement" ([va-eligibility-integration.md:32][o-c-va-doc]). |
+| Mobile-friendly beneficiary interface (Available) | ✅ (thin evidence) | A viewport meta tag ([application_base.html.erb:8][o-c-viewport]) and a "Mobile Chrome" Playwright project ([playwright.config.js:50-61][o-c-pw]). User research was "Desktop (primary)" ([test-plan-jan-2026.md:45][o-c-ur]). |
+| Beneficiary-facing exemption screener (Available) | ✅ | Controller, YAML config and tests. Only a signed-in member with an open case can use it ([exemption_screener_controller.rb:87-103][o-c-screener]). |
+| Case management tools (Available) | ✅ core, 🟡 gaps | Tasks, assignment and "pick up next" ([tasks_controller.rb:29-67][o-c-tasks]). Gaps:<br>- Region scoping is a TODO ([staff_policy.rb:36-43][o-c-staffpolicy]), and certifications return every record (`scope.all`, [certification_policy.rb:26-31][o-c-certpolicy]).<br>- The case tasks, documents and notes pages have routes but no actions ([routes.rb:87-91][o-c-caseroutes]). |
+| Email and SMS "that integrates with existing state notification systems" (Email available, SMS coming soon) | Email ✅ · SMS label accurate · state integration ❌ | Email goes through SES only ([production.rb:97][o-c-ses]). SMS exists only as disabled Terraform ([main.tf:49-52][o-c-sms]). Webhooks are a "future enhancement" ([in-app-medicaid-flow.md:435][o-c-webhooks]) in a design marked "[ON HOLD]" ([:2][o-c-onhold]). |
+| Audit-tested reporting and dashboard (In progress) | Label accurate | One admin metric, median time-to-close ([reporting_service.rb:4-18][o-c-reporting]). Nothing is audit-tested. The GitHub repo description says it "generates compliance reports", which is ❌. |
+| Document AI (Available) | 🟡 label overstated | - Off by default ([feature_flags.rb:36-40][o-c-docai-flag]).<br>- One extraction schema, for payslips ([schema.json:1-4][o-c-docai-schema]), although the guide lists W-2s, tax returns and driver's licenses ([configuring-doc-ai.md:3][o-c-docai-guide]).<br>- It builds FROM a **private** image ([Dockerfile:3-5][o-c-docai-docker], [markdownlint-config.json:22][o-c-private]), and deploys a Terraform module pulled from the private repo over SSH, running Claude Haiku on AWS Bedrock ([main.tf:91][o-c-docai-tf], [:112][o-c-docai-model]).<br>- A public template exposes the same API (§10). |
+| Custom state branding (Available) | ✅ | SCSS, view and locale overrides ([branding.md:11-35][o-c-branding]). Changes are code edits plus a redeploy. |
+| SSO integration (Available) | ✅ | OIDC for staff and members, with identity-provider groups mapped to roles ([sso_role_mapping.yml:50-58][o-c-sso-map]). Off by default ([sso.rb:33-35][o-c-sso]); SAML is out of scope ([staff-sso.md:294][o-c-saml]). |
+
+### Claims in the page body
+
+| Claim (quoted) | Verdict | Evidence |
+|---|---|---|
+| "OSCER can verify community engagement compliance without requiring any action from the beneficiary" | 🟡 | System steps run before the member is asked for anything ([certification_business_process.rb:23-97][o-cbp]), but they only evaluate data the state has already verified. Every shipped data source is a mock ([verification_data_sources.yml:76-102][o-ds-mocks]), and all are loaded in every environment ([initializer:6-13][o-c-dsinit]). ⚠️ One mock marks a member compliant if their email contains "ce-met" ([mock_community_engagement.rb:18-25][o-mock-ce]). Any deployment that doesn't edit the YAML runs it. |
+| "connect data sources many state systems can’t reach, such as the U.S. Department of Veteran Affairs (VA) Lighthouse application programming interface (API) for Veteran exemptions or employment data for income compliance" | VA 🟡 · employment ❌ | VA: see the feature table above. There is no payroll or wage integration; the design doc lists payroll APIs as "future" ([income-data.md:34-37][o-c-income-future]). |
+| "States do not need to change the code to adapt to policy updates" | ❌ | Config and env vars cover ordering, on/off switches, thresholds and screener text. But:<br>- Exclusions can't be disabled ([exclusion_types.yml:7-10][o-c-excl-yml]).<br>- Lookback defaults are hard-coded, with a "TODO: can be updated to load from some config" ([requirement_type_params.rb:24-28][o-c-lookback]).<br>- A new rule or new determination logic has to be written in Ruby ([CUSTOMIZATION.md:209-213][o-c-cust-table]), after which you "rewire the one line that instantiates it" ([:145-149][o-c-cust-rewire]). |
+| "sidecar application" / "states don’t have to adopt everything at once" | 🟡 | Data comes in through an HMAC-signed API and batch upload ([routes.rb:53][o-routes-api]). Results go back only by polling, which returns 202 until ready ([certifications_controller.rb:21-27][o-c-outcome]). An automated "not compliant" result is reported as "indeterminate" ([outcome.rb:14-15][o-c-indeterminate]). |
+| "ready-to-deploy" / "Two-month MVP implementation deployed to your infrastructure" | 🟡 / ⚪ | There is no release yet; states sync from `main` ([CUSTOMIZATION.md:14-18][o-cust-fork]). The AWS install guide is a video link plus a link to the infra template ([oscer-install-with-aws-infra.md:1-6][o-c-install]). The shipped production config has no domain and HTTPS off ([prod.tf:7-10][o-c-prodtf]). The two-month timeline is a service claim. |
+| "Vendor-agnostic" | ❌ as shipped | Production is wired to AWS: S3 storage ([production.rb:46][o-c-s3]), SES email, Cognito login (the only other option is a mock, [auth_service.rb:11-14][o-c-auth]), and RDS IAM database auth ([database.yml:94-96][o-c-rdsiam]). `infra/` is AWS-only; Azure is a separate template at v0.1.0 (§10). |
+| "no license fees" / "Own your data and code" | ✅, with one exception | Apache-2.0, and each state runs its own fork. The exception is Document AI, which depends on a private repo. |
+| "Roadmap control" / "state-driven" | 🟡 | Nava controls the upstream repo: "Final approval required from trusted Nava staff" ([understanding-open-source.md:56][o-c-approval]), and CODEOWNERS is a Nava team ([CODEOWNERS:3][o-codeowners]). Batch processing does exist, but states merge upstream changes into their forks by hand. |
+| Public repo, public roadmap, "public demo days", "publish progress reports" | Repo ✅ · roadmap and demos ⚪ · progress reports ❌ | The roadmap board renders client-side, and the demo playlist ([README:178][o-c-playlist]) hit an anti-bot page, so I couldn't check either. The repo has no changelog, releases or progress reports. |
+| "the only solution on the market that fully aligns with government’s long-term, no lock-in technology…" | ⚪ | Marketing |
+
+**What this means for SnappyForms:**
+- The "no action from the beneficiary" path works only if the state already holds verified data.
+- OSCER's only non-mock data source is VA, and it isn't registered.
+- OSCER's own assumptions leave volunteer-hour verification as an open question ([hr1-working-assumptions.md:24][o-hr1-volunteer]).
+- That is the gap a SnappyForms data source would fill (D4).
+
+If we pursue D4, plan for three things:
+- Results are pull-only.
+- A deployment has to remove the mock data sources.
+- We need an agreed identifier for matching people (§6).
+
+## 10. OSCER-related repositories
+
+**How I found them:**
+- Searching Nava's GitHub org for "oscer", "medicaid", "hr1" and "community engagement" returns only `oscer`.
+- The rest come from links inside OSCER, a "strata" search of the org (7 repos), and the source list of Nava's documentation engine ([sources.md:10-20][x-sources]).
+- Each repo was read at its HEAD commit as of 2026-09-26. Tag counts come from `git ls-remote`.
+
+| Repo @ commit | What it is | Tie to OSCER | Last commit · tags | Value for SnappyForms |
+|---|---|---|---|---|
+| `strata-sdk-rails` @70d6869 | Rails engine providing cases, tasks, business processes and a rules engine | Runtime dependency ([Gemfile:8][o-gemfile]) | 2026-09 · none (`0.1.0`) | Low as code; its ideas are in §4 |
+| `template-application-rails` @5505753 | Rails app template: USWDS form builder, UUIDs, S3/SES/Cognito, Pundit, i18n ([README:30-38][x-rails-features]) | OSCER's template, pinned at `v1.0.0-3-gc7f7e95` ([reporting-app.yml:2][x-oscer-railstpl]) | 2026-09-04 · 8 (v1.0.0) | Low. Explains where OSCER's conventions and AWS coupling come from. |
+| `template-infra` @8b7bc38 | Terraform infrastructure template for AWS | OSCER's infra, pinned at v0.20.0 ([base.yml:2][x-oscer-infratpl]); linked 52 times | 2026-08-04 · 68 (v0.21.0) | Low for now (we use App Hosting). The most mature repo in this set. |
+| `template-infra-azure` @474f45e | Terraform infrastructure template for Azure | The basis for the "vendor-agnostic" claim ([system-architecture.md:3-8][o-sysarch]) | 2026-08-20 · 1 (v0.1.0) | Low; early |
+| `platform-cli` @49dc298 | `nava-platform` CLI that installs and updates templates via Copier; installed from git ([README:23][x-cli]) | How OSCER pulls in template updates | 2026-09-16 · none | Low |
+| `strata` @095812a | Catalog README for the Rails, Next.js and Flask templates and the SDK ([README:47-57][x-strata]) | OSCER is "Built with Nava Strata" | 2026-01-27 · none | Reference only |
+| `strata-template-documentai-api` @753ad50 | FastAPI document-extraction service on AWS Bedrock | Serves the same `/v1/documents` endpoints OSCER calls ([app.py:260][x-docai-post], [:351][x-docai-get] vs [doc_ai_adapter.rb:14-30][x-oscer-docai]). The key header name is configurable, so this is a plausible public substitute for the private image. | 2026-08-10 · 1 (v0.1.0) | Medium: an option for #27 document intake |
+| `strata-documentai-api-enterprise` @bfddb23 | Multi-tenant Document AI with an admin console, labeled "Public Preview / Active Development (August 2026)" ([README:25-32][x-docai-ent]) | Successor to the template above | 2026-09-25 · none | Medium, later |
+| `strata-template-rules-engine-catala` @60d6db4 | Rules written in Catala (a law-as-code language), compiled to Python and served over REST. The only example is paid leave ([paidleave.catala_en][x-catala]) | None: OSCER uses Strata's Ruby rules instead | 2026-04-20 · 1 (0.1.0) | Medium: a rules-as-code option for B3 and #27's policy mapping |
+| `strata-documentation-engine` @38ce7f5 | Uses agents to generate and self-verify an agent-queryable knowledge base of the Strata repos, OSCER included ([sources.md:10-20][x-sources]) | Documents OSCER. My inference: it's the intended fix for OSCER's missing `.claude/references` folder. | 2026-09-04 · none; **no LICENSE file** | Medium: a pattern for C5 (docs that agents can trust) |
+| `strata-lib-renovate` @69b13b0 | Shared Renovate (dependency-update) presets | Dependency tooling | 2026-09-16 · none | Low; the presets are copyable |
+| `terraform-aws-oidc-github` @fbbf4f6 | A fork of `unfunco/terraform-aws-oidc-github` ([README:3][x-oidc]) | Linked once from OSCER's infra docs | **2022-09-28** · none | None; stale |
+| `template-application-nextjs` @a0ca4c9 | Next.js 15 + React 19 template with `next-intl`, USWDS for React, Jest + `jest-axe`, Storybook, ESLint and Prettier ([package.json:30-46][x-next-pkg]) | Not OSCER, but from the same Strata template family, and it's our stack | **2026-02-17** · 8 (v0.1.0) | **High.** Its CI (tests, lint, type check, format check, app and Storybook builds, [ci workflow][x-next-ci]) and typed i18n can be copied directly for adopt items #2 and #10. |
+
+**Not public.** Nava's own files name four repos that can't be read anonymously ([markdownlint-config.json:22][o-c-private], [sources.md:10-20][x-sources]):
+- `strata-service-document-ai`: OSCER's Document AI image and Terraform source.
+- `strata-sdk-case-management`: a **TypeScript** case-management SDK with config schemas and workflow "blueprints".
+- `strata-unemployment` and `strata-paidleave`: example apps.
+
+The TypeScript SDK is the one worth asking Nava about. It is the closest match to our stack and to B1–B2.
+
+**Takeaways:**
+- The template layer (infra, Rails) is mature and versioned.
+- The newer pieces are early (0.1.0, public previews), and several important ones are private.
+- Their docs drift here too. The Next.js template's i18n decision record chooses I18next ([0007-i18n-type-safety.md:9-18][x-next-adr]), but the template ships `next-intl`.
+
 ## Appendix: method
 
 - **Where Nava states each convention:** I checked four layers in order: `.claude/rules`, then `claude.md`, then `docs/` and the ADRs, then the code and CI. I recorded the highest layer that states the convention and whether anything enforces it.
@@ -447,6 +553,8 @@ flowchart LR
 - **Limits:**
   - Everything here comes from reading the code at those commits. I didn't run any tests or deploy either app.
   - OSCER's GitHub stats (stars, commit count, releases) were read on 2026-09-26.
+  - §9 quotes Nava's page as it read on 2026-09-26; marketing pages change.
+  - §10 reads each ecosystem repo at the commit listed there. Private repos were not readable.
 
 [i26]: https://github.com/snappyforms/snappyforms/issues/26
 
@@ -585,3 +693,69 @@ flowchart LR
 [t-rules]: https://github.com/navapbc/strata-sdk-rails/blob/70d6869/app/models/strata/rules_engine.rb#L53
 [t-flows]: https://github.com/navapbc/strata-sdk-rails/blob/70d6869/docs/multi-page-form-flows.md
 [t-generators]: https://github.com/navapbc/strata-sdk-rails/blob/70d6869/docs/generators.md
+
+[o-c-creation]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/services/certifications/creation_service.rb#L46-L52
+[o-c-importer]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/services/unified_record_processor.rb#L133-L139
+[o-c-json]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/lib/active_model/type/json.rb#L22-L26
+[o-c-income-types]: https://github.com/navapbc/oscer/blob/b1a7561/docs/architecture/income-data/income-data.md#L190-L200
+[o-c-sourcetypes]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/models/external_activity.rb#L39-L43
+[o-c-va]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/adapters/veteran_affairs_adapter.rb#L6-L18
+[o-c-defaults]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/services/verification_data_sources_loader.rb#L43-L45
+[o-c-csv]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/public/certification_batch_upload_template.csv#L1
+[o-c-va-rating]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/services/verification/adapters/va_disability_rating.rb#L20-L27
+[o-c-va-doc]: https://github.com/navapbc/oscer/blob/b1a7561/docs/architecture/va-eligibility-integration/va-eligibility-integration.md#L32
+[o-c-viewport]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/views/layouts/application_base.html.erb#L8
+[o-c-pw]: https://github.com/navapbc/oscer/blob/b1a7561/e2e/playwright.config.js#L50-L61
+[o-c-ur]: https://github.com/navapbc/oscer/blob/b1a7561/docs/user-research/homepage-report-activities-flow/test-plan-jan-2026.md#L45
+[o-c-screener]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/controllers/exemption_screener_controller.rb#L87-L103
+[o-c-tasks]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/controllers/tasks_controller.rb#L29-L67
+[o-c-staffpolicy]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/policies/staff_policy.rb#L36-L43
+[o-c-certpolicy]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/policies/certification_policy.rb#L26-L31
+[o-c-caseroutes]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/config/routes.rb#L87-L91
+[o-c-ses]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/config/environments/production.rb#L97
+[o-c-sms]: https://github.com/navapbc/oscer/blob/b1a7561/infra/reporting-app/app-config/main.tf#L49-L52
+[o-c-onhold]: https://github.com/navapbc/oscer/blob/b1a7561/docs/architecture/in-app-flow/in-app-medicaid-flow.md#L2
+[o-c-webhooks]: https://github.com/navapbc/oscer/blob/b1a7561/docs/architecture/in-app-flow/in-app-medicaid-flow.md#L435
+[o-c-reporting]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/services/reporting_service.rb#L4-L18
+[o-c-docai-flag]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/config/initializers/feature_flags.rb#L36-L40
+[o-c-docai-schema]: https://github.com/navapbc/oscer/blob/b1a7561/document-ai/schema.json#L1-L4
+[o-c-docai-guide]: https://github.com/navapbc/oscer/blob/b1a7561/docs/how-to-guides/configuring-doc-ai.md#L3
+[o-c-docai-docker]: https://github.com/navapbc/oscer/blob/b1a7561/document-ai/Dockerfile#L3-L5
+[o-c-private]: https://github.com/navapbc/oscer/blob/b1a7561/.github/workflows/markdownlint-config.json#L22
+[o-c-docai-tf]: https://github.com/navapbc/oscer/blob/b1a7561/infra/document-ai/service/main.tf#L91
+[o-c-docai-model]: https://github.com/navapbc/oscer/blob/b1a7561/infra/document-ai/service/main.tf#L112
+[o-c-branding]: https://github.com/navapbc/oscer/blob/b1a7561/docs/how-to-guides/branding.md#L11-L35
+[o-c-sso-map]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/config/sso_role_mapping.yml#L50-L58
+[o-c-sso]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/config/initializers/sso.rb#L33-L35
+[o-c-saml]: https://github.com/navapbc/oscer/blob/b1a7561/docs/architecture/staff-sso/staff-sso.md#L294
+[o-c-dsinit]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/config/initializers/verification_data_sources.rb#L6-L13
+[o-c-income-future]: https://github.com/navapbc/oscer/blob/b1a7561/docs/architecture/income-data/income-data.md#L34-L37
+[o-c-excl-yml]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/config/custom/exclusion_types.yml#L7-L10
+[o-c-lookback]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/models/certifications/requirement_type_params.rb#L24-L28
+[o-c-cust-table]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/CUSTOMIZATION.md#L209-L213
+[o-c-cust-rewire]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/CUSTOMIZATION.md#L145-L149
+[o-c-outcome]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/controllers/api/certifications_controller.rb#L21-L27
+[o-c-indeterminate]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/models/api/certifications/outcome.rb#L14-L15
+[o-c-install]: https://github.com/navapbc/oscer/blob/b1a7561/docs/how-to-guides/oscer-install-with-aws-infra.md#L1-L6
+[o-c-prodtf]: https://github.com/navapbc/oscer/blob/b1a7561/infra/reporting-app/app-config/prod.tf#L7-L10
+[o-c-s3]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/config/environments/production.rb#L46
+[o-c-auth]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/services/auth_service.rb#L11-L14
+[o-c-rdsiam]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/config/database.yml#L94-L96
+[o-c-approval]: https://github.com/navapbc/oscer/blob/b1a7561/docs/how-to-guides/understanding-open-source.md#L56
+[o-c-playlist]: https://github.com/navapbc/oscer/blob/b1a7561/README.md#L178
+
+[x-sources]: https://github.com/navapbc/strata-documentation-engine/blob/38ce7f5/sources.md#L10-L20
+[x-rails-features]: https://github.com/navapbc/template-application-rails/blob/5505753/README.md#L30-L38
+[x-oscer-railstpl]: https://github.com/navapbc/oscer/blob/b1a7561/.template-application-rails/reporting-app.yml#L2
+[x-oscer-infratpl]: https://github.com/navapbc/oscer/blob/b1a7561/.template-infra/base.yml#L2
+[x-cli]: https://github.com/navapbc/platform-cli/blob/49dc298/README.md#L23
+[x-strata]: https://github.com/navapbc/strata/blob/095812a/README.md#L47-L57
+[x-docai-post]: https://github.com/navapbc/strata-template-documentai-api/blob/753ad50/template/%7B%7Bapp_name%7D%7D/src/documentai_api/app.py#L260
+[x-docai-get]: https://github.com/navapbc/strata-template-documentai-api/blob/753ad50/template/%7B%7Bapp_name%7D%7D/src/documentai_api/app.py#L351
+[x-oscer-docai]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/adapters/doc_ai_adapter.rb#L14-L30
+[x-docai-ent]: https://github.com/navapbc/strata-documentai-api-enterprise/blob/bfddb23/README.md#L25-L32
+[x-catala]: https://github.com/navapbc/strata-template-rules-engine-catala/blob/60d6db4/template/%7B%7Bapp_name%7D%7D/catala/src/paidleave.catala_en
+[x-oidc]: https://github.com/navapbc/terraform-aws-oidc-github/blob/fbbf4f6/README.md#L3
+[x-next-pkg]: https://github.com/navapbc/template-application-nextjs/blob/a0ca4c9/template/%7B%7Bapp_name%7D%7D/package.json#L30-L46
+[x-next-ci]: https://github.com/navapbc/template-application-nextjs/blob/a0ca4c9/template/.github/workflows/ci-%7B%7Bapp_name%7D%7D.yml.jinja#L27-L130
+[x-next-adr]: https://github.com/navapbc/template-application-nextjs/blob/a0ca4c9/template/docs/decisions/%7B%7Bapp_name%7D%7D/0007-i18n-type-safety.md#L9-L18
