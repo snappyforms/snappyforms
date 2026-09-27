@@ -49,6 +49,7 @@ Every citation below points at one of these fixed commits, so line numbers stay 
   - An ERD of all 27 tables.
   - Postgres enforces only 9 foreign keys.
   - Links to users, Strata's workflow records and state-supplied data exist only in Ruby.
+  - JSON contents are checked in Ruby, and fully only on the API path. The staff edit form skips the nested checks.
 - **HIPAA (§12).**
   - Present: encryption at rest and in transit, session timeouts, and deny-by-default authorization.
   - Missing: a log of who viewed records, login checks on document downloads (including medical-exemption evidence), and logging that keeps PII out.
@@ -574,6 +575,19 @@ The three member forms also store a `user_id` that points at `users`; those link
 - **Strata's workflow tables attach by type and ID.** Tasks, determinations and audit lines use polymorphic pairs. Determinations always point at a certification, because `Certification` is the only model that includes `Determinable` ([certification.rb:8][o-e-determinable]).
 - **State-supplied data joins by text.** `external_activities` finds its member by matching `member_id`: "no certification FK; the member's active certification is implicit" ([schema.rb:172-173][o-e-extact]). The two older tables it replaced are read-only stubs ([external_hourly_activity.rb:3-8][o-e-legacy]).
 
+**JSON columns are checked in Ruby, not Postgres, and not on every write path.**
+- The API runs every nested rule and rejects a certification that fails one before saving it ([create_request.rb:3-18][o-j-api]).
+- Batch uploads validate only the requirements ([certification_service.rb:57-70][o-j-batch]). The staff edit form checks only that requirements are present ([certification.rb:19][o-j-presence], [certifications_controller.rb:41-64][o-j-staff]).
+- Unknown keys are dropped without an error, and a value that isn't a JSON object becomes `nil` ([json.rb:14-31][o-j-cast]).
+- `determination_data` has no defined shape, which let a double-encoded string crash the member dashboard ([issue #680][o-j-680]).
+
+Details and citations are in [How JSON shape is enforced](oscer-schema-reference.md#how-json-shape-is-enforced).
+
+**For SnappyForms:** our Prisma schema has no `Json` columns today ([schema.prisma][s-prisma]). If form payloads move into jsonb, keep OSCER's one-typed-object-per-column idea and close its gaps:
+- One Zod schema per column, checked in the data layer so every write path goes through it.
+- `.strict()` schemas, so unknown keys fail instead of vanishing.
+- A `CHECK (jsonb_typeof(col) = 'object')` constraint on each column, which would have rejected #680's bad write in the database.
+
 ## 12. HIPAA readiness: what the code supports
 
 **Short answer: partly.** OSCER has infrastructure-level safeguards, but several application-level controls HIPAA expects are missing or left to the state.
@@ -617,6 +631,7 @@ The three member forms also store a `user_id` that points at `users`; those link
 [s-schema-status]: https://github.com/snappyforms/snappyforms/blob/a5b23fd/frontend/prisma/schema.prisma#L213-L217
 [s-schema-supersede]: https://github.com/snappyforms/snappyforms/blob/a5b23fd/frontend/prisma/schema.prisma#L249-L253
 [s-schema-cert]: https://github.com/snappyforms/snappyforms/blob/a5b23fd/frontend/prisma/schema.prisma#L435-L450
+[s-prisma]: https://github.com/snappyforms/snappyforms/blob/a5b23fd/frontend/prisma/schema.prisma
 [s-schema-case]: https://github.com/snappyforms/snappyforms/blob/a5b23fd/frontend/prisma/schema.prisma#L667-L668
 [s-activity]: https://github.com/snappyforms/snappyforms/blob/a5b23fd/frontend/src/lib/activity.ts#L6-L34
 [s-formcert]: https://github.com/snappyforms/snappyforms/blob/a5b23fd/frontend/src/lib/formCertification.ts#L3-L23
@@ -822,6 +837,12 @@ The three member forms also store a `user_id` that points at `users`; those link
 [o-e-determinable]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/models/certification.rb#L8
 [o-e-extact]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/db/schema.rb#L172-L173
 [o-e-legacy]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/models/external_hourly_activity.rb#L3-L8
+[o-j-api]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/models/api/certifications/create_request.rb#L3-L18
+[o-j-batch]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/services/certification_service.rb#L57-L70
+[o-j-presence]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/models/certification.rb#L19
+[o-j-staff]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/controllers/certifications_controller.rb#L41-L64
+[o-j-cast]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/lib/active_model/type/json.rb#L14-L31
+[o-j-680]: https://github.com/navapbc/oscer/issues/680
 [o-h-claims]: https://github.com/navapbc/oscer/blob/b1a7561/docs/how-to-guides/understanding-open-source.md#L75-L94
 [o-h-shared]: https://github.com/navapbc/oscer/blob/b1a7561/docs/how-to-guides/understanding-open-source.md#L21-L22
 [o-h-noleave]: https://github.com/navapbc/oscer/blob/b1a7561/docs/how-to-guides/understanding-open-source.md#L69
