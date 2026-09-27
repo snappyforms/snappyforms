@@ -143,8 +143,8 @@
 <text class="ctype" x="810" y="157" text-anchor="end">text</text>
 <text class="col c-pii" x="534" y="175">member_data</text>
 <text class="ctype c-pii" x="810" y="175" text-anchor="end">jsonb · PII</text>
-<text class="col c-plain" x="534" y="193">household_data</text>
-<text class="ctype" x="810" y="193" text-anchor="end">jsonb</text>
+<text class="col c-pii" x="534" y="193">household_data</text>
+<text class="ctype c-pii" x="810" y="193" text-anchor="end">jsonb · PII</text>
 <text class="col c-plain" x="534" y="211">certification_requirements</text>
 <text class="ctype" x="810" y="211" text-anchor="end">jsonb</text>
 <text class="col c-plain" x="534" y="229">application_date</text>

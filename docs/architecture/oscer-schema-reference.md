@@ -13,6 +13,7 @@ The diagram is [`oscer-erd.svg`](oscer-erd.svg); the findings are in
 - **PII**: sensitive personal data.
 
 REF, POLY and VAL come from the model code, not the database. Column comments are OSCER's own.
+Each JSON column has an example value: the field names come from the cited code, and the values are made up.
 
 ## State input
 
@@ -34,6 +35,16 @@ REF, POLY and VAL come from the model code, not the database. Column comments ar
 | `updated_at` | datetime | required |
 | `source_type` | string | default `"ui"` |
 | `source_type::text <> 'ui'::text OR uploader_id IS NOT NULL` | check_constraint |  |
+
+**Example `results` value.** Shape from [certification_batch_upload.rb:52-66](https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/models/certification_batch_upload.rb#L52-L66). Empty after a normal run. Row counts live in their own columns.
+
+*After a failed run*
+
+```json
+{
+  "error": "All chunks failed to process"
+}
+```
 
 ### `certification_batch_upload_audit_logs`
 
@@ -60,6 +71,23 @@ REF, POLY and VAL come from the model code, not the database. Column comments ar
 | `row_data` | jsonb |  |
 | `created_at` | datetime | required |
 | `updated_at` | datetime | required |
+
+**Example `row_data` value.** Shape from [process_certification_batch_chunk_job.rb:63-86](https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/jobs/process_certification_batch_chunk_job.rb#L63-L86), [csv_stream_reader.rb:36](https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/services/csv_stream_reader.rb#L36). The failed CSV row, keyed by the upload template's column headers.
+
+```json
+{
+  "member_id": "M-10423",
+  "case_number": "C-5521",
+  "member_email": "jane.doe@example.com",
+  "first_name": "Jane",
+  "last_name": "Doe",
+  "application_date": "2025-09-01",
+  "certification_type": "new_application",
+  "date_of_birth": "1990-04-02",
+  "work_hours": "85",
+  "other_income_sources": ""
+}
+```
 
 ### `certification_origins`
 
@@ -94,6 +122,14 @@ Hours and/or gross income data from external sources (API/batch) for compliance 
 | `created_at` | datetime | required |
 | `updated_at` | datetime | required |
 | `hours IS NOT NULL OR gross_income IS NOT NULL` | check_constraint |  |
+
+**Example `metadata` value.** Shape from [external_activity_service.rb:81](https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/services/external_activity_service.rb#L81).
+
+```json
+{
+  "employer": "Riverside Food Bank"
+}
+```
 
 ### `external_hourly_activities` (legacy · read-only)
 
@@ -135,6 +171,14 @@ Income data from external sources (API/batch/QWD) for compliance calculation
 | `origin_hash` | string |  |
 | `name` | string |  |
 
+**Example `metadata` value.** Shape from [schema.rb:221](https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/db/schema.rb#L221). Legacy table; same idea as external_activities.metadata.
+
+```json
+{
+  "employer": "Riverside Food Bank"
+}
+```
+
 ## Certification and member forms
 
 ### `certifications`
@@ -149,7 +193,109 @@ Income data from external sources (API/batch/QWD) for compliance calculation
 | `created_at` | datetime | required |
 | `updated_at` | datetime | required |
 | `application_date` | date |  |
-| `household_data` | jsonb |  |
+| `household_data` | jsonb | **PII** Holds household members' names, SSNs, dates of birth and incomes as plain JSON |
+
+**Example `certification_requirements` value.** Shape from [requirements.rb:10-23](https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/models/certifications/requirements.rb#L10-L23), [OSCER's API example](https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/lib/assets/oas.json#L688). Staff region scoping reads region from here (certification.rb:27).
+
+```json
+{
+  "certification_type": "new_application",
+  "certification_period_start": "2025-04-01",
+  "certification_period_end": "2025-09-30",
+  "months_that_can_be_certified": [
+    "2025-06-01",
+    "2025-07-01",
+    "2025-08-01"
+  ],
+  "number_of_months_to_certify": 1,
+  "due_date": "2025-10-26",
+  "region": "Southwest",
+  "seasonal_worker": false,
+  "self_employed": false,
+  "params": {
+    "lookback_period": 3,
+    "number_of_months_to_certify": 1,
+    "due_period_days": 30
+  }
+}
+```
+
+**Example `member_data` value.** Shape from [member_data.rb:137-167](https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/models/certifications/member_data.rb#L137-L167), [OSCER's API example](https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/lib/assets/oas.json#L688). The value object also defines older flags and date lists, such as dates_in_drug_treatment and dates_receiving_inpatient_medical_care, plus payroll_accounts.
+
+```json
+{
+  "account_email": "john@doe.com",
+  "contact": {
+    "email": "john@doe.com",
+    "phone": "+123456789"
+  },
+  "name": {
+    "first": "Johnathan",
+    "middle": "Alfred",
+    "last": "Doe",
+    "suffix": "Jr."
+  },
+  "ssn": "123456789",
+  "date_of_birth": "1980-01-01",
+  "address": {
+    "street_line_1": "123 Main St",
+    "street_line_2": null,
+    "city": "Harrisburg",
+    "state": "PA",
+    "zip_code": "17101"
+  },
+  "va_icn": "1012345678V123456",
+  "activities": [
+    {
+      "category": "community_service",
+      "hours": "80",
+      "period_start": "2025-08-01",
+      "period_end": "2025-08-31",
+      "employer": "Community Center",
+      "verification_status": "verified"
+    }
+  ],
+  "exemptions": [
+    {
+      "type": "medical_condition",
+      "value": true,
+      "verification_status": "verified",
+      "periods": [
+        {
+          "period_start": "2025-06-01",
+          "period_end": "2025-08-31"
+        }
+      ]
+    }
+  ],
+  "race_ethnicity": "Hispanic",
+  "currently_medically_frail": false
+}
+```
+
+**Example `household_data` value.** Shape from [household_data.rb:7-54](https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/models/certifications/household_data.rb#L7-L54).
+
+```json
+{
+  "members": [
+    {
+      "name": {
+        "first": "Maria",
+        "last": "Doe"
+      },
+      "ssn": "987654321",
+      "date_of_birth": "1984-03-12",
+      "gross_incomes": [
+        {
+          "gross_income": "620.0",
+          "period_start": "2025-08-01",
+          "period_end": "2025-08-31"
+        }
+      ]
+    }
+  ]
+}
+```
 
 ### `certification_cases`
 
@@ -165,6 +311,15 @@ Income data from external sources (API/batch/QWD) for compliance calculation
 | `verification_window_start_date` | date | The start date for the time a member is given to resolve a negative determination on their CE certification |
 | `verification_window_end_date` | date | The end date for the time a member is given to resolve a negative determination on their CE certification |
 
+**Example `facts` value.** Shape from [certification_case.rb:16-18](https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/models/certification_case.rb#L16-L18). Keys appear once set. The same pair exists for exemption_request_* and denial_response_*.
+
+```json
+{
+  "activity_report_approval_status": "approved",
+  "activity_report_approval_status_updated_at": "2025-10-02T14:05:11.000Z"
+}
+```
+
 ### `activity_report_application_forms`
 
 | Column | Type | Notes |
@@ -177,6 +332,15 @@ Income data from external sources (API/batch/QWD) for compliance calculation
 | `submitted_at` | datetime |  |
 | `certification_case_id` | uuid | **FK** → `certification_cases` |
 | `reporting_periods` | jsonb |  |
+
+**Example `reporting_periods` value.** Shape from [activity_report_application_form.rb:14](https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/models/activity_report_application_form.rb#L14), [year_month_attribute.rb:56-58](https://github.com/navapbc/strata-sdk-rails/blob/70d6869/app/lib/strata/attributes/year_month_attribute.rb#L56-L58).
+
+```json
+[
+  "2025-07",
+  "2025-08"
+]
+```
 
 ### `activities` (STI)
 
@@ -254,6 +418,58 @@ Income data from external sources (API/batch/QWD) for compliance calculation
 | `created_at` | datetime | required |
 | `reasons` | string[] | required · default `[]` |
 
+**Example `determination_data` value.** Shape from [hours_based_determination_data.rb:17-49](https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/models/determinations/hours_based_determination_data.rb#L17-L49), [hours_compliance_determination_service.rb:66-77](https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/services/hours_compliance_determination_service.rb#L66-L77), [certification_case.rb:115-201](https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/models/certification_case.rb#L115-L201). Four shapes, one per kind of decision.
+
+*Hours-based compliance*
+
+```json
+{
+  "total_hours": 84.5,
+  "maximum_monthly_hours": 84.5,
+  "hours_by_category": {
+    "community_service": 80.0,
+    "employment": 4.5
+  },
+  "hours_by_source": {
+    "external": 80.0,
+    "activity": 4.5
+  },
+  "external_hourly_activity_ids": [],
+  "activity_ids": [
+    "c83e5f19-0d27-4a9b-b6e4-7f2a1d8c3e05"
+  ],
+  "enrollment_status": null,
+  "calculated_at": "2025-10-01T00:00:00Z"
+}
+```
+
+*Exemption approved by staff*
+
+```json
+{
+  "exemption_type": "medical_condition"
+}
+```
+
+*Automated exclusion*
+
+```json
+{
+  "exclusion_reasons": [
+    "pregnancy_excluded"
+  ],
+  "data_source": "api"
+}
+```
+
+*Denial response*
+
+```json
+{
+  "denial_response_application_form_id": "9d4b2e71-5a6c-4f3e-8b20-1e7c9a4d6f52"
+}
+```
+
 ### `strata_audit_lines`
 
 | Column | Type | Notes |
@@ -266,6 +482,45 @@ Income data from external sources (API/batch/QWD) for compliance calculation
 | `actor_type` | string | **POLY** with actor_id → users |
 | `data` | jsonb | required · default `{}` |
 | `created_at` | datetime | required |
+
+**Example `data` value.** Shape from [tasks_controller.rb:31-37](https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/controllers/tasks_controller.rb#L31-L37), [determinable.rb:74-78](https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/models/concerns/determinable.rb#L74-L78), [external_activity_service.rb:84-88](https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/services/external_activity_service.rb#L84-L88). The shape depends on the action. External-activity lines copy the whole row, member_id and income included.
+
+*action: case.task_picked_up*
+
+```json
+{
+  "task_id": "2f1c6a0e-8b1d-4e0f-9a51-3c2d7e8f9a10",
+  "task_type": "ReviewActivityReportTask"
+}
+```
+
+*action: case.activity_report.approved (any determination)*
+
+```json
+{
+  "determination_id": "9d4b2e71-5a6c-4f3e-8b20-1e7c9a4d6f52"
+}
+```
+
+*action: external_activity.create*
+
+```json
+{
+  "id": "c83e5f19-0d27-4a9b-b6e4-7f2a1d8c3e05",
+  "member_id": "M-10423",
+  "category": "employment",
+  "hours": "40.0",
+  "gross_income": null,
+  "period_start": "2025-08-01",
+  "period_end": "2025-08-31",
+  "source_type": "api",
+  "source_id": null,
+  "reported_at": "2025-09-02T10:00:00.000Z",
+  "metadata": {
+    "employer": "Riverside Food Bank"
+  }
+}
+```
 
 ### `information_requests` (STI)
 
@@ -314,6 +569,33 @@ Income data from external sources (API/batch/QWD) for compliance calculation
 | `created_at` | datetime | required |
 | `updated_at` | datetime | required |
 
+**Example `extracted_fields` value.** Shape from [doc_ai_result.rb:75-81](https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/models/doc_ai_result.rb#L75-L81), [payslip.rb:7-38](https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/models/doc_ai_result/payslip.rb#L7-L38), [spec fixture](https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/spec/helpers/activities_helper_spec.rb#L223). One entry per field Document AI read from a payslip, each with its confidence.
+
+```json
+{
+  "payperiodstartdate": {
+    "value": "2025-08-01",
+    "confidence": 0.97
+  },
+  "payperiodenddate": {
+    "value": "2025-08-15",
+    "confidence": 0.96
+  },
+  "currentgrosspay": {
+    "value": 1500.0,
+    "confidence": 0.9
+  },
+  "currentnetpay": {
+    "value": 1231.4,
+    "confidence": 0.88
+  },
+  "employeename.firstname": {
+    "value": "Jane",
+    "confidence": 0.99
+  }
+}
+```
+
 ## Framework tables
 
 ### `active_storage_attachments`
@@ -356,7 +638,7 @@ Income data from external sources (API/batch/QWD) for compliance calculation
 | `id` | uuid | PK, gen_random_uuid() |
 | `queue_name` | text |  |
 | `priority` | integer |  |
-| `serialized_params` | jsonb |  |
+| `serialized_params` | jsonb | ActiveJob's serialized job: job_class, job_id, queue_name, arguments, executions, enqueued_at |
 | `scheduled_at` | datetime |  |
 | `performed_at` | datetime |  |
 | `finished_at` | datetime |  |
@@ -388,7 +670,7 @@ Income data from external sources (API/batch/QWD) for compliance calculation
 | `active_job_id` | uuid | **VAL** matches good_jobs.active_job_id · required |
 | `job_class` | text |  |
 | `queue_name` | text |  |
-| `serialized_params` | jsonb |  |
+| `serialized_params` | jsonb | Same ActiveJob payload, copied per execution attempt |
 | `scheduled_at` | datetime |  |
 | `finished_at` | datetime |  |
 | `error` | text |  |
@@ -404,7 +686,7 @@ Income data from external sources (API/batch/QWD) for compliance calculation
 | `id` | uuid | PK, gen_random_uuid() |
 | `created_at` | datetime | required |
 | `updated_at` | datetime | required |
-| `state` | jsonb |  |
+| `state` | jsonb | GoodJob's heartbeat for a worker process (host, PID, scheduler state) |
 | `lock_type` | integer |  |
 
 ### `good_job_batches`
@@ -415,7 +697,7 @@ Income data from external sources (API/batch/QWD) for compliance calculation
 | `created_at` | datetime | required |
 | `updated_at` | datetime | required |
 | `description` | text |  |
-| `serialized_properties` | jsonb |  |
+| `serialized_properties` | jsonb | Batch properties. OSCER never uses GoodJob batches, so this table stays empty |
 | `on_finish` | text |  |
 | `on_success` | text |  |
 | `on_discard` | text |  |
@@ -434,4 +716,4 @@ Income data from external sources (API/batch/QWD) for compliance calculation
 | `created_at` | datetime | required |
 | `updated_at` | datetime | required |
 | `key` | text | unique |
-| `value` | jsonb |  |
+| `value` | jsonb | GoodJob runtime settings, such as paused queues or disabled cron jobs |
