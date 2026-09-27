@@ -45,6 +45,14 @@ Every citation below points at one of these fixed commits, so line numbers stay 
   - Only `oscer` is OSCER-specific. Around it sit 12 public Strata repos and 4 private ones.
   - The most useful one for us is `template-application-nextjs`: it's our stack, with CI, `jest-axe` and typed i18n ready to copy.
   - The one to ask Nava about is their private TypeScript case-management SDK.
+- **OSCER's database (§11).**
+  - An ERD of all 27 tables.
+  - Postgres enforces only 9 foreign keys.
+  - Links to users, Strata's workflow records and state-supplied data exist only in Ruby.
+- **HIPAA (§12).**
+  - Present: encryption at rest and in transit, session timeouts, and deny-by-default authorization.
+  - Missing: a log of who viewed records, login checks on document downloads (including medical-exemption evidence), and logging that keeps PII out.
+  - Nava leaves HIPAA compliance to the deploying state.
 
 ### The same goals, reached differently
 
@@ -545,6 +553,53 @@ The TypeScript SDK is the one worth asking Nava about. It is the closest match t
 - The newer pieces are early (0.1.0, public previews), and several important ones are private.
 - Their docs drift here too. The Next.js template's i18n decision record chooses I18next ([0007-i18n-type-safety.md:9-18][x-next-adr]), but the template ships `next-intl`.
 
+## 11. OSCER database ERD
+
+![OSCER's 27 Postgres tables grouped by role. Solid teal arrows are the 9 foreign keys Postgres enforces; every other arrow is a link that only application code maintains.](oscer-erd.svg)
+
+*Open the image at full size to read the column names. Every column of every table is listed in [oscer-schema-reference.md](oscer-schema-reference.md), which is generated from [schema.rb][o-schema] at `b1a7561`.*
+
+**How to read it:** arrows point from the referencing table to the table it references.
+- **Solid teal:** a foreign key Postgres enforces.
+- **Dashed:** an ID column with no constraint.
+- **Dotted amber:** a polymorphic type-and-ID pair.
+- **Dash-dot:** a link matched by value rather than by key.
+
+The three member forms also store a `user_id` that points at `users`; those links are listed in the rows but not drawn.
+
+**What it shows:**
+- **Only 9 links are enforced.** The 27 tables have 9 foreign keys ([schema.rb:412-420][o-e-fks]). There are also 9 ID columns with no constraint, 7 polymorphic pairs, and 3 single-table-inheritance tables.
+- **The certification spine is enforced.** `certifications` → `certification_cases` → activity-report and exemption forms → `activities`. The denial-response form is the exception: its `certification_case_id` has an index but no foreign key ([schema.rb:150-159][o-e-denial]).
+- **`users` is referenced from 8 columns, and Postgres enforces one of them** (`staged_documents.user_id`, [schema.rb:420][o-e-fkuser]). Form owners, task assignees, batch uploaders, determinations and audit actors can all point at a user who no longer exists.
+- **Strata's workflow tables attach by type and ID.** Tasks, determinations and audit lines use polymorphic pairs. Determinations always point at a certification, because `Certification` is the only model that includes `Determinable` ([certification.rb:8][o-e-determinable]).
+- **State-supplied data joins by text.** `external_activities` finds its member by matching `member_id`: "no certification FK; the member's active certification is implicit" ([schema.rb:172-173][o-e-extact]). The two older tables it replaced are read-only stubs ([external_hourly_activity.rb:3-8][o-e-legacy]).
+
+## 12. HIPAA readiness: what the code supports
+
+**Short answer: partly.** OSCER has infrastructure-level safeguards, but several application-level controls HIPAA expects are missing or left to the state.
+- Nava says "OSCER can support HIPAA-aligned deployments", but that compliance "is determined by how the deploying organization configures, hosts, and operates it" ([understanding-open-source.md:75-94][o-h-claims]). They describe it as "a shared responsibility" ([:21-22][o-h-shared]).
+- The repo contains no HIPAA-specific configuration, no guidance on a business associate agreement, and no access-audit feature.
+
+| Safeguard | What the code shows | Verdict |
+|---|---|---|
+| Encryption at rest | - The database is encrypted with its own KMS key ([main.tf:39-40][o-h-dbenc]).<br>- The document bucket uses KMS encryption ([encryption.tf:62-69][o-h-s3enc]) and blocks public access ([access_control.tf:5-6][o-h-s3public]).<br>- Backups run weekly to an encrypted vault ([backups.tf:9-20][o-h-backup]).<br>- There is no field-level encryption: SSN and medical flags sit as plain JSON inside the encrypted database. | ✅ infrastructure · 🟡 application |
+| Encryption in transit | Production forces SSL ([production.rb:58][o-h-ssl]), and the database connection requires SSL ([database.yml:99][o-h-dbssl]). The shipped production environment has no domain and HTTPS off ([prod.tf:7-10][o-c-prodtf]), so each state must set up certificates. | ✅ / 🟡 |
+| Session management | Sessions end after 30 minutes idle ([devise.rb:9-17][o-h-timeout], [user.rb:8][o-h-timeoutable]). | ✅ |
+| Access control | Policies deny by default (§3). But:<br>- Staff scoping by region is a TODO ([staff_policy.rb:36-43][o-c-staffpolicy]), and any staff user can list every certification ([certification_policy.rb:26-31][o-c-certpolicy]).<br>- **File downloads aren't authenticated.** OSCER adds a login check to uploads only ([authenticated_active_storage.rb:3-25][o-h-asauth]). Downloads use Rails' default blob links ([_supporting_documents.html.erb:17][o-h-blobview]), which work for anyone who has the link, and no link expiry is configured. | 🟡 · ❌ downloads (found by reading the code; not tested) |
+| Audit logging | Audit lines record task pick-ups, determinations and changes to external activity ([tasks_controller.rb:31-57][o-h-audit-tasks], [determinable.rb:77][o-h-audit-det], [external_activity_service.rb:68-87][o-h-audit-ext]). Nothing records who viewed a member's record or downloaded a document. Load-balancer access logs exist ([access_logs.tf:22][o-h-alblogs]) but don't identify the user. | 🟡 |
+| PII kept out of logs | Parameter filtering covers SSN and secrets ([filter_parameter_logging.rb:8-10][o-filter]). But email sends are logged with their arguments, under a "Beware PII" TODO ([notification_service.rb:6-14][o-h-notifylog]). | 🟡 |
+| "No PHI or PII leaves the state systems" ([understanding-open-source.md:69][o-h-noleave]) | Mostly true when OSCER runs in the state's own AWS account. Two exceptions:<br>- The VA integration (off by default) sends the member's VA identifier (ICN) to VA's token endpoint ([va_token_manager.rb:26-30][o-h-vaicn]).<br>- Document AI sends payslips to Claude Haiku on AWS Bedrock, in the state's account ([main.tf:112][o-c-docai-model]). | 🟡 |
+| Business associate agreement | Not addressed. The state needs a BAA with AWS that covers every service OSCER uses: Aurora, S3, SES, Cognito and Bedrock. | ⚪ |
+
+**Medical exemptions specifically:**
+- **Enabled by default:** `medical_condition`, `substance_treatment` and `received_medical_care` ([exemption_types_loader.rb:24-30][o-h-extypes]).
+- **When a member claims one:** the form records the exemption type, and the evidence files go to the KMS-encrypted bucket ([exemption_application_form.rb:13][o-h-exattach], [production.rb:46][o-c-s3]). They are then served through the unauthenticated download links described above.
+- **When the state sends the data:** the medically-frail flag and the dates of inpatient medical care land in `certifications.member_data` as plain JSON ([member_data.rb:153-166][o-h-medflags]).
+- **The exemption screener doesn't store answers**, by design ([README:149-155][o-h-stateless]). ✅
+- **Substance-use treatment** records can fall under 42 CFR Part 2, which is stricter than HIPAA. Nothing in OSCER handles Part 2 consent or redisclosure. That is a question for the state's counsel, not a verdict.
+
+**For SnappyForms:** the same controls apply to us: authenticated document downloads, a log of who accessed records, and logging that keeps PII out. The SSN last-4 in stored PDFs (§8) is our version of this risk.
+
 ## Appendix: method
 
 - **Where Nava states each convention:** I checked four layers in order: `.claude/rules`, then `claude.md`, then `docs/` and the ADRs, then the code and CI. I recorded the highest layer that states the convention and whether anything enforces it.
@@ -759,3 +814,34 @@ The TypeScript SDK is the one worth asking Nava about. It is the closest match t
 [x-next-pkg]: https://github.com/navapbc/template-application-nextjs/blob/a0ca4c9/template/%7B%7Bapp_name%7D%7D/package.json#L30-L46
 [x-next-ci]: https://github.com/navapbc/template-application-nextjs/blob/a0ca4c9/template/.github/workflows/ci-%7B%7Bapp_name%7D%7D.yml.jinja#L27-L130
 [x-next-adr]: https://github.com/navapbc/template-application-nextjs/blob/a0ca4c9/template/docs/decisions/%7B%7Bapp_name%7D%7D/0007-i18n-type-safety.md#L9-L18
+
+[o-schema]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/db/schema.rb
+[o-e-fks]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/db/schema.rb#L412-L420
+[o-e-denial]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/db/schema.rb#L150-L159
+[o-e-fkuser]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/db/schema.rb#L420
+[o-e-determinable]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/models/certification.rb#L8
+[o-e-extact]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/db/schema.rb#L172-L173
+[o-e-legacy]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/models/external_hourly_activity.rb#L3-L8
+[o-h-claims]: https://github.com/navapbc/oscer/blob/b1a7561/docs/how-to-guides/understanding-open-source.md#L75-L94
+[o-h-shared]: https://github.com/navapbc/oscer/blob/b1a7561/docs/how-to-guides/understanding-open-source.md#L21-L22
+[o-h-noleave]: https://github.com/navapbc/oscer/blob/b1a7561/docs/how-to-guides/understanding-open-source.md#L69
+[o-h-dbenc]: https://github.com/navapbc/oscer/blob/b1a7561/infra/modules/database/resources/main.tf#L39-L40
+[o-h-s3enc]: https://github.com/navapbc/oscer/blob/b1a7561/infra/modules/storage/encryption.tf#L62-L69
+[o-h-s3public]: https://github.com/navapbc/oscer/blob/b1a7561/infra/modules/storage/access_control.tf#L5-L6
+[o-h-backup]: https://github.com/navapbc/oscer/blob/b1a7561/infra/modules/database/resources/backups.tf#L9-L20
+[o-h-ssl]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/config/environments/production.rb#L58
+[o-h-dbssl]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/config/database.yml#L99
+[o-h-timeout]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/config/initializers/devise.rb#L9-L17
+[o-h-timeoutable]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/models/user.rb#L8
+[o-h-asauth]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/config/initializers/authenticated_active_storage.rb#L3-L25
+[o-h-blobview]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/views/application/_supporting_documents.html.erb#L17
+[o-h-audit-tasks]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/controllers/tasks_controller.rb#L31-L57
+[o-h-audit-det]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/models/concerns/determinable.rb#L77
+[o-h-audit-ext]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/services/external_activity_service.rb#L68-L87
+[o-h-alblogs]: https://github.com/navapbc/oscer/blob/b1a7561/infra/modules/service/access_logs.tf#L22
+[o-h-notifylog]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/services/notification_service.rb#L6-L14
+[o-h-vaicn]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/services/va_token_manager.rb#L26-L30
+[o-h-extypes]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/services/exemption_types_loader.rb#L24-L30
+[o-h-exattach]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/models/exemption_application_form.rb#L13
+[o-h-medflags]: https://github.com/navapbc/oscer/blob/b1a7561/reporting-app/app/models/certifications/member_data.rb#L153-L166
+[o-h-stateless]: https://github.com/navapbc/oscer/blob/b1a7561/docs/architecture/exemption-screener-v2/README.md#L149-L155

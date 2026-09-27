@@ -1,0 +1,374 @@
+<svg class="erd" viewBox="0 0 1640 1352" width="1640" height="1352" role="img" aria-label="Entity-relationship diagram of OSCER's 27 Postgres tables. Solid teal arrows are the 9 foreign keys Postgres enforces; dashed, dotted and dash-dot arrows are links only application code maintains." xmlns="http://www.w3.org/2000/svg"><style>.box{fill:#FFFFFF;stroke:#C9D2DA} .head{fill:#E6ECF1} .rule{stroke:#C9D2DA}.tname{font:600 12.5px "IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;fill:#16202A} .ttag{font:500 9.5px "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;letter-spacing:.06em;fill:#566472}.col{font:400 11.5px "IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;fill:#16202A} .ctype{font:400 11px "IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;fill:#566472} .c-pii{fill:#B42318}.badge{font:600 9px "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;letter-spacing:.06em;fill:#566472} .b-pk{fill:#16202A} .b-fk{fill:#0A6D69} .b-poly{fill:#9A5A0C}.grp{font:600 11px "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;letter-spacing:.09em;fill:#566472}.edge{fill:none;stroke-width:1.5;stroke-linejoin:round} .e-fk{stroke:#0A6D69;stroke-width:1.8}.e-ref{stroke:#566472;stroke-dasharray:6 4} .e-poly{stroke:#9A5A0C;stroke-dasharray:1.5 3.5;stroke-linecap:round;stroke-width:1.8}.e-val{stroke:#566472;stroke-dasharray:9 3 2 3} .mk-fk{fill:#0A6D69} .mk-ref,.mk-val{fill:#566472} .mk-poly{fill:#9A5A0C}.elabel{font:400 10.5px "IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;fill:#566472;paint-order:stroke;stroke:#FFFFFF;stroke-width:4px;stroke-linejoin:round}.note{font:400 11px "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;fill:#566472}</style><rect x="0" y="0" width="1640" height="1352" fill="#F7F9FA"/>
+<defs>
+<marker id="m-fk" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="mk-fk"/></marker>
+<marker id="m-ref" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="mk-ref"/></marker>
+<marker id="m-poly" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="mk-poly"/></marker>
+<marker id="m-val" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="mk-val"/></marker>
+</defs>
+<text class="grp" x="70" y="66">STATE INPUT</text>
+<text class="grp" x="490" y="66">CERTIFICATION</text>
+<text class="grp" x="920" y="66">WORKFLOW RECORDS · STRATA SDK</text>
+<text class="grp" x="1360" y="66">PEOPLE AND FILES</text>
+<text class="grp" x="490" y="508">MEMBER FORMS</text>
+<text class="grp" x="70" y="1184">FRAMEWORK TABLES</text>
+<polyline class="edge e-fk" points="235,254 235,224" marker-end="url(#m-fk)"/>
+<polyline class="edge e-fk" points="400,428 416,428 416,152 400,152" marker-end="url(#m-fk)"/>
+<polyline class="edge e-val" points="70,613 40,613 40,120 70,120" marker-end="url(#m-val)"/>
+<polyline class="edge e-val" points="70,787 40,787 40,120 70,120" marker-end="url(#m-val)"/>
+<polyline class="edge e-ref" points="400,577 432,577 432,110 490,110" marker-end="url(#m-ref)"/>
+<polyline class="edge e-val" points="400,697 448,697 448,140 490,140" marker-end="url(#m-val)"/>
+<polyline class="edge e-fk" points="655,300 655,242" marker-end="url(#m-fk)"/>
+<polyline class="edge e-fk" points="655,520 655,444" marker-end="url(#m-fk)"/>
+<polyline class="edge e-fk" points="655,688 655,628" marker-end="url(#m-fk)"/>
+<polyline class="edge e-fk" points="490,934 464,934 464,420 490,420" marker-end="url(#m-fk)"/>
+<polyline class="edge e-ref" points="490,1074 478,1074 478,432 490,432" marker-end="url(#m-ref)"/>
+<polyline class="edge e-poly" points="920,117 820,117" marker-end="url(#m-poly)"/>
+<polyline class="edge e-poly" points="920,280 900,280 900,165 820,165" marker-end="url(#m-poly)"/>
+<polyline class="edge e-poly" points="920,410 820,410" marker-end="url(#m-poly)"/>
+<polyline class="edge e-ref" points="920,500 884,500 884,560 820,560" marker-end="url(#m-ref)"/>
+<polyline class="edge e-poly" points="920,675 868,675 868,600 820,600" marker-end="url(#m-poly)"/>
+<polyline class="edge e-poly" points="920,675 868,675 868,920 820,920" marker-end="url(#m-poly)"/>
+<polyline class="edge e-poly" points="1360,355 1338,355 1338,760 820,760" marker-end="url(#m-poly)"/>
+<polyline class="edge e-fk" points="1485,300 1485,224" marker-end="url(#m-fk)"/>
+<polyline class="edge e-ref" points="1290,135 1360,135" marker-end="url(#m-ref)"/>
+<polyline class="edge e-poly" points="1290,309 1306,309 1306,165 1360,165" marker-end="url(#m-poly)"/>
+<polyline class="edge e-ref" points="1290,483 1322,483 1322,195 1360,195" marker-end="url(#m-ref)"/>
+<polyline class="edge e-ref" points="180,80 180,40 1540,40 1540,80" marker-end="url(#m-ref)"/>
+<polyline class="edge e-fk" points="400,1236 490,1236" marker-end="url(#m-fk)"/>
+<polyline class="edge e-fk" points="920,1236 820,1236" marker-end="url(#m-fk)"/>
+<g class="tbl"><rect class="box" x="70" y="80" width="330" height="144" rx="4"/>
+<rect class="head" x="70" y="80" width="330" height="28" rx="4"/><rect class="head" x="70" y="94" width="330" height="14"/><line class="rule" x1="70" y1="108" x2="400" y2="108"/>
+<text class="tname" x="80" y="99">certification_batch_uploads</text>
+<text class="badge b-pk" x="80" y="121">PK</text>
+<text class="col c-pk" x="114" y="121">id</text>
+<text class="ctype" x="390" y="121" text-anchor="end">uuid</text>
+<text class="badge b-ref" x="80" y="139">REF</text>
+<text class="col c-ref" x="114" y="139">uploader_id → users</text>
+<text class="ctype" x="390" y="139" text-anchor="end">uuid</text>
+<text class="col c-plain" x="114" y="157">filename</text>
+<text class="ctype" x="390" y="157" text-anchor="end">string</text>
+<text class="col c-plain" x="114" y="175">status</text>
+<text class="ctype" x="390" y="175" text-anchor="end">string</text>
+<text class="col c-plain" x="114" y="193">source_type (ui or api)</text>
+<text class="ctype" x="390" y="193" text-anchor="end">string</text>
+<text class="col c-plain" x="114" y="211">results</text>
+<text class="ctype" x="390" y="211" text-anchor="end">jsonb</text>
+</g>
+<g class="tbl"><rect class="box" x="70" y="254" width="330" height="90" rx="4"/>
+<rect class="head" x="70" y="254" width="330" height="28" rx="4"/><rect class="head" x="70" y="268" width="330" height="14"/><line class="rule" x1="70" y1="282" x2="400" y2="282"/>
+<text class="tname" x="80" y="273">certification_batch_upload_audit_logs</text>
+<text class="badge b-fk" x="80" y="295">FK</text>
+<text class="col c-fk" x="114" y="295">certification_batch_upload_id</text>
+<text class="ctype" x="390" y="295" text-anchor="end">uuid</text>
+<text class="col c-plain" x="114" y="313">chunk_number</text>
+<text class="ctype" x="390" y="313" text-anchor="end">integer</text>
+<text class="col c-plain" x="114" y="331">status</text>
+<text class="ctype" x="390" y="331" text-anchor="end">string</text>
+</g>
+<g class="tbl"><rect class="box" x="70" y="374" width="330" height="108" rx="4"/>
+<rect class="head" x="70" y="374" width="330" height="28" rx="4"/><rect class="head" x="70" y="388" width="330" height="14"/><line class="rule" x1="70" y1="402" x2="400" y2="402"/>
+<text class="tname" x="80" y="393">certification_batch_upload_errors</text>
+<text class="badge b-fk" x="80" y="415">FK</text>
+<text class="col c-fk" x="114" y="415">certification_batch_upload_id</text>
+<text class="ctype" x="390" y="415" text-anchor="end">uuid</text>
+<text class="col c-plain" x="114" y="433">row_number</text>
+<text class="ctype" x="390" y="433" text-anchor="end">integer</text>
+<text class="col c-plain" x="114" y="451">error_code</text>
+<text class="ctype" x="390" y="451" text-anchor="end">string</text>
+<text class="col c-plain" x="114" y="469">row_data</text>
+<text class="ctype" x="390" y="469" text-anchor="end">jsonb</text>
+</g>
+<g class="tbl"><rect class="box" x="70" y="540" width="330" height="90" rx="4"/>
+<rect class="head" x="70" y="540" width="330" height="28" rx="4"/><rect class="head" x="70" y="554" width="330" height="14"/><line class="rule" x1="70" y1="568" x2="400" y2="568"/>
+<text class="tname" x="80" y="559">certification_origins</text>
+<text class="badge b-ref" x="80" y="581">REF</text>
+<text class="col c-ref" x="114" y="581">certification_id · unique</text>
+<text class="ctype" x="390" y="581" text-anchor="end">uuid</text>
+<text class="col c-plain" x="114" y="599">source_type</text>
+<text class="ctype" x="390" y="599" text-anchor="end">string</text>
+<text class="badge b-val" x="80" y="617">VAL</text>
+<text class="col c-val" x="114" y="617">source_id → batch upload</text>
+<text class="ctype" x="390" y="617" text-anchor="end">uuid</text>
+</g>
+<g class="tbl"><rect class="box" x="70" y="660" width="330" height="162" rx="4"/>
+<rect class="head" x="70" y="660" width="330" height="28" rx="4"/><rect class="head" x="70" y="674" width="330" height="14"/><line class="rule" x1="70" y1="688" x2="400" y2="688"/>
+<text class="tname" x="80" y="679">external_activities</text>
+<text class="badge b-val" x="80" y="701">VAL</text>
+<text class="col c-val" x="114" y="701">member_id → certifications</text>
+<text class="ctype" x="390" y="701" text-anchor="end">string</text>
+<text class="col c-plain" x="114" y="719">category</text>
+<text class="ctype" x="390" y="719" text-anchor="end">string</text>
+<text class="col c-plain" x="114" y="737">hours</text>
+<text class="ctype" x="390" y="737" text-anchor="end">decimal</text>
+<text class="col c-plain" x="114" y="755">gross_income</text>
+<text class="ctype" x="390" y="755" text-anchor="end">decimal</text>
+<text class="col c-plain" x="114" y="773">period_start · period_end</text>
+<text class="ctype" x="390" y="773" text-anchor="end">date</text>
+<text class="badge b-val" x="80" y="791">VAL</text>
+<text class="col c-val" x="114" y="791">source_id → batch upload</text>
+<text class="ctype" x="390" y="791" text-anchor="end">string</text>
+<text class="col c-plain" x="114" y="809">origin_hash</text>
+<text class="ctype" x="390" y="809" text-anchor="end">string</text>
+</g>
+<g class="tbl"><rect class="box" x="70" y="852" width="330" height="72" rx="4"/>
+<rect class="head" x="70" y="852" width="330" height="28" rx="4"/><rect class="head" x="70" y="866" width="330" height="14"/><line class="rule" x1="70" y1="880" x2="400" y2="880"/>
+<text class="tname" x="80" y="871">external_hourly_activities</text>
+<text class="ttag" x="390" y="870" text-anchor="end">LEGACY · READ-ONLY</text>
+<text class="badge b-val" x="80" y="893">VAL</text>
+<text class="col c-val" x="114" y="893">member_id</text>
+<text class="ctype" x="390" y="893" text-anchor="end">string</text>
+<text class="col c-plain" x="114" y="911">hours</text>
+<text class="ctype" x="390" y="911" text-anchor="end">decimal</text>
+</g>
+<g class="tbl"><rect class="box" x="70" y="944" width="330" height="72" rx="4"/>
+<rect class="head" x="70" y="944" width="330" height="28" rx="4"/><rect class="head" x="70" y="958" width="330" height="14"/><line class="rule" x1="70" y1="972" x2="400" y2="972"/>
+<text class="tname" x="80" y="963">external_income_activities</text>
+<text class="ttag" x="390" y="962" text-anchor="end">LEGACY · READ-ONLY</text>
+<text class="badge b-val" x="80" y="985">VAL</text>
+<text class="col c-val" x="114" y="985">member_id</text>
+<text class="ctype" x="390" y="985" text-anchor="end">string</text>
+<text class="col c-plain" x="114" y="1003">gross_income</text>
+<text class="ctype" x="390" y="1003" text-anchor="end">decimal</text>
+</g>
+<g class="tbl"><rect class="box" x="490" y="80" width="330" height="162" rx="4"/>
+<rect class="head" x="490" y="80" width="330" height="28" rx="4"/><rect class="head" x="490" y="94" width="330" height="14"/><line class="rule" x1="490" y1="108" x2="820" y2="108"/>
+<text class="tname" x="500" y="99">certifications</text>
+<text class="badge b-pk" x="500" y="121">PK</text>
+<text class="col c-pk" x="534" y="121">id</text>
+<text class="ctype" x="810" y="121" text-anchor="end">uuid</text>
+<text class="badge b-val" x="500" y="139">VAL</text>
+<text class="col c-val" x="534" y="139">member_id</text>
+<text class="ctype" x="810" y="139" text-anchor="end">text</text>
+<text class="col c-plain" x="534" y="157">case_number</text>
+<text class="ctype" x="810" y="157" text-anchor="end">text</text>
+<text class="col c-pii" x="534" y="175">member_data</text>
+<text class="ctype c-pii" x="810" y="175" text-anchor="end">jsonb · PII</text>
+<text class="col c-plain" x="534" y="193">household_data</text>
+<text class="ctype" x="810" y="193" text-anchor="end">jsonb</text>
+<text class="col c-plain" x="534" y="211">certification_requirements</text>
+<text class="ctype" x="810" y="211" text-anchor="end">jsonb</text>
+<text class="col c-plain" x="534" y="229">application_date</text>
+<text class="ctype" x="810" y="229" text-anchor="end">date</text>
+</g>
+<g class="tbl"><rect class="box" x="490" y="300" width="330" height="144" rx="4"/>
+<rect class="head" x="490" y="300" width="330" height="28" rx="4"/><rect class="head" x="490" y="314" width="330" height="14"/><line class="rule" x1="490" y1="328" x2="820" y2="328"/>
+<text class="tname" x="500" y="319">certification_cases</text>
+<text class="badge b-pk" x="500" y="341">PK</text>
+<text class="col c-pk" x="534" y="341">id</text>
+<text class="ctype" x="810" y="341" text-anchor="end">uuid</text>
+<text class="badge b-fk" x="500" y="359">FK</text>
+<text class="col c-fk" x="534" y="359">certification_id</text>
+<text class="ctype" x="810" y="359" text-anchor="end">uuid</text>
+<text class="col c-plain" x="534" y="377">status (open or closed)</text>
+<text class="ctype" x="810" y="377" text-anchor="end">integer</text>
+<text class="col c-plain" x="534" y="395">business_process_current_step</text>
+<text class="ctype" x="810" y="395" text-anchor="end">string</text>
+<text class="col c-plain" x="534" y="413">facts</text>
+<text class="ctype" x="810" y="413" text-anchor="end">jsonb</text>
+<text class="col c-plain" x="534" y="431">verification_window_start/end</text>
+<text class="ctype" x="810" y="431" text-anchor="end">date</text>
+</g>
+<g class="tbl"><rect class="box" x="490" y="520" width="330" height="108" rx="4"/>
+<rect class="head" x="490" y="520" width="330" height="28" rx="4"/><rect class="head" x="490" y="534" width="330" height="14"/><line class="rule" x1="490" y1="548" x2="820" y2="548"/>
+<text class="tname" x="500" y="539">activity_report_application_forms</text>
+<text class="badge b-fk" x="500" y="561">FK</text>
+<text class="col c-fk" x="534" y="561">certification_case_id</text>
+<text class="ctype" x="810" y="561" text-anchor="end">uuid</text>
+<text class="badge b-ref" x="500" y="579">REF</text>
+<text class="col c-ref" x="534" y="579">user_id → users</text>
+<text class="ctype" x="810" y="579" text-anchor="end">uuid</text>
+<text class="col c-plain" x="534" y="597">status</text>
+<text class="ctype" x="810" y="597" text-anchor="end">integer</text>
+<text class="col c-plain" x="534" y="615">reporting_periods</text>
+<text class="ctype" x="810" y="615" text-anchor="end">jsonb</text>
+</g>
+<g class="tbl"><rect class="box" x="490" y="688" width="330" height="144" rx="4"/>
+<rect class="head" x="490" y="688" width="330" height="28" rx="4"/><rect class="head" x="490" y="702" width="330" height="14"/><line class="rule" x1="490" y1="716" x2="820" y2="716"/>
+<text class="tname" x="500" y="707">activities</text>
+<text class="ttag" x="810" y="706" text-anchor="end">STI · 2 TYPES</text>
+<text class="badge b-fk" x="500" y="729">FK</text>
+<text class="col c-fk" x="534" y="729">activity_report_application_form_id</text>
+<text class="ctype" x="810" y="729" text-anchor="end">uuid</text>
+<text class="col c-plain" x="534" y="747">type</text>
+<text class="ctype" x="810" y="747" text-anchor="end">string</text>
+<text class="col c-plain" x="534" y="765">category</text>
+<text class="ctype" x="810" y="765" text-anchor="end">string</text>
+<text class="col c-plain" x="534" y="783">month</text>
+<text class="ctype" x="810" y="783" text-anchor="end">date</text>
+<text class="col c-plain" x="534" y="801">hours</text>
+<text class="ctype" x="810" y="801" text-anchor="end">decimal</text>
+<text class="col c-plain" x="534" y="819">income</text>
+<text class="ctype" x="810" y="819" text-anchor="end">integer</text>
+</g>
+<g class="tbl"><rect class="box" x="490" y="880" width="330" height="108" rx="4"/>
+<rect class="head" x="490" y="880" width="330" height="28" rx="4"/><rect class="head" x="490" y="894" width="330" height="14"/><line class="rule" x1="490" y1="908" x2="820" y2="908"/>
+<text class="tname" x="500" y="899">exemption_application_forms</text>
+<text class="badge b-fk" x="500" y="921">FK</text>
+<text class="col c-fk" x="534" y="921">certification_case_id</text>
+<text class="ctype" x="810" y="921" text-anchor="end">uuid</text>
+<text class="badge b-ref" x="500" y="939">REF</text>
+<text class="col c-ref" x="534" y="939">user_id → users</text>
+<text class="ctype" x="810" y="939" text-anchor="end">uuid</text>
+<text class="col c-plain" x="534" y="957">exemption_type</text>
+<text class="ctype" x="810" y="957" text-anchor="end">string</text>
+<text class="col c-plain" x="534" y="975">status</text>
+<text class="ctype" x="810" y="975" text-anchor="end">integer</text>
+</g>
+<g class="tbl"><rect class="box" x="490" y="1020" width="330" height="108" rx="4"/>
+<rect class="head" x="490" y="1020" width="330" height="28" rx="4"/><rect class="head" x="490" y="1034" width="330" height="14"/><line class="rule" x1="490" y1="1048" x2="820" y2="1048"/>
+<text class="tname" x="500" y="1039">denial_response_application_forms</text>
+<text class="badge b-ref" x="500" y="1061">REF</text>
+<text class="col c-ref" x="534" y="1061">certification_case_id · no FK</text>
+<text class="ctype" x="810" y="1061" text-anchor="end">uuid</text>
+<text class="badge b-ref" x="500" y="1079">REF</text>
+<text class="col c-ref" x="534" y="1079">user_id → users</text>
+<text class="ctype" x="810" y="1079" text-anchor="end">uuid</text>
+<text class="col c-plain" x="534" y="1097">comment</text>
+<text class="ctype" x="810" y="1097" text-anchor="end">text</text>
+<text class="col c-plain" x="534" y="1115">status</text>
+<text class="ctype" x="810" y="1115" text-anchor="end">integer</text>
+</g>
+<g class="tbl"><rect class="box" x="920" y="80" width="370" height="144" rx="4"/>
+<rect class="head" x="920" y="80" width="370" height="28" rx="4"/><rect class="head" x="920" y="94" width="370" height="14"/><line class="rule" x1="920" y1="108" x2="1290" y2="108"/>
+<text class="tname" x="930" y="99">strata_determinations</text>
+<text class="badge b-poly" x="930" y="121">POLY</text>
+<text class="col c-poly" x="964" y="121">subject → certifications</text>
+<text class="badge b-ref" x="930" y="139">REF</text>
+<text class="col c-ref" x="964" y="139">determined_by_id → users</text>
+<text class="ctype" x="1280" y="139" text-anchor="end">uuid</text>
+<text class="col c-plain" x="964" y="157">decision_method</text>
+<text class="ctype" x="1280" y="157" text-anchor="end">string</text>
+<text class="col c-plain" x="964" y="175">outcome</text>
+<text class="ctype" x="1280" y="175" text-anchor="end">string</text>
+<text class="col c-plain" x="964" y="193">reasons</text>
+<text class="ctype" x="1280" y="193" text-anchor="end">string[]</text>
+<text class="col c-plain" x="964" y="211">determination_data</text>
+<text class="ctype" x="1280" y="211" text-anchor="end">jsonb</text>
+</g>
+<g class="tbl"><rect class="box" x="920" y="254" width="370" height="108" rx="4"/>
+<rect class="head" x="920" y="254" width="370" height="28" rx="4"/><rect class="head" x="920" y="268" width="370" height="14"/><line class="rule" x1="920" y1="282" x2="1290" y2="282"/>
+<text class="tname" x="930" y="273">strata_audit_lines</text>
+<text class="badge b-poly" x="930" y="295">POLY</text>
+<text class="col c-poly" x="964" y="295">subject → certifications, external_activities</text>
+<text class="badge b-poly" x="930" y="313">POLY</text>
+<text class="col c-poly" x="964" y="313">actor → users</text>
+<text class="col c-plain" x="964" y="331">action</text>
+<text class="ctype" x="1280" y="331" text-anchor="end">string</text>
+<text class="col c-plain" x="964" y="349">data</text>
+<text class="ctype" x="1280" y="349" text-anchor="end">jsonb</text>
+</g>
+<g class="tbl"><rect class="box" x="920" y="392" width="370" height="162" rx="4"/>
+<rect class="head" x="920" y="392" width="370" height="28" rx="4"/><rect class="head" x="920" y="406" width="370" height="14"/><line class="rule" x1="920" y1="420" x2="1290" y2="420"/>
+<text class="tname" x="930" y="411">strata_tasks</text>
+<text class="ttag" x="1280" y="410" text-anchor="end">STI · 3 REVIEW TASKS</text>
+<text class="col c-plain" x="964" y="433">type</text>
+<text class="ctype" x="1280" y="433" text-anchor="end">string</text>
+<text class="badge b-poly" x="930" y="451">POLY</text>
+<text class="col c-poly" x="964" y="451">case → certification_cases</text>
+<text class="badge b-ref" x="930" y="469">REF</text>
+<text class="col c-ref" x="964" y="469">application_form_id → form</text>
+<text class="ctype" x="1280" y="469" text-anchor="end">uuid</text>
+<text class="badge b-ref" x="930" y="487">REF</text>
+<text class="col c-ref" x="964" y="487">assignee_id → users</text>
+<text class="ctype" x="1280" y="487" text-anchor="end">uuid</text>
+<text class="col c-plain" x="964" y="505">status</text>
+<text class="ctype" x="1280" y="505" text-anchor="end">integer</text>
+<text class="col c-plain" x="964" y="523">approval_status</text>
+<text class="ctype" x="1280" y="523" text-anchor="end">string</text>
+<text class="col c-plain" x="964" y="541">due_on</text>
+<text class="ctype" x="1280" y="541" text-anchor="end">date</text>
+</g>
+<g class="tbl"><rect class="box" x="920" y="620" width="370" height="108" rx="4"/>
+<rect class="head" x="920" y="620" width="370" height="28" rx="4"/><rect class="head" x="920" y="634" width="370" height="14"/><line class="rule" x1="920" y1="648" x2="1290" y2="648"/>
+<text class="tname" x="930" y="639">information_requests</text>
+<text class="ttag" x="1280" y="638" text-anchor="end">STI · 2 TYPES</text>
+<text class="col c-plain" x="964" y="661">type</text>
+<text class="ctype" x="1280" y="661" text-anchor="end">string</text>
+<text class="badge b-poly" x="930" y="679">POLY</text>
+<text class="col c-poly" x="964" y="679">application_form → form</text>
+<text class="col c-plain" x="964" y="697">staff_comment</text>
+<text class="ctype" x="1280" y="697" text-anchor="end">text</text>
+<text class="col c-plain" x="964" y="715">due_date</text>
+<text class="ctype" x="1280" y="715" text-anchor="end">date</text>
+</g>
+<g class="tbl"><rect class="box" x="1360" y="80" width="250" height="144" rx="4"/>
+<rect class="head" x="1360" y="80" width="250" height="28" rx="4"/><rect class="head" x="1360" y="94" width="250" height="14"/><line class="rule" x1="1360" y1="108" x2="1610" y2="108"/>
+<text class="tname" x="1370" y="99">users</text>
+<text class="badge b-pk" x="1370" y="121">PK</text>
+<text class="col c-pk" x="1404" y="121">id</text>
+<text class="ctype" x="1600" y="121" text-anchor="end">uuid</text>
+<text class="col c-plain" x="1404" y="139">uid · unique</text>
+<text class="ctype" x="1600" y="139" text-anchor="end">string</text>
+<text class="col c-plain" x="1404" y="157">provider</text>
+<text class="ctype" x="1600" y="157" text-anchor="end">string</text>
+<text class="col c-plain" x="1404" y="175">email</text>
+<text class="ctype" x="1600" y="175" text-anchor="end">string</text>
+<text class="col c-plain" x="1404" y="193">role</text>
+<text class="ctype" x="1600" y="193" text-anchor="end">string</text>
+<text class="col c-plain" x="1404" y="211">region</text>
+<text class="ctype" x="1600" y="211" text-anchor="end">string</text>
+</g>
+<g class="tbl"><rect class="box" x="1360" y="300" width="250" height="126" rx="4"/>
+<rect class="head" x="1360" y="300" width="250" height="28" rx="4"/><rect class="head" x="1360" y="314" width="250" height="14"/><line class="rule" x1="1360" y1="328" x2="1610" y2="328"/>
+<text class="tname" x="1370" y="319">staged_documents</text>
+<text class="badge b-fk" x="1370" y="341">FK</text>
+<text class="col c-fk" x="1404" y="341">user_id</text>
+<text class="ctype" x="1600" y="341" text-anchor="end">uuid</text>
+<text class="badge b-poly" x="1370" y="359">POLY</text>
+<text class="col c-poly" x="1404" y="359">stageable → activities</text>
+<text class="col c-plain" x="1404" y="377">status</text>
+<text class="ctype" x="1600" y="377" text-anchor="end">string</text>
+<text class="col c-plain" x="1404" y="395">doc_ai_job_id</text>
+<text class="ctype" x="1600" y="395" text-anchor="end">string</text>
+<text class="col c-plain" x="1404" y="413">extracted_fields</text>
+<text class="ctype" x="1600" y="413" text-anchor="end">jsonb</text>
+</g>
+<g class="tbl"><rect class="box" x="70" y="1200" width="330" height="90" rx="4"/>
+<rect class="head" x="70" y="1200" width="330" height="28" rx="4"/><rect class="head" x="70" y="1214" width="330" height="14"/><line class="rule" x1="70" y1="1228" x2="400" y2="1228"/>
+<text class="tname" x="80" y="1219">active_storage_attachments</text>
+<text class="badge b-fk" x="80" y="1241">FK</text>
+<text class="col c-fk" x="114" y="1241">blob_id</text>
+<text class="ctype" x="390" y="1241" text-anchor="end">uuid</text>
+<text class="badge b-poly" x="80" y="1259">POLY</text>
+<text class="col c-poly" x="114" y="1259">record → any model with files</text>
+<text class="col c-plain" x="114" y="1277">name</text>
+<text class="ctype" x="390" y="1277" text-anchor="end">string</text>
+</g>
+<g class="tbl"><rect class="box" x="490" y="1200" width="330" height="108" rx="4"/>
+<rect class="head" x="490" y="1200" width="330" height="28" rx="4"/><rect class="head" x="490" y="1214" width="330" height="14"/><line class="rule" x1="490" y1="1228" x2="820" y2="1228"/>
+<text class="tname" x="500" y="1219">active_storage_blobs</text>
+<text class="badge b-pk" x="500" y="1241">PK</text>
+<text class="col c-pk" x="534" y="1241">id</text>
+<text class="ctype" x="810" y="1241" text-anchor="end">uuid</text>
+<text class="col c-plain" x="534" y="1259">key · unique</text>
+<text class="ctype" x="810" y="1259" text-anchor="end">string</text>
+<text class="col c-plain" x="534" y="1277">filename</text>
+<text class="ctype" x="810" y="1277" text-anchor="end">string</text>
+<text class="col c-plain" x="534" y="1295">service_name</text>
+<text class="ctype" x="810" y="1295" text-anchor="end">string</text>
+</g>
+<g class="tbl"><rect class="box" x="920" y="1200" width="330" height="72" rx="4"/>
+<rect class="head" x="920" y="1200" width="330" height="28" rx="4"/><rect class="head" x="920" y="1214" width="330" height="14"/><line class="rule" x1="920" y1="1228" x2="1250" y2="1228"/>
+<text class="tname" x="930" y="1219">active_storage_variant_records</text>
+<text class="badge b-fk" x="930" y="1241">FK</text>
+<text class="col c-fk" x="964" y="1241">blob_id</text>
+<text class="ctype" x="1240" y="1241" text-anchor="end">uuid</text>
+<text class="col c-plain" x="964" y="1259">variation_digest</text>
+<text class="ctype" x="1240" y="1259" text-anchor="end">string</text>
+</g>
+<g class="tbl"><rect class="box" x="1360" y="1200" width="250" height="126" rx="4"/>
+<rect class="head" x="1360" y="1200" width="250" height="28" rx="4"/><rect class="head" x="1360" y="1214" width="250" height="14"/><line class="rule" x1="1360" y1="1228" x2="1610" y2="1228"/>
+<text class="tname" x="1370" y="1219">GoodJob queue</text>
+<text class="ttag" x="1600" y="1218" text-anchor="end">5 TABLES</text>
+<text class="col c-plain" x="1404" y="1241">good_jobs</text>
+<text class="col c-plain" x="1404" y="1259">good_job_executions</text>
+<text class="col c-plain" x="1404" y="1277">good_job_processes</text>
+<text class="col c-plain" x="1404" y="1295">good_job_batches</text>
+<text class="col c-plain" x="1404" y="1313">good_job_settings</text>
+</g>
+<text class="elabel" x="33" y="370" text-anchor="middle" transform="rotate(-90 33 370)">source_id (string match)</text>
+<text class="elabel" x="442" y="420" text-anchor="middle" transform="rotate(-90 442 420)">member_id (text match)</text>
+<text class="elabel" x="860" y="33" text-anchor="middle">uploader_id → users</text>
+<text class="note" x="70" y="1312">record → activities, exemption and denial forms, information_requests</text>
+<text class="note" x="70" y="1328">(supporting_documents); staged_documents and certification_batch_uploads (file)</text>
+</svg>
