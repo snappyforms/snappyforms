@@ -3,13 +3,15 @@ import { UserCircle } from 'lucide-react';
 import Link from "next/link";
 import { Button } from '@/components/ui/button';
 import { useState } from "react";
+import { useAuth } from '@/AuthContext';
+
 
 export default function Checklist() {
 
-    const [currentPhase, setCurrentPhase] = useState<number>(0);
+    const { activePage, setActivePage } = useAuth();
     const checklistComponents = {
         requirementsYes: { key: 'requirements', label: 'Confirm Work Hour Requirement Exemptions', href: 'requirementCheck', tooltip: 'Check with your benfits officier (CAO) or review the exemption options in our resource center.' },
-        hoursNeeded: { key: 'hours', label: 'Hours Confirmation', href: 'requirementCheck', tooltip: 'Your benefits officer (CAO) can tell you how many hours are needed to stay enrolled in benefits.' },
+        hoursNeeded: { key: 'hours', label: 'Hours Confirmation', href: 'hours', tooltip: 'Your benefits officer (CAO) can tell you how many hours are needed to stay enrolled in benefits.' },
         logActivities: { key: 'log', label: 'Log Activities', href: 'requirementCheck', tooltip: 'Check the resource center (or contact your CAO) for activities that count toward your work hour requirements.' },
         attest: { key: 'attest', label: 'Submit Hours for Review', href: 'requirementCheck', tooltip: 'Click send to push your activity log to the applicable organization(s) for approval.' },
         confirmation: { key: 'org', label: 'Org Review & Confirmation', href: 'requirementCheck', tooltip: 'The applicable organization(s) is reviewing your hours.' },
@@ -43,13 +45,16 @@ export default function Checklist() {
                         {
                             componentKeys.map((component, idx) => (
                                 <a className='w-full flex flex-col items-center'
-                                href={checklistComponents[component].href}>
-                                    <div key={idx}
+                                    key={idx}
+                                    href={checklistComponents[component].href}>
+                                    <button
+                                        disabled={idx > activePage}
+                                        key={idx}
                                         className='rounded-[50%]  w-[50%] h-[8rem] text-md text-center place-content-center p-4 bg-white shadow-sm grid grid-cols-[1fr_10px] cursor-pointer transition delay-150 ease-in-out hover:-translate-y-1 hover:scale-105'
                                         style={{
-                                            border: idx < currentPhase ? '1px solid oklch(95% 0.052 163.051)' : idx === currentPhase ? '1px solid oklch(50.8% 0.118 165.612)' : '',
-                                            backgroundColor: idx < currentPhase ? 'oklch(98.2% 0.018 155.826)' : idx === currentPhase ? 'oklch(50.8% 0.118 165.612)' : '',
-                                            color: idx < currentPhase ? 'oklch(70.5% 0.015 286.067)' : idx === currentPhase ? 'white' : '',
+                                            border: idx < activePage ? '1px solid oklch(95% 0.052 163.051)' : idx === activePage ? '1px solid oklch(50.8% 0.118 165.612)' : '',
+                                            backgroundColor: idx < activePage ? 'oklch(98.2% 0.018 155.826)' : idx === activePage ? 'oklch(50.8% 0.118 165.612)' : '',
+                                            color: idx < activePage ? 'oklch(70.5% 0.015 286.067)' : idx === activePage ? 'white' : '',
                                         }}>
                                         {checklistComponents[component].label}
                                         <div
@@ -62,14 +67,14 @@ export default function Checklist() {
                                             hover:after:visible hover:after:opacity-100"
                                             data-tooltip={checklistComponents[component].tooltip}
                                             style={{
-                                                border: idx < currentPhase ? '1px solid oklch(95% 0.052 163.051)' : idx === currentPhase ? '1px solid oklch(50.8% 0.118 165.612)' : '',
-                                                backgroundColor: idx < currentPhase ? 'oklch(98.2% 0.018 155.826)' : '',
-                                                color: idx < currentPhase ? 'oklch(50.8% 0.118 165.612)' : idx === currentPhase ? 'oklch(59.6% 0.145 163.225)' : '',
+                                                border: idx < activePage ? '1px solid oklch(95% 0.052 163.051)' : idx === activePage ? '1px solid oklch(50.8% 0.118 165.612)' : '',
+                                                backgroundColor: idx < activePage ? 'oklch(98.2% 0.018 155.826)' : '',
+                                                color: idx < activePage ? 'oklch(50.8% 0.118 165.612)' : idx === activePage ? 'oklch(59.6% 0.145 163.225)' : '',
                                             }}>
 
-                                            {idx < currentPhase ? "✓" : "i"}
+                                            {idx < activePage ? "✓" : "i"}
                                         </div>
-                                    </div>
+                                    </button>
                                     {checklistComponents[component].key === 'submit' ? null :
                                         (<div key={idx.toString().concat('-divider')}><span className='text-slate-400'>⇣</span></div>)
                                     }

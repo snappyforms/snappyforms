@@ -36,9 +36,9 @@ interface AuthContextType {
   setIsAvatarMenuOpen: (value: boolean) => void;
   user: any;
   setUser: (value: any) => void;
-  activePage: string;
-  setActivePage: (value: string) => void;
-  formID: (value: number) => void;
+  activePage: number;
+  setActivePage: (value: number) => void;
+  formID: number;
   setFormID: (value:number) => void;
   time: any;
   setTime: (value: any) => void;
@@ -69,16 +69,36 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   });
   const [isAvatarMenuOpen, setIsAvatarMenuOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
-  const [activePage, setActivePage] = useState<string>('My Map');
+  const [activePage, setActivePageState] = useState<number>(0);
   const [time, setTime] = useState(new Date().toLocaleTimeString());
   const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
   const [loading, setLoading] = useState(true);
   const [globalContentCategories, setGlobalContentCategories] = useState<Array<{ name: string, color: string }>>([]);
-  const [formID, setFormID] = useState<any>(0);
+  const [formID, setFormIDState] = useState<number>(0);
+
+  const setActivePage = (value: number) => {
+    setActivePageState(value);
+    localStorage.setItem("activePage", String(value));
+  };
+
+  const setFormID = (value: number) => {
+    setFormIDState(value);
+    localStorage.setItem("formID", String(value));
+  };
 
   // --- Token Verification on Mount ---
   useEffect(() => {
     const verifyToken = async () => {
+      const storedActivePage = Number(localStorage.getItem("activePage"));
+      if (Number.isFinite(storedActivePage) && storedActivePage >= 0) {
+        setActivePageState(storedActivePage);
+      }
+
+      const storedFormID = Number(localStorage.getItem("formID"));
+      if (Number.isFinite(storedFormID) && storedFormID >= 0) {
+        setFormIDState(storedFormID);
+      }
+
       const storedToken = localStorage.getItem('token');
       if (!storedToken) {
         setLoading(false);

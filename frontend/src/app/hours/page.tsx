@@ -1,10 +1,10 @@
 import { AuthProvider } from "@/AuthContext";
-import Checklist from "@/components/Checklist";
+import HoursConfirmation from "@/components/HoursConfirmation";
 
 export default function Page() {
   return (
     <AuthProvider>
-      <Checklist />
+      <HoursConfirmation />
     </AuthProvider>
   );
 }
