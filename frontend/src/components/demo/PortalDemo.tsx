@@ -19,6 +19,7 @@ import {
   PenLine,
   QrCode,
   Search,
+  Share2,
   Settings,
   ShieldCheck,
   UserRound,
@@ -152,16 +153,18 @@ function Sidebar({
 
 function Header({
   openMenu,
+  openShare,
   view,
   setView,
 }: {
   openMenu: () => void;
+  openShare: () => void;
   view: DemoView;
   setView: (view: DemoView) => void;
 }) {
   return (
-    <header className="flex min-h-[68px] flex-col items-stretch justify-between gap-3 border-b border-[#E1E5E2] bg-white px-4 py-3 sm:flex-row sm:items-center sm:px-7 sm:py-0">
-      <div className="flex items-center gap-3">
+    <header className="flex min-h-[68px] flex-wrap items-center gap-3 border-b border-[#E1E5E2] bg-white px-4 py-3 sm:flex-nowrap sm:px-7">
+      <div className="flex flex-1 items-center gap-3">
         <button
           aria-label="Open navigation"
           className="rounded-lg border border-[#DCE1DE] p-2 text-[#43514F] hover:bg-[#F3F5F2] focus:outline-none focus:ring-2 focus:ring-[#275D7A] focus:ring-offset-2"
@@ -173,17 +176,74 @@ function Header({
         <div className="sm:hidden"><BrandMark compact /></div>
         <div className="hidden sm:block"><BrandMark /></div>
       </div>
-      <DemoSwitcher setView={setView} view={view} />
+      <button
+        className="inline-flex items-center gap-1.5 rounded-lg border border-[#CBD5CF] bg-white px-3 py-2 text-xs font-semibold text-[#35554C] hover:bg-[#F3F6F3] focus:outline-none focus:ring-2 focus:ring-[#275D7A] focus:ring-offset-2"
+        onClick={openShare}
+        type="button"
+      >
+        <Share2 className="h-3.5 w-3.5" /> Share link
+      </button>
+      <div className="hidden sm:block">
+        <DemoSwitcher setView={setView} view={view} />
+      </div>
+      <div className="w-full sm:hidden">
+        <DemoSwitcher setView={setView} view={view} />
+      </div>
     </header>
   );
 }
 
-function Metric({ value, label, note }: { value: string; label: string; note: string }) {
+function ShareModal({ close }: { close: () => void }) {
+  const [copied, setCopied] = useState(false);
+
+  const copyLink = () => {
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1800);
+  };
+
   return (
-    <div className="border-l-2 border-[#B9CEC2] pl-4">
-      <p className="text-3xl font-bold tracking-[-0.04em]">{value}</p>
-      <p className="mt-1 text-sm font-semibold text-[#344442]">{label}</p>
-      <p className="mt-0.5 text-xs text-[#7B8785]">{note}</p>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <button
+        aria-label="Close share dialog"
+        className="absolute inset-0 bg-[#162A2B]/45"
+        onClick={close}
+        type="button"
+      />
+      <section
+        aria-labelledby="share-dialog-title"
+        aria-modal="true"
+        className="relative w-full max-w-sm rounded-2xl bg-white p-6 text-center shadow-[0_24px_80px_rgba(22,42,43,0.24)]"
+        role="dialog"
+      >
+        <button
+          aria-label="Close share dialog"
+          className="absolute right-4 top-4 rounded-md p-1.5 text-[#65726F] hover:bg-[#F1F3F1]"
+          onClick={close}
+          type="button"
+        >
+          <X className="h-4 w-4" />
+        </button>
+        <h2 className="text-xl font-bold tracking-[-0.03em]" id="share-dialog-title">
+          Share the volunteer form
+        </h2>
+        <p className="mt-2 text-xs leading-5 text-[#6D7976]">
+          Northside Community Resource Center
+        </p>
+        <div className="mx-auto mt-5 w-fit rounded-xl border border-[#E0E5E1] bg-white p-2">
+          <QrPreview size={176} />
+        </div>
+        <p className="mt-4 break-all rounded-lg bg-[#F3F5F2] px-3 py-2 text-[11px] text-[#5E6C69]">
+          snappyforms.org/apply/northside-pa1938
+        </p>
+        <button
+          className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#275D7A] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#204E67] focus:outline-none focus:ring-2 focus:ring-[#275D7A] focus:ring-offset-2"
+          onClick={copyLink}
+          type="button"
+        >
+          {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+          {copied ? "Link copied" : "Copy share link"}
+        </button>
+      </section>
     </div>
   );
 }
@@ -227,17 +287,10 @@ function SubmissionRow({
 function Overview({
   submissions,
   openSubmission,
-  showIntake,
 }: {
   submissions: Submission[];
   openSubmission: (submission: Submission) => void;
-  showIntake: () => void;
 }) {
-  const awaiting = submissions.filter((item) => item.status === "Submitted").length;
-  const ready = submissions.filter(
-    (item) => item.status === "Ready to download",
-  ).length;
-
   return (
     <div className="mx-auto w-full max-w-[1180px] px-4 py-7 sm:px-7 sm:py-9">
       <div>
@@ -252,15 +305,7 @@ function Overview({
           </p>
         </div>
       </div>
-      <section
-        aria-label="Workflow summary"
-        className="mt-8 grid gap-6 border-y border-[#DDE2DE] py-6 sm:grid-cols-3"
-      >
-        <Metric label="Awaiting review" note="2 submitted today" value={String(awaiting)} />
-        <Metric label="Awaiting signature" note="Oldest is 2 days" value="1" />
-        <Metric label="Documents ready" note="Available to download" value={String(ready)} />
-      </section>
-      <div className="mt-7 grid gap-6 xl:grid-cols-[minmax(0,1.65fr)_minmax(300px,.8fr)]">
+      <div className="mt-8">
         <section className="overflow-hidden rounded-xl border border-[#DCE1DE] bg-white shadow-[0_2px_12px_rgba(22,42,43,0.05)]">
           <div className="flex items-center justify-between px-4 py-4 sm:px-5">
             <div>
@@ -277,32 +322,6 @@ function Overview({
               submission={submission}
             />
           ))}
-        </section>
-        <section className="relative overflow-hidden rounded-xl bg-[#244F45] p-5 text-white shadow-[0_8px_30px_rgba(36,79,69,0.18)]">
-          <div className="absolute -right-8 -top-8 h-32 w-32 rounded-full border border-white/10" />
-          <p className="text-xs font-semibold text-white/70">Active intake program</p>
-          <h3 className="mt-1 text-xl font-bold tracking-[-0.02em]">
-            PA 1938 volunteer verification
-          </h3>
-          <div className="mt-6 flex items-center gap-4">
-            <QrPreview size={112} />
-            <div>
-              <span className="rounded-full bg-[#CFE8D7] px-2.5 py-1 text-[11px] font-bold text-[#24543B]">
-                Live
-              </span>
-              <p className="mt-3 text-xs leading-5 text-white/75">
-                12 submissions
-                <br />this month
-              </p>
-            </div>
-          </div>
-          <button
-            className="mt-6 flex w-full items-center justify-center gap-2 rounded-lg bg-white px-4 py-2.5 text-sm font-semibold text-[#244F45]"
-            onClick={showIntake}
-            type="button"
-          >
-            Manage link <ArrowRight className="h-4 w-4" />
-          </button>
         </section>
       </div>
     </div>
@@ -796,6 +815,7 @@ export default function PortalDemo({
   const [page, setPage] = useState<PortalPage>("overview");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [shareOpen, setShareOpen] = useState(false);
   const selected = submissions.find((item) => item.id === selectedId);
 
   const openSubmission = (submission: Submission) => {
@@ -827,7 +847,6 @@ export default function PortalDemo({
     content = (
       <Overview
         openSubmission={openSubmission}
-        showIntake={() => changePage("intake")}
         submissions={submissions}
       />
     );
@@ -851,9 +870,11 @@ export default function PortalDemo({
         page={page}
         setPage={changePage}
       />
+      {shareOpen && <ShareModal close={() => setShareOpen(false)} />}
       <div className="min-w-0">
         <Header
           openMenu={() => setMobileOpen(true)}
+          openShare={() => setShareOpen(true)}
           setView={setView}
           view={view}
         />
