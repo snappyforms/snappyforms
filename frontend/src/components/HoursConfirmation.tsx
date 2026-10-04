@@ -24,7 +24,7 @@ export default function HoursConfirmation() {
             </div>
 
             <div className='flex flex-col gap-10 bg-slate-100 p-4 pt-0 rounded-sm border shadow-sm overflow-auto max-h-[80vh]'>
-                <h1 className="mt-4 text-lg font-medium">Required  <span className='text-green-700'>Work Hours Needed</span></h1>
+                <h1 className="mt-4 text-lg font-medium">Required  <span className='text-emerald-700'>Work Hours Needed</span></h1>
                 <div className='flex flex-col gap-3 rounded-md border border-slate-200 bg-white p-4 shadow-sm gap-6'>
                     <p className='text-sm font-medium leading-6 text-slate-800'>Tell us more about your work hour requirements. How many hours do you need to keep your benefits?</p>
                     <div className="flex flex-row gap-1 rounded border px-3 py-2 text-left text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700">
