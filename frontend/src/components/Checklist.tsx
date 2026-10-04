@@ -84,7 +84,7 @@ export default function Checklist() {
                     </div>
                 </div>
                 <div key='checklistButtons' className='grid grid-cols-2 gap-10'>
-                    <a href="/home"><Button className='bg-red-400 w-full'>Discard Checklist</Button></a>
+                    <a href="/home"><Button className='bg-red-400 w-full' onClick={() => setActivePage(0)}>Discard Checklist</Button></a>
                     <a href="/home"><Button className='w-full'>Save Checklist</Button></a>
 
                 </div>
