@@ -43,7 +43,7 @@ override with `BASE_URL`).
 
 ### Frontend-only production MVP preview
 
-The `/demo` route is an interactive, frontend-only preview of the proposed volunteer intake and
+The `/chris-demo` route is an interactive, frontend-only preview of the proposed volunteer intake and
 organization review workflow. It uses sample data and local React state. It does not read from or
 write to PostgreSQL, call application API routes, or generate a real government form.
 
@@ -51,7 +51,7 @@ write to PostgreSQL, call application API routes, or generate a real government 
 cd frontend
 npm install
 npm run dev
-# Open http://localhost:3000/demo
+# Open http://localhost:3000/chris-demo
 ```
 
 ## Demo accounts

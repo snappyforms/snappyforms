@@ -7,6 +7,6 @@ export const metadata: Metadata = {
     "A frontend-only preview of the SnappyForms volunteer intake and organization review workflow.",
 };
 
-export default function DemoPage() {
+export default function ChrisDemoPage() {
   return <ProductionMvpDemo />;
 }
