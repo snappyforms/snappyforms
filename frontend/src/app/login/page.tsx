@@ -23,7 +23,7 @@ export default function LoginPage() {
         href="/home"
       >
         <Button className="bg-white text-black border-2 border-green-700 w-full">
-          Demo
+          Demo | Beneficiary View
         </Button>
       </a>
     </div>
