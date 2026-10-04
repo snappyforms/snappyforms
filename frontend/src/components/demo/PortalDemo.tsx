@@ -60,24 +60,24 @@ function Sidebar({
   open: boolean;
   close: () => void;
 }) {
+  if (!open) return null;
+
   return (
     <>
-      {open && (
-        <button
-          aria-label="Close navigation"
-          className="fixed inset-0 z-30 bg-[#162A2B]/35 lg:hidden"
-          onClick={close}
-          type="button"
-        />
-      )}
+      <button
+        aria-label="Close navigation"
+        className="fixed bottom-0 left-0 right-0 top-10 z-30 bg-[#162A2B]/35"
+        onClick={close}
+        type="button"
+      />
       <aside
-        className={`fixed inset-y-0 left-0 z-40 flex w-[252px] flex-col border-r border-[#DCE1DE] bg-[#F7F8F5] transition-transform lg:static lg:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}
+        className="fixed bottom-0 left-0 top-10 z-40 flex w-[278px] max-w-[88vw] flex-col border-r border-[#DCE1DE] bg-[#F7F8F5] shadow-[10px_0_36px_rgba(22,42,43,0.14)]"
       >
         <div className="flex items-center justify-between px-5 pb-6 pt-5">
           <BrandMark />
           <button
             aria-label="Close navigation"
-            className="rounded-md p-1.5 text-[#5E6B69] hover:bg-[#E9ECE8] lg:hidden"
+            className="rounded-md p-1.5 text-[#5E6B69] hover:bg-[#E9ECE8]"
             onClick={close}
             type="button"
           >
@@ -151,35 +151,27 @@ function Sidebar({
 }
 
 function Header({
-  title,
   openMenu,
   view,
   setView,
 }: {
-  title: string;
   openMenu: () => void;
   view: DemoView;
   setView: (view: DemoView) => void;
 }) {
   return (
-    <header className="flex min-h-[74px] flex-col items-stretch justify-between gap-3 border-b border-[#E1E5E2] bg-white px-4 py-3 sm:flex-row sm:items-center sm:px-7 sm:py-0">
+    <header className="flex min-h-[68px] flex-col items-stretch justify-between gap-3 border-b border-[#E1E5E2] bg-white px-4 py-3 sm:flex-row sm:items-center sm:px-7 sm:py-0">
       <div className="flex items-center gap-3">
         <button
           aria-label="Open navigation"
-          className="rounded-lg border border-[#DCE1DE] p-2 text-[#43514F] lg:hidden"
+          className="rounded-lg border border-[#DCE1DE] p-2 text-[#43514F] hover:bg-[#F3F5F2] focus:outline-none focus:ring-2 focus:ring-[#275D7A] focus:ring-offset-2"
           onClick={openMenu}
           type="button"
         >
           <Menu className="h-5 w-5" />
         </button>
-        <div>
-          <h1 className="text-lg font-bold tracking-[-0.02em] sm:text-xl">
-            {title}
-          </h1>
-          <p className="hidden text-xs text-[#718080] sm:block">
-            Northside Community Resource Center
-          </p>
-        </div>
+        <div className="sm:hidden"><BrandMark compact /></div>
+        <div className="hidden sm:block"><BrandMark /></div>
       </div>
       <DemoSwitcher setView={setView} view={view} />
     </header>
@@ -248,7 +240,7 @@ function Overview({
 
   return (
     <div className="mx-auto w-full max-w-[1180px] px-4 py-7 sm:px-7 sm:py-9">
-      <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
+      <div>
         <div>
           <p className="text-sm text-[#687573]">Thursday, October 1</p>
           <h2 className="mt-1 text-2xl font-bold tracking-[-0.03em] sm:text-[28px]">
@@ -259,13 +251,6 @@ function Overview({
             signature.
           </p>
         </div>
-        <button
-          className="inline-flex w-fit items-center gap-2 rounded-lg bg-[#275D7A] px-4 py-2.5 text-sm font-semibold text-white"
-          onClick={showIntake}
-          type="button"
-        >
-          <QrCode className="h-4 w-4" /> View intake link
-        </button>
       </div>
       <section
         aria-label="Workflow summary"
@@ -402,6 +387,7 @@ function SubmissionDetail({
   goBack: () => void;
 }) {
   const [showChangeNote, setShowChangeNote] = useState(false);
+  const [showSecondaryActions, setShowSecondaryActions] = useState(false);
 
   return (
     <div className="mx-auto w-full max-w-[1120px] px-4 py-6 sm:px-7 sm:py-8">
@@ -498,13 +484,32 @@ function SubmissionDetail({
                   <Check className="h-4 w-4" /> Approve for signature
                 </button>
                 <button
-                  className="flex w-full items-center justify-center gap-2 rounded-lg border border-[#C9D2CD] px-4 py-2.5 text-sm font-semibold"
-                  onClick={() => setShowChangeNote((value) => !value)}
+                  aria-expanded={showSecondaryActions}
+                  className="flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2 text-xs font-semibold text-[#60706C] hover:bg-[#F3F5F2]"
+                  onClick={() => setShowSecondaryActions((value) => !value)}
                   type="button"
                 >
-                  <PenLine className="h-4 w-4" /> Request changes
+                  <MoreHorizontal className="h-4 w-4" /> More review actions
                 </button>
-                {showChangeNote && (
+                {showSecondaryActions && (
+                  <div className="rounded-lg border border-[#E0E5E1] bg-[#F7F8F6] p-2">
+                    <button
+                      className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-xs font-semibold text-[#40514E] hover:bg-white"
+                      onClick={() => setShowChangeNote((value) => !value)}
+                      type="button"
+                    >
+                      <PenLine className="h-3.5 w-3.5" /> Request changes
+                    </button>
+                    <button
+                      className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-xs font-semibold text-[#98504B] hover:bg-white"
+                      onClick={() => updateStatus("Declined")}
+                      type="button"
+                    >
+                      <X className="h-3.5 w-3.5" /> Decline submission
+                    </button>
+                  </div>
+                )}
+                {showChangeNote && showSecondaryActions && (
                   <div className="rounded-lg bg-[#F4F6F3] p-3">
                     <label className="text-xs font-semibold" htmlFor="change-note">
                       Message to volunteer
@@ -523,13 +528,6 @@ function SubmissionDetail({
                     </button>
                   </div>
                 )}
-                <button
-                  className="w-full px-4 py-2 text-xs font-semibold text-[#98504B]"
-                  onClick={() => updateStatus("Declined")}
-                  type="button"
-                >
-                  Decline submission
-                </button>
               </div>
             )}
             {submission.status === "Approved" && (
@@ -845,23 +843,18 @@ export default function PortalDemo({
     content = <Team />;
   }
 
-  const title = selected
-    ? "Submission review"
-    : navItems.find((item) => item.page === page)?.label || "Overview";
-
   return (
-    <div className="flex min-h-[calc(100vh-40px)] bg-[#F5F6F3]">
+    <div className="min-h-[calc(100vh-40px)] bg-[#F5F6F3]">
       <Sidebar
         close={() => setMobileOpen(false)}
         open={mobileOpen}
         page={page}
         setPage={changePage}
       />
-      <div className="min-w-0 flex-1">
+      <div className="min-w-0">
         <Header
           openMenu={() => setMobileOpen(true)}
           setView={setView}
-          title={title}
           view={view}
         />
         <main>{content}</main>
