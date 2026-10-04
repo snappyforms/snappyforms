@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import { LoginForm } from "@/components/LoginForm";
+import { Button } from "@/components/ui/button";
 
 export default function LoginPage() {
   return (
@@ -17,6 +18,14 @@ export default function LoginPage() {
       <Suspense fallback={null}>
         <LoginForm />
       </Suspense>
+
+      <a
+        href="/home"
+      >
+        <Button className="bg-white text-black border-2 border-green-700 w-full">
+          Demo
+        </Button>
+      </a>
     </div>
   );
 }
