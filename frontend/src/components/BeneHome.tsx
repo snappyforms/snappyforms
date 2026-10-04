@@ -81,7 +81,7 @@ export default function BeneHome() {
                 </div>
                 <div className='flex flex-col gap-3 border border-slate-200 bg-white shadow-sm gap-6 rounded-md overflow-hidden'>
                         <div className="border-b border-emerald-100 bg-emerald-700 px-4 py-3">
-                            <h2 id="forms-heading" className="text-sm font-semibold text-white">Quick Links</h2>
+                            <h2 id="forms-heading" className="text-sm font-semibold text-white">All Forms</h2>
                         </div>
 
                 </div>
