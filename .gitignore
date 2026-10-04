@@ -9,6 +9,7 @@ tsconfig.tsbuildinfo
 *.db-journal
 .DS_Store
 npm-debug.log*
+docs/cvch_poc
 
 # Firebase
 firebase-debug.log
