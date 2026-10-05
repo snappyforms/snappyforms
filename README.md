@@ -41,6 +41,19 @@ A quick browserless smoke test (`npm run smoke`) logs in and exercises the core
 Postgres-backed flows against a running server (defaults to `http://localhost:3000`,
 override with `BASE_URL`).
 
+### Frontend-only production MVP preview
+
+The `/chris-demo` route is an interactive, frontend-only preview of the proposed volunteer intake and
+organization review workflow. It uses sample data and local React state. It does not read from or
+write to PostgreSQL, call application API routes, or generate a real government form.
+
+```bash
+cd frontend
+npm install
+npm run dev
+# Open http://localhost:3000/chris-demo
+```
+
 ## Demo accounts
 
 Every seeded account shares the password `VerwovoDemo!1` (password sign-in tab), but the fastest
