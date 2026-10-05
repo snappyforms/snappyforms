@@ -417,6 +417,32 @@
       ]
     },
     {
+      "url": "/chris-demo",
+      "group": "(root)",
+      "file": "frontend/src/app/chris-demo/page.tsx",
+      "layouts": [
+        "layout.tsx"
+      ],
+      "render": "server",
+      "dynamic": false,
+      "auth": "public",
+      "db": "none",
+      "demoMode": "",
+      "apiCalls": [],
+      "unresolvedFetches": [],
+      "linksTo": [],
+      "deadLinks": [],
+      "drift": {
+        "palette": 63,
+        "arbitraryColor": 196,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 48
+      },
+      "tests": [],
+      "linkedFrom": []
+    },
+    {
       "url": "/consent",
       "group": "(app)",
       "file": "frontend/src/app/(app)/consent/page.tsx",

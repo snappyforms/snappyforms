@@ -1,7 +1,7 @@
 # SnappyForms site map, health baseline and reorganization proposal
 
 **As of 2026-10-05.**
-- **Surveyed branch:** `ccr-d3cab329-ci4gbj` at `6e64f76`. That is the same commit as `44-bene-pov-dev`: `main` plus the BenePOV pages.
+- **Surveyed branch:** `ccr-d3cab329-ci4gbj`: `44-bene-pov-dev` (`6e64f76`, which is `main` plus the BenePOV pages) with `main` at `b03c752` (PR #51, `/chris-demo`) merged in. It now has every page on `main` plus the four BenePOV pages.
 - **Compared against:** `main` at `b03c752`, which is what snappyforms.org serves (see [§1](#1-where-routes-live)), and `postgres-demo`.
 - **Generated companion:** [routes.generated.md](./routes.generated.md) / [.json](./routes.generated.json). It has per-route auth, DB dependence, API calls, link graph, design-system drift and test coverage. Regenerate it with `npm run routes` in `frontend/`; `npm run routes -- --check` exits non-zero when it is stale.
 
@@ -11,9 +11,9 @@ Two goals drive this document:
 
 ## Summary
 
-- **44 pages and 91 API route files** on this branch; `main` has 41 pages.
-  - 7 pages are frontend-only: `/`, `/landing`, `/demo`, and the 4 BenePOV pages.
-  - `main` adds an 8th, `/chris-demo`.
+- **45 pages and 91 API route files** on this branch; `main` has 41 pages.
+  - 8 pages are frontend-only: `/`, `/landing`, `/demo`, `/chris-demo`, and the 4 BenePOV pages.
+  - Those 8 serve with no `.env` and no database at all (checked: `/`, `/demo`, `/chris-demo` and `/home` return 200).
   - Every other page needs Postgres. 89 of 91 API routes touch the DB.
 - **This branch does not build.** `next build` fails on `/hours`, `/newForm` and `/requirementCheck`: `ReferenceError: localStorage is not defined` from `src/AuthContext.tsx:64` during prerender. The same three pages return **500** in `next dev`. `main` builds cleanly. Merging `44-bene-pov-dev` as it stands would block every App Hosting rollout.
 - **Every other page works** against a seeded local Postgres, in a real browser, for the right persona (§3).
@@ -21,7 +21,7 @@ Two goals drive this document:
 - **Production runs with `DEMO_MODE=true`** (`frontend/apphosting.yaml`), and `DEPLOY.md` says it should be false. One consequence: **`/dev/inbox` is reachable on snappyforms.org.** That page lists every login code and magic link the app "sends". Anyone who signs up there with a real address has their login codes on a public page.
 - **There are three separate frontend-only prototypes**, each built a different way and none fenced off from production routes:
   - the BenePOV pages (issue #44);
-  - `/chris-demo` (#51, merged to `main`);
+  - `/chris-demo` (#51, merged to `main` and live);
   - the planned CHVC checklist (`docs/planning/mvp/pa-1938-chvc-poc.md`), which also wants the URL `/hours`.
 
   The proposal below gives prototypes one home: `/proto`, visible in demo mode only.
@@ -32,7 +32,8 @@ Two goals drive this document:
 |---|---|---|---|
 | snappyforms.org (live) | `main` `b03c752` | 41 | Checked 2026-10-05: `/demo` and `/chris-demo` return 200, `/home` and `/hours` return 404. `postgres-demo` has no `/demo`, so the live site is `main`. |
 | `main` | `b03c752` | 41 | Includes `/chris-demo` (PR #51). `/demo` (`DemoLanding`) is still present. |
-| `44-bene-pov-dev` / this branch | `6e64f76` | 44 | `main` minus `/chris-demo`, plus `/home`, `/newForm`, `/hours`, `/requirementCheck`. |
+| this branch | `main` + `6e64f76` | 45 | `main` plus `/home`, `/newForm`, `/hours`, `/requirementCheck`. |
+| `44-bene-pov-dev` | `6e64f76` | 44 | One commit behind `main`: no `/chris-demo` yet. |
 | `postgres-demo` | `3676505` | 41 | Old integration branch. Has `/chris-demo` but **no `/demo`**. |
 | Local, `npm run dev` | any | — | Frontend-only pages need no `.env`. Everything else needs Postgres. |
 | Local, `npm run docker:up` | any | — | Postgres plus the app on :3000, migrated and seeded. |
@@ -58,7 +59,7 @@ There is no `backend/` on any branch. The README and DEPLOY.md mention a Django 
 | `/` | Marketing landing (`LandingPage.tsx`, 452 lines): hero, how it works, for orgs, features, CTA | P | — | 200 |
 | `/landing` | Exact duplicate of `/`. Nothing links to it. | P | — | 200 |
 | `/demo` | Phase-1 demo landing (`DemoLanding.tsx`): Create account, Register org, Explore → `/login`. Entry point of the Maya tour. | P | — | 200 |
-| `/chris-demo` *(main only)* | "Production MVP Preview": portal and volunteer intake/review mockup with sample data (`src/components/demo/*`). Nothing links to it. | P | — | 200 live |
+| `/chris-demo` | "Production MVP Preview": portal and volunteer intake/review mockup with sample data and React state (`src/components/demo/*`, PR #51). Nothing links to it. | P | — | 200 (also live, and with no DB) |
 
 ### BenePOV prototype (this branch only, issue #44; no DB)
 | Route | What it is | Auth | Data | Health |
@@ -170,11 +171,11 @@ Per-route methods, auth, rate limiting, callers and tests are in [routes.generat
 
 **Anonymous pass.** The same URLs were fetched again without a cookie.
 
-| Check | `44-bene-pov-dev` (this branch) | `main` |
+| Check | This branch (BenePOV + `main`) | `main` |
 |---|---|---|
 | `tsc --noEmit` | pass | pass |
-| `next build`, no `DATABASE_URL` | **fail**: prerender of `/hours`, `/newForm`, `/requirementCheck` | pass (51 static outputs) |
-| Pages as their persona | 41 × 200 (two after redirects: `/q` → `/u/maya-j`, `/onboarding` → `/dashboard`), **3 × 500** (the three above) | not run (same pages minus BenePOV) |
+| `next build`, no `DATABASE_URL` | **fail**: prerender of `/hours`, `/newForm`, `/requirementCheck` (`/chris-demo` prerenders fine) | pass (51 static outputs) |
+| Pages as their persona | 41 × 200 (two after redirects: `/q` → `/u/maya-j`, `/onboarding` → `/dashboard`), **3 × 500** (the three above); `/chris-demo` 200, checked after merging `main` | not run (same pages minus BenePOV) |
 | Uncaught page errors / API 5xx in the browser | none | — |
 | Anonymous, `M` routes | all 26 → 307 `/login?next=…` | — |
 | `npm test` | **fail** at `test:middleware`, so the rest is skipped | **fail**, same assertion |
@@ -207,7 +208,7 @@ Per-route methods, auth, rate limiting, callers and tests are in [routes.generat
    - `BeneHome` has 3 quick links with `href=''`.
    - `Checklist` uses the relative hrefs `requirementCheck` and `hours`, and 5 of its 7 steps point at the exemption page.
    - `LandingPage` links to the relative `./demo`.
-5. **Orphans** (nothing links to them): `/landing`, `/chris-demo` (on main), `/organization/[id]/shifts/new`, `/hours`, `/requirementCheck`.
+5. **Orphans** (nothing links to them): `/landing`, `/chris-demo`, `/organization/[id]/shifts/new`, `/hours`, `/requirementCheck`.
    - `/q`, `/share`, `/shift` and `/verify` are reached by QR or shared links, which is expected.
    - The "Host a shift" page has no entry point in the UI.
 6. **`tests/middleware.test.ts:47-49` is stale.** It asserts the protocol upgrade that `src/middleware.ts` (the comment above `canonicalRedirect`) deliberately removed.
@@ -227,7 +228,7 @@ There is no Select, Textarea or Label primitive. The established pattern is a to
 | Surface | Hard-coded colours / raw controls | How |
 |---|---|---|
 | `/` and `/landing` | 127 / 0 | Inline `hsl()` copies of the tokens; fonts via `@import`; breaks out of the column with `99vw` |
-| `/chris-demo` (main) | 259 / 48 | Hex colours (`bg-[#F5F6F3]`); escapes the layout with `fixed inset-0 z-[100]` |
+| `/chris-demo` | 259 / 48 | Hex colours (`bg-[#F5F6F3]`); escapes the layout with `fixed inset-0 z-[100]` |
 | BenePOV (4 pages) | 70 / 5 | `emerald-*`/`slate-*`/`oklch()`; `<a>` wrapping `<button>` |
 | The whole DB-backed app (52 files, each counted once) | 23 / 41 | 3 of the colours are the BenePOV button on `/login`; most raw controls are token-styled `<select>`/`<textarea>`, the accepted pattern |
 
@@ -337,8 +338,8 @@ Each phase is its own PR, and each must leave `next build` and the health baseli
 - which smoke, e2e or tour script touches each route.
 
 **Coverage today.**
-- 29 of 44 pages and 78 of 91 API routes are not referenced by any test script.
-- The browser baseline (§3) covered all 44 pages, but it is not committed yet (phase 4).
+- 30 of 45 pages and 78 of 91 API routes are not referenced by any test script.
+- The browser baseline (§3) covered all 45 pages, but it is not committed yet (phase 4).
 
 **Manual: please confirm or fill in.**
 - *Origin* comes from the README phases and git history.

@@ -5,7 +5,7 @@
 The hand-written companion with descriptions and the reorganization proposal is [site-map.md](./site-map.md).
 Static analysis only, so treat every column as a lead: fetches and links built from variables are invisible to it.
 
-**44 pages · 91 API route files** · middleware login gate: `/dashboard`, `/qr`, `/settings`, `/onboarding`, `/activity`, `/notifications`, `/forms`, `/organization`, `/agency`, `/consent`
+**45 pages · 91 API route files** · middleware login gate: `/dashboard`, `/qr`, `/settings`, `/onboarding`, `/activity`, `/notifications`, `/forms`, `/organization`, `/agency`, `/consent`
 
 ## Pages
 
@@ -29,6 +29,7 @@ Columns:
 | `/agency/[id]/bulk-query/[jobId]` | (app) | client | middleware | via-api | — | 1 | 1 | — | — |
 | `/agency/[id]/cases` | (app) | client | middleware | via-api | — | 1 | 2 | — | — |
 | `/agency/[id]/cases/[caseId]` | (app) | client | middleware | via-api | — | 2 | 1 | — | — |
+| `/chris-demo` | (root) | server | public | none | — | 0 | 0 | 259 / 48 | — |
 | `/consent` | (app) | client | middleware | via-api | — | 3 | 1 | — | — |
 | `/dashboard` | (app) | server | middleware | direct | — | 2 | 8 + nav | — | smoke.mjs, pw-smoke.mjs, e2e/maya-confirmation-story.mjs, tour:maya-confirmation.storyboard.yml, tests/middleware.test.ts |
 | `/demo` | (root) | server | public | none | — | 0 | 2 | — | tour:maya-confirmation.storyboard.yml |
@@ -67,6 +68,7 @@ Columns:
 ## Frontend-only pages (no DB, directly or via `/api`)
 
 - `/`
+- `/chris-demo`
 - `/demo`
 - `/home`
 - `/hours`
@@ -78,6 +80,7 @@ Columns:
 
 Reached only by typed URL, QR code, redirect, or a link this scan cannot see.
 
+- `/chris-demo`
 - `/hours`
 - `/landing`
 - `/organization/[id]/shifts/new`
