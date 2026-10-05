@@ -1,0 +1,3101 @@
+{
+  "protectedPrefixes": [
+    "/dashboard",
+    "/qr",
+    "/settings",
+    "/onboarding",
+    "/activity",
+    "/notifications",
+    "/forms",
+    "/organization",
+    "/agency",
+    "/consent"
+  ],
+  "pages": [
+    {
+      "url": "/",
+      "group": "(root)",
+      "file": "frontend/src/app/page.tsx",
+      "layouts": [
+        "layout.tsx"
+      ],
+      "render": "server",
+      "dynamic": false,
+      "auth": "public",
+      "db": "none",
+      "demoMode": "",
+      "apiCalls": [],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/demo",
+        "/login"
+      ],
+      "deadLinks": [
+        "./demo (relative)"
+      ],
+      "drift": {
+        "palette": 1,
+        "arbitraryColor": 0,
+        "colorFn": 70,
+        "inlineStyle": 56,
+        "rawControl": 0
+      },
+      "tests": [],
+      "linkedFrom": [
+        "/login",
+        "/settings",
+        "/settings/sessions",
+        "/share/[token]"
+      ]
+    },
+    {
+      "url": "/activity",
+      "group": "(app)",
+      "file": "frontend/src/app/(app)/activity/page.tsx",
+      "layouts": [
+        "layout.tsx",
+        "(app)/layout.tsx"
+      ],
+      "render": "client",
+      "dynamic": false,
+      "auth": "middleware",
+      "db": "via-api",
+      "demoMode": "",
+      "apiCalls": [
+        "/api/activity",
+        "/api/form-requests",
+        "/api/me",
+        "/api/organizations/[id]/audit-log",
+        "/api/organizations/[id]/members",
+        "/api/organizations/[id]/members/[membershipId]/activate",
+        "/api/organizations/[id]/members/[membershipId]/approve-join",
+        "/api/organizations/[id]/members/[membershipId]/ratify",
+        "/api/organizations/[id]/members/[membershipId]/reactivate",
+        "/api/organizations/[id]/members/[membershipId]/suspend"
+      ],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/activity/[id]",
+        "/activity/new",
+        "/activity/new-for-participant",
+        "/forms/requests/[id]"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 3,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 1
+      },
+      "tests": [
+        "frontend/shift-flow.mjs",
+        "frontend/e2e/shift-qr-story.mjs"
+      ],
+      "linkedFrom": [
+        "/activity/[id]",
+        "/activity/new",
+        "/activity/new-for-participant",
+        "/dashboard",
+        "nav: (app)/layout.tsx"
+      ]
+    },
+    {
+      "url": "/activity/[id]",
+      "group": "(app)",
+      "file": "frontend/src/app/(app)/activity/[id]/page.tsx",
+      "layouts": [
+        "layout.tsx",
+        "(app)/layout.tsx"
+      ],
+      "render": "client",
+      "dynamic": true,
+      "auth": "middleware",
+      "db": "via-api",
+      "demoMode": "",
+      "apiCalls": [
+        "/api/activity/[id]",
+        "/api/activity/[id]/accept",
+        "/api/activity/[id]/confirm",
+        "/api/activity/[id]/decline",
+        "/api/activity/[id]/dispute",
+        "/api/activity/[id]/request-changes",
+        "/api/activity/[id]/resubmit",
+        "/api/activity/[id]/revise",
+        "/api/activity/[id]/revoke",
+        "/api/activity/records",
+        "/api/activity/requests",
+        "/api/share-links"
+      ],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/activity",
+        "/activity/new",
+        "/activity/new-for-participant",
+        "/forms"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 4,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 10
+      },
+      "tests": [
+        "frontend/e2e/demo-stories.mjs",
+        "frontend/e2e/maya-confirmation-story.mjs",
+        "frontend/e2e/tours/maya-confirmation.storyboard.yml"
+      ],
+      "linkedFrom": [
+        "/activity",
+        "/activity/new",
+        "/activity/new-for-participant",
+        "/notifications",
+        "/shift/[id]",
+        "/u/[handle]"
+      ]
+    },
+    {
+      "url": "/activity/new",
+      "group": "(app)",
+      "file": "frontend/src/app/(app)/activity/new/page.tsx",
+      "layouts": [
+        "layout.tsx",
+        "(app)/layout.tsx"
+      ],
+      "render": "client",
+      "dynamic": false,
+      "auth": "middleware",
+      "db": "via-api",
+      "demoMode": "",
+      "apiCalls": [
+        "/api/activity/requests",
+        "/api/organizations/[id]/members",
+        "/api/organizations/by-handle/[handle]",
+        "/api/search"
+      ],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/activity",
+        "/activity/[id]",
+        "/activity/new-for-participant"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 0,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 9
+      },
+      "tests": [
+        "frontend/e2e/demo-stories.mjs",
+        "frontend/e2e/maya-confirmation-story.mjs"
+      ],
+      "linkedFrom": [
+        "/activity",
+        "/activity/[id]",
+        "/activity/new-for-participant",
+        "/notifications",
+        "/o/[handle]",
+        "/shift/[id]",
+        "/u/[handle]"
+      ]
+    },
+    {
+      "url": "/activity/new-for-participant",
+      "group": "(app)",
+      "file": "frontend/src/app/(app)/activity/new-for-participant/page.tsx",
+      "layouts": [
+        "layout.tsx",
+        "(app)/layout.tsx"
+      ],
+      "render": "client",
+      "dynamic": false,
+      "auth": "middleware",
+      "db": "via-api",
+      "demoMode": "",
+      "apiCalls": [
+        "/api/activity/records",
+        "/api/me",
+        "/api/search"
+      ],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/activity",
+        "/activity/[id]",
+        "/activity/new"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 0,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 9
+      },
+      "tests": [],
+      "linkedFrom": [
+        "/activity",
+        "/activity/[id]",
+        "/activity/new",
+        "/notifications",
+        "/shift/[id]",
+        "/u/[handle]"
+      ]
+    },
+    {
+      "url": "/agency/[id]/api-console",
+      "group": "(app)",
+      "file": "frontend/src/app/(app)/agency/[id]/api-console/page.tsx",
+      "layouts": [
+        "layout.tsx",
+        "(app)/layout.tsx"
+      ],
+      "render": "client",
+      "dynamic": true,
+      "auth": "middleware",
+      "db": "via-api",
+      "demoMode": "",
+      "apiCalls": [
+        "/api/agency-api/v1/openapi.json",
+        "/api/agency/[id]/api-clients"
+      ],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/dashboard"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 0,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 0
+      },
+      "tests": [],
+      "linkedFrom": [
+        "/dashboard"
+      ]
+    },
+    {
+      "url": "/agency/[id]/bulk-query",
+      "group": "(app)",
+      "file": "frontend/src/app/(app)/agency/[id]/bulk-query/page.tsx",
+      "layouts": [
+        "layout.tsx",
+        "(app)/layout.tsx"
+      ],
+      "render": "client",
+      "dynamic": true,
+      "auth": "middleware",
+      "db": "via-api",
+      "demoMode": "",
+      "apiCalls": [
+        "/api/agency/[id]/bulk-query"
+      ],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/agency/[id]/bulk-query/[jobId]",
+        "/dashboard"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 0,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 1
+      },
+      "tests": [],
+      "linkedFrom": [
+        "/agency/[id]/bulk-query/[jobId]",
+        "/dashboard"
+      ]
+    },
+    {
+      "url": "/agency/[id]/bulk-query/[jobId]",
+      "group": "(app)",
+      "file": "frontend/src/app/(app)/agency/[id]/bulk-query/[jobId]/page.tsx",
+      "layouts": [
+        "layout.tsx",
+        "(app)/layout.tsx"
+      ],
+      "render": "client",
+      "dynamic": true,
+      "auth": "middleware",
+      "db": "via-api",
+      "demoMode": "",
+      "apiCalls": [
+        "/api/agency/[id]/bulk-query/[jobId]"
+      ],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/agency/[id]/bulk-query"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 0,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 0
+      },
+      "tests": [],
+      "linkedFrom": [
+        "/agency/[id]/bulk-query"
+      ]
+    },
+    {
+      "url": "/agency/[id]/cases",
+      "group": "(app)",
+      "file": "frontend/src/app/(app)/agency/[id]/cases/page.tsx",
+      "layouts": [
+        "layout.tsx",
+        "(app)/layout.tsx"
+      ],
+      "render": "client",
+      "dynamic": true,
+      "auth": "middleware",
+      "db": "via-api",
+      "demoMode": "",
+      "apiCalls": [
+        "/api/agency/[id]/cases"
+      ],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/agency/[id]/cases/[caseId]",
+        "/dashboard"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 0,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 0
+      },
+      "tests": [],
+      "linkedFrom": [
+        "/agency/[id]/cases/[caseId]",
+        "/dashboard"
+      ]
+    },
+    {
+      "url": "/agency/[id]/cases/[caseId]",
+      "group": "(app)",
+      "file": "frontend/src/app/(app)/agency/[id]/cases/[caseId]/page.tsx",
+      "layouts": [
+        "layout.tsx",
+        "(app)/layout.tsx"
+      ],
+      "render": "client",
+      "dynamic": true,
+      "auth": "middleware",
+      "db": "via-api",
+      "demoMode": "",
+      "apiCalls": [
+        "/api/agency/[id]/cases/[caseId]",
+        "/api/agency/[id]/cases/[caseId]/reveal-case-number"
+      ],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/agency/[id]/cases"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 0,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 0
+      },
+      "tests": [],
+      "linkedFrom": [
+        "/agency/[id]/cases"
+      ]
+    },
+    {
+      "url": "/consent",
+      "group": "(app)",
+      "file": "frontend/src/app/(app)/consent/page.tsx",
+      "layouts": [
+        "layout.tsx",
+        "(app)/layout.tsx"
+      ],
+      "render": "client",
+      "dynamic": false,
+      "auth": "middleware",
+      "db": "via-api",
+      "demoMode": "",
+      "apiCalls": [
+        "/api/consent",
+        "/api/consent/[caseId]/grant",
+        "/api/consent/[caseId]/revoke"
+      ],
+      "unresolvedFetches": [],
+      "linksTo": [],
+      "deadLinks": [],
+      "drift": {
+        "palette": 0,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 0
+      },
+      "tests": [],
+      "linkedFrom": [
+        "/dashboard"
+      ]
+    },
+    {
+      "url": "/dashboard",
+      "group": "(app)",
+      "file": "frontend/src/app/(app)/dashboard/page.tsx",
+      "layouts": [
+        "layout.tsx",
+        "(app)/layout.tsx"
+      ],
+      "render": "server",
+      "dynamic": false,
+      "auth": "middleware",
+      "db": "direct",
+      "demoMode": "",
+      "apiCalls": [
+        "/api/organizations/[id]/join",
+        "/api/organizations/joinable"
+      ],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/activity",
+        "/agency/[id]/api-console",
+        "/agency/[id]/bulk-query",
+        "/agency/[id]/cases",
+        "/consent",
+        "/login",
+        "/onboarding",
+        "/onboarding/participant",
+        "/opportunities",
+        "/organization/[id]/settings",
+        "/qr",
+        "/search"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 0,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 0
+      },
+      "tests": [
+        "frontend/smoke.mjs",
+        "frontend/pw-smoke.mjs",
+        "frontend/e2e/maya-confirmation-story.mjs",
+        "frontend/e2e/tours/maya-confirmation.storyboard.yml",
+        "frontend/tests/middleware.test.ts"
+      ],
+      "linkedFrom": [
+        "/agency/[id]/api-console",
+        "/agency/[id]/bulk-query",
+        "/agency/[id]/cases",
+        "/onboarding",
+        "/onboarding/organization",
+        "/onboarding/participant",
+        "/organization/[id]/settings",
+        "/organization/[id]/shifts/new",
+        "nav: (app)/layout.tsx"
+      ]
+    },
+    {
+      "url": "/demo",
+      "group": "(root)",
+      "file": "frontend/src/app/demo/page.tsx",
+      "layouts": [
+        "layout.tsx"
+      ],
+      "render": "server",
+      "dynamic": false,
+      "auth": "public",
+      "db": "none",
+      "demoMode": "",
+      "apiCalls": [],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/login"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 0,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 0
+      },
+      "tests": [
+        "frontend/e2e/tours/maya-confirmation.storyboard.yml"
+      ],
+      "linkedFrom": [
+        "/",
+        "/landing"
+      ]
+    },
+    {
+      "url": "/dev/inbox",
+      "group": "(root)",
+      "file": "frontend/src/app/dev/inbox/page.tsx",
+      "layouts": [
+        "layout.tsx"
+      ],
+      "render": "server",
+      "dynamic": false,
+      "auth": "public",
+      "db": "direct",
+      "demoMode": "gated",
+      "apiCalls": [],
+      "unresolvedFetches": [],
+      "linksTo": [],
+      "deadLinks": [],
+      "drift": {
+        "palette": 0,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 0
+      },
+      "tests": [],
+      "linkedFrom": [
+        "/login"
+      ]
+    },
+    {
+      "url": "/forms",
+      "group": "(app)",
+      "file": "frontend/src/app/(app)/forms/page.tsx",
+      "layouts": [
+        "layout.tsx",
+        "(app)/layout.tsx"
+      ],
+      "render": "client",
+      "dynamic": false,
+      "auth": "middleware",
+      "db": "via-api",
+      "demoMode": "",
+      "apiCalls": [
+        "/api/activity",
+        "/api/advocacy/messages",
+        "/api/fax-destinations",
+        "/api/fax-transmissions/[id]/download",
+        "/api/form-requests",
+        "/api/forms/generate",
+        "/api/generated-forms",
+        "/api/generated-forms/[id]/download",
+        "/api/generated-forms/[id]/fax",
+        "/api/share-links"
+      ],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/forms/pa-1938",
+        "/forms/requests/[id]"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 1,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 5
+      },
+      "tests": [
+        "frontend/e2e/maya-confirmation-story.mjs",
+        "frontend/e2e/tours/maya-confirmation.storyboard.yml"
+      ],
+      "linkedFrom": [
+        "/activity/[id]",
+        "/forms/pa-1938",
+        "/forms/requests/[id]",
+        "/qr",
+        "/shift/[id]"
+      ]
+    },
+    {
+      "url": "/forms/pa-1938",
+      "group": "(app)",
+      "file": "frontend/src/app/(app)/forms/pa-1938/page.tsx",
+      "layouts": [
+        "layout.tsx",
+        "(app)/layout.tsx"
+      ],
+      "render": "client",
+      "dynamic": false,
+      "auth": "middleware",
+      "db": "via-api",
+      "demoMode": "",
+      "apiCalls": [
+        "/api/activity",
+        "/api/form-requests",
+        "/api/me",
+        "/api/organizations/[id]",
+        "/api/organizations/[id]/members",
+        "/api/organizations/by-handle/[handle]",
+        "/api/organizations/joinable"
+      ],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/forms",
+        "/forms/requests/[id]"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 0,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 4
+      },
+      "tests": [],
+      "linkedFrom": [
+        "/forms"
+      ]
+    },
+    {
+      "url": "/forms/requests/[id]",
+      "group": "(app)",
+      "file": "frontend/src/app/(app)/forms/requests/[id]/page.tsx",
+      "layouts": [
+        "layout.tsx",
+        "(app)/layout.tsx"
+      ],
+      "render": "client",
+      "dynamic": true,
+      "auth": "middleware",
+      "db": "via-api",
+      "demoMode": "",
+      "apiCalls": [
+        "/api/form-requests/[id]",
+        "/api/form-requests/[id]/certify",
+        "/api/form-requests/[id]/decline",
+        "/api/form-requests/[id]/finalize",
+        "/api/form-requests/[id]/request-changes",
+        "/api/form-requests/[id]/resubmit",
+        "/api/generated-forms/[id]/download",
+        "/api/me"
+      ],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/forms"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 3,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 2
+      },
+      "tests": [],
+      "linkedFrom": [
+        "/activity",
+        "/forms",
+        "/forms/pa-1938"
+      ]
+    },
+    {
+      "url": "/home",
+      "group": "(root)",
+      "file": "frontend/src/app/home/page.tsx",
+      "layouts": [
+        "layout.tsx"
+      ],
+      "render": "server",
+      "dynamic": false,
+      "auth": "public",
+      "db": "none",
+      "demoMode": "",
+      "apiCalls": [],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/newForm"
+      ],
+      "deadLinks": [
+        "\"\" (empty href)"
+      ],
+      "drift": {
+        "palette": 25,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 0
+      },
+      "tests": [],
+      "linkedFrom": [
+        "/login",
+        "/newForm"
+      ]
+    },
+    {
+      "url": "/hours",
+      "group": "(root)",
+      "file": "frontend/src/app/hours/page.tsx",
+      "layouts": [
+        "layout.tsx"
+      ],
+      "render": "server",
+      "dynamic": false,
+      "auth": "public",
+      "db": "none",
+      "demoMode": "",
+      "apiCalls": [],
+      "unresolvedFetches": [
+        "${API_URL_BASE}auth/login",
+        "${API_URL_BASE}auth/logout",
+        "${API_URL_BASE}auth/me",
+        "${API_URL_BASE}auth/register"
+      ],
+      "linksTo": [
+        "/newForm"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 6,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 2,
+        "rawControl": 2
+      },
+      "tests": [],
+      "linkedFrom": []
+    },
+    {
+      "url": "/landing",
+      "group": "(root)",
+      "file": "frontend/src/app/landing/page.tsx",
+      "layouts": [
+        "layout.tsx"
+      ],
+      "render": "server",
+      "dynamic": false,
+      "auth": "public",
+      "db": "none",
+      "demoMode": "",
+      "apiCalls": [],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/demo",
+        "/login"
+      ],
+      "deadLinks": [
+        "./demo (relative)"
+      ],
+      "drift": {
+        "palette": 1,
+        "arbitraryColor": 0,
+        "colorFn": 70,
+        "inlineStyle": 56,
+        "rawControl": 0
+      },
+      "tests": [],
+      "linkedFrom": []
+    },
+    {
+      "url": "/login",
+      "group": "(root)",
+      "file": "frontend/src/app/login/page.tsx",
+      "layouts": [
+        "layout.tsx"
+      ],
+      "render": "server",
+      "dynamic": false,
+      "auth": "public",
+      "db": "via-api",
+      "demoMode": "partial",
+      "apiCalls": [
+        "/api/auth/demo-join",
+        "/api/auth/demo-login",
+        "/api/auth/magic-link/request",
+        "/api/auth/password-login",
+        "/api/auth/request-code",
+        "/api/auth/verify-code"
+      ],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/",
+        "/dev/inbox",
+        "/home"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 3,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 2
+      },
+      "tests": [
+        "frontend/smoke.mjs",
+        "frontend/pw-smoke.mjs",
+        "frontend/e2e/demo-stories.mjs",
+        "frontend/e2e/shift-qr-story.mjs",
+        "frontend/e2e/tours/maya-confirmation.storyboard.yml",
+        "frontend/tests/middleware.test.ts"
+      ],
+      "linkedFrom": [
+        "/",
+        "/dashboard",
+        "/demo",
+        "/landing",
+        "/onboarding",
+        "/settings"
+      ]
+    },
+    {
+      "url": "/newForm",
+      "group": "(root)",
+      "file": "frontend/src/app/newForm/page.tsx",
+      "layouts": [
+        "layout.tsx"
+      ],
+      "render": "server",
+      "dynamic": false,
+      "auth": "public",
+      "db": "none",
+      "demoMode": "",
+      "apiCalls": [],
+      "unresolvedFetches": [
+        "${API_URL_BASE}auth/login",
+        "${API_URL_BASE}auth/logout",
+        "${API_URL_BASE}auth/me",
+        "${API_URL_BASE}auth/register"
+      ],
+      "linksTo": [
+        "/home"
+      ],
+      "deadLinks": [
+        "hours (relative)",
+        "requirementCheck (relative)"
+      ],
+      "drift": {
+        "palette": 11,
+        "arbitraryColor": 0,
+        "colorFn": 10,
+        "inlineStyle": 2,
+        "rawControl": 2
+      },
+      "tests": [],
+      "linkedFrom": [
+        "/home",
+        "/hours",
+        "/requirementCheck"
+      ]
+    },
+    {
+      "url": "/notifications",
+      "group": "(app)",
+      "file": "frontend/src/app/(app)/notifications/page.tsx",
+      "layouts": [
+        "layout.tsx",
+        "(app)/layout.tsx"
+      ],
+      "render": "client",
+      "dynamic": false,
+      "auth": "middleware",
+      "db": "via-api",
+      "demoMode": "",
+      "apiCalls": [
+        "/api/notifications",
+        "/api/notifications/[id]/read"
+      ],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/activity/[id]",
+        "/activity/new",
+        "/activity/new-for-participant",
+        "/settings"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 0,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 0
+      },
+      "tests": [],
+      "linkedFrom": [
+        "/settings"
+      ]
+    },
+    {
+      "url": "/o/[handle]",
+      "group": "(root)",
+      "file": "frontend/src/app/o/[handle]/page.tsx",
+      "layouts": [
+        "layout.tsx"
+      ],
+      "render": "server",
+      "dynamic": true,
+      "auth": "public",
+      "db": "direct",
+      "demoMode": "",
+      "apiCalls": [],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/activity/new",
+        "/opportunities/[id]",
+        "/search"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 1,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 0
+      },
+      "tests": [
+        "frontend/e2e/tours/maya-confirmation.storyboard.yml"
+      ],
+      "linkedFrom": [
+        "/q/[opaqueId]",
+        "/qr"
+      ]
+    },
+    {
+      "url": "/onboarding",
+      "group": "(root)",
+      "file": "frontend/src/app/onboarding/page.tsx",
+      "layouts": [
+        "layout.tsx"
+      ],
+      "render": "server",
+      "dynamic": false,
+      "auth": "middleware",
+      "db": "direct",
+      "demoMode": "",
+      "apiCalls": [],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/dashboard",
+        "/login",
+        "/onboarding/organization",
+        "/onboarding/participant"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 0,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 0
+      },
+      "tests": [],
+      "linkedFrom": [
+        "/dashboard"
+      ]
+    },
+    {
+      "url": "/onboarding/organization",
+      "group": "(root)",
+      "file": "frontend/src/app/onboarding/organization/page.tsx",
+      "layouts": [
+        "layout.tsx"
+      ],
+      "render": "client",
+      "dynamic": false,
+      "auth": "middleware",
+      "db": "via-api",
+      "demoMode": "",
+      "apiCalls": [
+        "/api/handles/check",
+        "/api/onboarding/organization"
+      ],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/dashboard"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 0,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 1
+      },
+      "tests": [
+        "frontend/pa1895-flow.mjs"
+      ],
+      "linkedFrom": [
+        "/onboarding"
+      ]
+    },
+    {
+      "url": "/onboarding/participant",
+      "group": "(root)",
+      "file": "frontend/src/app/onboarding/participant/page.tsx",
+      "layouts": [
+        "layout.tsx"
+      ],
+      "render": "client",
+      "dynamic": false,
+      "auth": "middleware",
+      "db": "via-api",
+      "demoMode": "",
+      "apiCalls": [
+        "/api/handles/check",
+        "/api/onboarding/participant"
+      ],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/dashboard"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 0,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 0
+      },
+      "tests": [],
+      "linkedFrom": [
+        "/dashboard",
+        "/onboarding"
+      ]
+    },
+    {
+      "url": "/opportunities",
+      "group": "(app)",
+      "file": "frontend/src/app/(app)/opportunities/page.tsx",
+      "layouts": [
+        "layout.tsx",
+        "(app)/layout.tsx"
+      ],
+      "render": "client",
+      "dynamic": false,
+      "auth": "public",
+      "db": "via-api",
+      "demoMode": "",
+      "apiCalls": [
+        "/api/opportunities"
+      ],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/opportunities/[id]"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 0,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 0
+      },
+      "tests": [
+        "frontend/smoke.mjs",
+        "frontend/pw-smoke.mjs"
+      ],
+      "linkedFrom": [
+        "/dashboard",
+        "/opportunities/[id]"
+      ]
+    },
+    {
+      "url": "/opportunities/[id]",
+      "group": "(app)",
+      "file": "frontend/src/app/(app)/opportunities/[id]/page.tsx",
+      "layouts": [
+        "layout.tsx",
+        "(app)/layout.tsx"
+      ],
+      "render": "client",
+      "dynamic": true,
+      "auth": "public",
+      "db": "via-api",
+      "demoMode": "",
+      "apiCalls": [
+        "/api/opportunities/[id]",
+        "/api/opportunities/[id]/cancel",
+        "/api/opportunities/[id]/check-in",
+        "/api/opportunities/[id]/ics",
+        "/api/opportunities/[id]/signup",
+        "/api/qr/[opaqueId]/render"
+      ],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/opportunities"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 0,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 0
+      },
+      "tests": [
+        "frontend/pw-smoke.mjs"
+      ],
+      "linkedFrom": [
+        "/o/[handle]",
+        "/opportunities",
+        "/organization/[id]/opportunities/new",
+        "/q/[opaqueId]",
+        "/qr"
+      ]
+    },
+    {
+      "url": "/organization/[id]/opportunities/new",
+      "group": "(app)",
+      "file": "frontend/src/app/(app)/organization/[id]/opportunities/new/page.tsx",
+      "layouts": [
+        "layout.tsx",
+        "(app)/layout.tsx"
+      ],
+      "render": "client",
+      "dynamic": true,
+      "auth": "middleware",
+      "db": "via-api",
+      "demoMode": "",
+      "apiCalls": [
+        "/api/organizations/[id]/locations",
+        "/api/organizations/[id]/opportunities"
+      ],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/opportunities/[id]",
+        "/organization/[id]/settings"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 0,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 5
+      },
+      "tests": [],
+      "linkedFrom": [
+        "/organization/[id]/settings"
+      ]
+    },
+    {
+      "url": "/organization/[id]/settings",
+      "group": "(app)",
+      "file": "frontend/src/app/(app)/organization/[id]/settings/page.tsx",
+      "layouts": [
+        "layout.tsx",
+        "(app)/layout.tsx"
+      ],
+      "render": "client",
+      "dynamic": true,
+      "auth": "middleware",
+      "db": "via-api",
+      "demoMode": "",
+      "apiCalls": [
+        "/api/organizations/[id]/domains",
+        "/api/organizations/[id]/domains/[domainId]/auto-join",
+        "/api/organizations/[id]/domains/[domainId]/verify",
+        "/api/organizations/[id]/locations"
+      ],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/dashboard",
+        "/organization/[id]/opportunities/new"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 0,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 1
+      },
+      "tests": [],
+      "linkedFrom": [
+        "/dashboard",
+        "/organization/[id]/opportunities/new"
+      ]
+    },
+    {
+      "url": "/organization/[id]/shifts/[shiftId]",
+      "group": "(app)",
+      "file": "frontend/src/app/(app)/organization/[id]/shifts/[shiftId]/page.tsx",
+      "layouts": [
+        "layout.tsx",
+        "(app)/layout.tsx"
+      ],
+      "render": "server",
+      "dynamic": true,
+      "auth": "middleware",
+      "db": "via-api",
+      "demoMode": "",
+      "apiCalls": [
+        "/api/opportunities/[id]/checkins",
+        "/api/opportunities/[id]/code"
+      ],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/u/[handle]"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 1,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 0
+      },
+      "tests": [],
+      "linkedFrom": [
+        "/organization/[id]/shifts/new"
+      ]
+    },
+    {
+      "url": "/organization/[id]/shifts/new",
+      "group": "(app)",
+      "file": "frontend/src/app/(app)/organization/[id]/shifts/new/page.tsx",
+      "layouts": [
+        "layout.tsx",
+        "(app)/layout.tsx"
+      ],
+      "render": "client",
+      "dynamic": true,
+      "auth": "middleware",
+      "db": "via-api",
+      "demoMode": "",
+      "apiCalls": [
+        "/api/organizations/[id]/shifts"
+      ],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/dashboard",
+        "/organization/[id]/shifts/[shiftId]"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 0,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 2
+      },
+      "tests": [],
+      "linkedFrom": []
+    },
+    {
+      "url": "/q/[opaqueId]",
+      "group": "(root)",
+      "file": "frontend/src/app/q/[opaqueId]/page.tsx",
+      "layouts": [
+        "layout.tsx"
+      ],
+      "render": "server",
+      "dynamic": true,
+      "auth": "public",
+      "db": "direct",
+      "demoMode": "",
+      "apiCalls": [],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/o/[handle]",
+        "/opportunities/[id]",
+        "/u/[handle]"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 0,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 0
+      },
+      "tests": [],
+      "linkedFrom": []
+    },
+    {
+      "url": "/qr",
+      "group": "(app)",
+      "file": "frontend/src/app/(app)/qr/page.tsx",
+      "layouts": [
+        "layout.tsx",
+        "(app)/layout.tsx"
+      ],
+      "render": "client",
+      "dynamic": false,
+      "auth": "middleware",
+      "db": "via-api",
+      "demoMode": "",
+      "apiCalls": [
+        "/api/activity",
+        "/api/generated-forms",
+        "/api/me",
+        "/api/opportunities/[id]/check-in",
+        "/api/qr/[opaqueId]",
+        "/api/qr/[opaqueId]/render",
+        "/api/search",
+        "/api/share-links"
+      ],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/forms",
+        "/o/[handle]",
+        "/opportunities/[id]",
+        "/u/[handle]"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 8,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 3
+      },
+      "tests": [],
+      "linkedFrom": [
+        "/dashboard",
+        "nav: (app)/layout.tsx"
+      ]
+    },
+    {
+      "url": "/requirementCheck",
+      "group": "(root)",
+      "file": "frontend/src/app/requirementCheck/page.tsx",
+      "layouts": [
+        "layout.tsx"
+      ],
+      "render": "server",
+      "dynamic": false,
+      "auth": "public",
+      "db": "none",
+      "demoMode": "",
+      "apiCalls": [],
+      "unresolvedFetches": [
+        "${API_URL_BASE}auth/login",
+        "${API_URL_BASE}auth/logout",
+        "${API_URL_BASE}auth/me",
+        "${API_URL_BASE}auth/register"
+      ],
+      "linksTo": [
+        "/newForm"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 14,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 1
+      },
+      "tests": [],
+      "linkedFrom": []
+    },
+    {
+      "url": "/search",
+      "group": "(app)",
+      "file": "frontend/src/app/(app)/search/page.tsx",
+      "layouts": [
+        "layout.tsx",
+        "(app)/layout.tsx"
+      ],
+      "render": "client",
+      "dynamic": false,
+      "auth": "public",
+      "db": "via-api",
+      "demoMode": "",
+      "apiCalls": [
+        "/api/search"
+      ],
+      "unresolvedFetches": [],
+      "linksTo": [],
+      "deadLinks": [],
+      "drift": {
+        "palette": 0,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 0
+      },
+      "tests": [
+        "frontend/smoke.mjs",
+        "frontend/pw-smoke.mjs",
+        "frontend/e2e/tours/maya-confirmation.storyboard.yml"
+      ],
+      "linkedFrom": [
+        "/dashboard",
+        "/o/[handle]",
+        "/u/[handle]",
+        "nav: (app)/layout.tsx"
+      ]
+    },
+    {
+      "url": "/settings",
+      "group": "(app)",
+      "file": "frontend/src/app/(app)/settings/page.tsx",
+      "layouts": [
+        "layout.tsx",
+        "(app)/layout.tsx"
+      ],
+      "render": "server",
+      "dynamic": false,
+      "auth": "middleware",
+      "db": "direct",
+      "demoMode": "",
+      "apiCalls": [
+        "/api/auth/logout"
+      ],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/",
+        "/login",
+        "/notifications",
+        "/settings/handle",
+        "/settings/sessions"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 0,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 0
+      },
+      "tests": [
+        "frontend/e2e/maya-confirmation-story.mjs",
+        "frontend/e2e/tours/maya-confirmation.storyboard.yml"
+      ],
+      "linkedFrom": [
+        "/notifications",
+        "/settings/handle",
+        "/settings/sessions",
+        "nav: (app)/layout.tsx"
+      ]
+    },
+    {
+      "url": "/settings/handle",
+      "group": "(app)",
+      "file": "frontend/src/app/(app)/settings/handle/page.tsx",
+      "layouts": [
+        "layout.tsx",
+        "(app)/layout.tsx"
+      ],
+      "render": "client",
+      "dynamic": false,
+      "auth": "middleware",
+      "db": "via-api",
+      "demoMode": "",
+      "apiCalls": [
+        "/api/handles/check",
+        "/api/settings/handle"
+      ],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/settings"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 0,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 0
+      },
+      "tests": [],
+      "linkedFrom": [
+        "/settings"
+      ]
+    },
+    {
+      "url": "/settings/sessions",
+      "group": "(app)",
+      "file": "frontend/src/app/(app)/settings/sessions/page.tsx",
+      "layouts": [
+        "layout.tsx",
+        "(app)/layout.tsx"
+      ],
+      "render": "client",
+      "dynamic": false,
+      "auth": "middleware",
+      "db": "via-api",
+      "demoMode": "",
+      "apiCalls": [
+        "/api/auth/sessions",
+        "/api/auth/sessions/[id]/revoke",
+        "/api/auth/sessions/revoke-all"
+      ],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/",
+        "/settings"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 0,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 0
+      },
+      "tests": [],
+      "linkedFrom": [
+        "/settings"
+      ]
+    },
+    {
+      "url": "/share/[token]",
+      "group": "(root)",
+      "file": "frontend/src/app/share/[token]/page.tsx",
+      "layouts": [
+        "layout.tsx"
+      ],
+      "render": "server",
+      "dynamic": true,
+      "auth": "public",
+      "db": "direct",
+      "demoMode": "",
+      "apiCalls": [
+        "/api/share/[token]/download"
+      ],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 0,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 0
+      },
+      "tests": [],
+      "linkedFrom": []
+    },
+    {
+      "url": "/shift/[id]",
+      "group": "(root)",
+      "file": "frontend/src/app/shift/[id]/page.tsx",
+      "layouts": [
+        "layout.tsx"
+      ],
+      "render": "client",
+      "dynamic": true,
+      "auth": "public",
+      "db": "via-api",
+      "demoMode": "",
+      "apiCalls": [
+        "/api/opportunities/[id]/scan-confirm",
+        "/api/opportunities/[id]/shift-preview"
+      ],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/activity/[id]",
+        "/activity/new",
+        "/activity/new-for-participant",
+        "/forms"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 0,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 0
+      },
+      "tests": [
+        "frontend/tests/middleware.test.ts"
+      ],
+      "linkedFrom": []
+    },
+    {
+      "url": "/u/[handle]",
+      "group": "(root)",
+      "file": "frontend/src/app/u/[handle]/page.tsx",
+      "layouts": [
+        "layout.tsx"
+      ],
+      "render": "server",
+      "dynamic": true,
+      "auth": "public",
+      "db": "direct",
+      "demoMode": "",
+      "apiCalls": [],
+      "unresolvedFetches": [],
+      "linksTo": [
+        "/activity/[id]",
+        "/activity/new",
+        "/activity/new-for-participant",
+        "/search"
+      ],
+      "deadLinks": [],
+      "drift": {
+        "palette": 1,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 0
+      },
+      "tests": [
+        "frontend/smoke.mjs",
+        "frontend/pw-smoke.mjs",
+        "frontend/e2e/demo-stories.mjs"
+      ],
+      "linkedFrom": [
+        "/organization/[id]/shifts/[shiftId]",
+        "/q/[opaqueId]",
+        "/qr"
+      ]
+    },
+    {
+      "url": "/verify/[id]",
+      "group": "(root)",
+      "file": "frontend/src/app/verify/[id]/page.tsx",
+      "layouts": [
+        "layout.tsx"
+      ],
+      "render": "server",
+      "dynamic": true,
+      "auth": "public",
+      "db": "direct",
+      "demoMode": "",
+      "apiCalls": [],
+      "unresolvedFetches": [],
+      "linksTo": [],
+      "deadLinks": [],
+      "drift": {
+        "palette": 0,
+        "arbitraryColor": 0,
+        "colorFn": 0,
+        "inlineStyle": 0,
+        "rawControl": 0
+      },
+      "tests": [],
+      "linkedFrom": []
+    }
+  ],
+  "apiRoutes": [
+    {
+      "url": "/api/activity",
+      "file": "frontend/src/app/api/activity/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/activity",
+        "/forms",
+        "/forms/pa-1938",
+        "/qr"
+      ],
+      "tests": [
+        "frontend/shift-flow.mjs"
+      ]
+    },
+    {
+      "url": "/api/activity/[id]",
+      "file": "frontend/src/app/api/activity/[id]/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/activity/[id]"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/activity/[id]/accept",
+      "file": "frontend/src/app/api/activity/[id]/accept/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/activity/[id]"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/activity/[id]/confirm",
+      "file": "frontend/src/app/api/activity/[id]/confirm/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/activity/[id]"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/activity/[id]/decline",
+      "file": "frontend/src/app/api/activity/[id]/decline/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/activity/[id]"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/activity/[id]/dispute",
+      "file": "frontend/src/app/api/activity/[id]/dispute/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/activity/[id]"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/activity/[id]/request-changes",
+      "file": "frontend/src/app/api/activity/[id]/request-changes/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/activity/[id]"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/activity/[id]/resubmit",
+      "file": "frontend/src/app/api/activity/[id]/resubmit/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/activity/[id]"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/activity/[id]/revise",
+      "file": "frontend/src/app/api/activity/[id]/revise/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/activity/[id]"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/activity/[id]/revoke",
+      "file": "frontend/src/app/api/activity/[id]/revoke/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/activity/[id]"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/activity/records",
+      "file": "frontend/src/app/api/activity/records/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/activity/[id]",
+        "/activity/new-for-participant"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/activity/requests",
+      "file": "frontend/src/app/api/activity/requests/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/activity/[id]",
+        "/activity/new"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/advocacy/messages",
+      "file": "frontend/src/app/api/advocacy/messages/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/forms"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/agency-api/v1/cases/[caseId]/verification",
+      "file": "frontend/src/app/api/agency-api/v1/cases/[caseId]/verification/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "client-credentials",
+      "demoGated": false,
+      "rateLimited": true,
+      "calledFrom": [],
+      "tests": []
+    },
+    {
+      "url": "/api/agency-api/v1/openapi.json",
+      "file": "frontend/src/app/api/agency-api/v1/openapi.json/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": false,
+      "auth": "public",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/agency/[id]/api-console"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/agency/[id]/api-clients",
+      "file": "frontend/src/app/api/agency/[id]/api-clients/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/agency/[id]/api-console"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/agency/[id]/bulk-query",
+      "file": "frontend/src/app/api/agency/[id]/bulk-query/route.ts",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/agency/[id]/bulk-query"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/agency/[id]/bulk-query/[jobId]",
+      "file": "frontend/src/app/api/agency/[id]/bulk-query/[jobId]/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/agency/[id]/bulk-query/[jobId]"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/agency/[id]/cases",
+      "file": "frontend/src/app/api/agency/[id]/cases/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/agency/[id]/cases"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/agency/[id]/cases/[caseId]",
+      "file": "frontend/src/app/api/agency/[id]/cases/[caseId]/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/agency/[id]/cases/[caseId]"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/agency/[id]/cases/[caseId]/reveal-case-number",
+      "file": "frontend/src/app/api/agency/[id]/cases/[caseId]/reveal-case-number/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": true,
+      "calledFrom": [
+        "/agency/[id]/cases/[caseId]"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/auth/demo-join",
+      "file": "frontend/src/app/api/auth/demo-join/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "signs-in",
+      "demoGated": true,
+      "rateLimited": false,
+      "calledFrom": [
+        "/login"
+      ],
+      "tests": [
+        "frontend/shift-flow.mjs",
+        "frontend/pa1895-flow.mjs",
+        "frontend/e2e/demo-stories.mjs"
+      ]
+    },
+    {
+      "url": "/api/auth/demo-login",
+      "file": "frontend/src/app/api/auth/demo-login/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "signs-in",
+      "demoGated": true,
+      "rateLimited": false,
+      "calledFrom": [
+        "/login"
+      ],
+      "tests": [
+        "frontend/smoke.mjs"
+      ]
+    },
+    {
+      "url": "/api/auth/logout",
+      "file": "frontend/src/app/api/auth/logout/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/settings"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/auth/magic-link/consume",
+      "file": "frontend/src/app/api/auth/magic-link/consume/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": true,
+      "auth": "signs-in",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [],
+      "tests": []
+    },
+    {
+      "url": "/api/auth/magic-link/request",
+      "file": "frontend/src/app/api/auth/magic-link/request/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "public",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/login"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/auth/password-login",
+      "file": "frontend/src/app/api/auth/password-login/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "signs-in",
+      "demoGated": false,
+      "rateLimited": true,
+      "calledFrom": [
+        "/login"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/auth/request-code",
+      "file": "frontend/src/app/api/auth/request-code/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "public",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/login"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/auth/sessions",
+      "file": "frontend/src/app/api/auth/sessions/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/settings/sessions"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/auth/sessions/[id]/revoke",
+      "file": "frontend/src/app/api/auth/sessions/[id]/revoke/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/settings/sessions"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/auth/sessions/revoke-all",
+      "file": "frontend/src/app/api/auth/sessions/revoke-all/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/settings/sessions"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/auth/verify-code",
+      "file": "frontend/src/app/api/auth/verify-code/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "signs-in",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/login"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/consent",
+      "file": "frontend/src/app/api/consent/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/consent"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/consent/[caseId]/grant",
+      "file": "frontend/src/app/api/consent/[caseId]/grant/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/consent"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/consent/[caseId]/revoke",
+      "file": "frontend/src/app/api/consent/[caseId]/revoke/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/consent"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/fax-destinations",
+      "file": "frontend/src/app/api/fax-destinations/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/forms"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/fax-transmissions/[id]/download",
+      "file": "frontend/src/app/api/fax-transmissions/[id]/download/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/forms"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/form-requests",
+      "file": "frontend/src/app/api/form-requests/route.ts",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/activity",
+        "/forms",
+        "/forms/pa-1938"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/form-requests/[id]",
+      "file": "frontend/src/app/api/form-requests/[id]/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/forms/requests/[id]"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/form-requests/[id]/certify",
+      "file": "frontend/src/app/api/form-requests/[id]/certify/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/forms/requests/[id]"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/form-requests/[id]/decline",
+      "file": "frontend/src/app/api/form-requests/[id]/decline/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/forms/requests/[id]"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/form-requests/[id]/finalize",
+      "file": "frontend/src/app/api/form-requests/[id]/finalize/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/forms/requests/[id]"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/form-requests/[id]/request-changes",
+      "file": "frontend/src/app/api/form-requests/[id]/request-changes/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/forms/requests/[id]"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/form-requests/[id]/resubmit",
+      "file": "frontend/src/app/api/form-requests/[id]/resubmit/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/forms/requests/[id]"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/forms/generate",
+      "file": "frontend/src/app/api/forms/generate/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/forms"
+      ],
+      "tests": [
+        "frontend/shift-flow.mjs",
+        "frontend/pa1895-flow.mjs"
+      ]
+    },
+    {
+      "url": "/api/generated-forms",
+      "file": "frontend/src/app/api/generated-forms/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/forms",
+        "/qr"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/generated-forms/[id]/download",
+      "file": "frontend/src/app/api/generated-forms/[id]/download/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/forms",
+        "/forms/requests/[id]"
+      ],
+      "tests": [
+        "frontend/shift-flow.mjs",
+        "frontend/pa1895-flow.mjs"
+      ]
+    },
+    {
+      "url": "/api/generated-forms/[id]/fax",
+      "file": "frontend/src/app/api/generated-forms/[id]/fax/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/forms"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/handles/check",
+      "file": "frontend/src/app/api/handles/check/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": true,
+      "auth": "public",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/onboarding/organization",
+        "/onboarding/participant",
+        "/settings/handle"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/me",
+      "file": "frontend/src/app/api/me/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/activity",
+        "/activity/new-for-participant",
+        "/forms/pa-1938",
+        "/forms/requests/[id]",
+        "/qr"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/notifications",
+      "file": "frontend/src/app/api/notifications/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/notifications"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/notifications/[id]/read",
+      "file": "frontend/src/app/api/notifications/[id]/read/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/notifications"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/notifications/unread-count",
+      "file": "frontend/src/app/api/notifications/unread-count/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "nav: (app)/layout.tsx"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/onboarding/organization",
+      "file": "frontend/src/app/api/onboarding/organization/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/onboarding/organization"
+      ],
+      "tests": [
+        "frontend/pa1895-flow.mjs"
+      ]
+    },
+    {
+      "url": "/api/onboarding/participant",
+      "file": "frontend/src/app/api/onboarding/participant/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/onboarding/participant"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/opportunities",
+      "file": "frontend/src/app/api/opportunities/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": true,
+      "auth": "public",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/opportunities"
+      ],
+      "tests": [
+        "frontend/smoke.mjs",
+        "frontend/pw-smoke.mjs"
+      ]
+    },
+    {
+      "url": "/api/opportunities/[id]",
+      "file": "frontend/src/app/api/opportunities/[id]/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/opportunities/[id]"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/opportunities/[id]/cancel",
+      "file": "frontend/src/app/api/opportunities/[id]/cancel/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/opportunities/[id]"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/opportunities/[id]/check-in",
+      "file": "frontend/src/app/api/opportunities/[id]/check-in/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/opportunities/[id]",
+        "/qr"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/opportunities/[id]/checkins",
+      "file": "frontend/src/app/api/opportunities/[id]/checkins/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/organization/[id]/shifts/[shiftId]"
+      ],
+      "tests": [
+        "frontend/shift-flow.mjs"
+      ]
+    },
+    {
+      "url": "/api/opportunities/[id]/code",
+      "file": "frontend/src/app/api/opportunities/[id]/code/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/organization/[id]/shifts/[shiftId]"
+      ],
+      "tests": [
+        "frontend/shift-flow.mjs",
+        "frontend/pa1895-flow.mjs"
+      ]
+    },
+    {
+      "url": "/api/opportunities/[id]/ics",
+      "file": "frontend/src/app/api/opportunities/[id]/ics/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": true,
+      "auth": "public",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/opportunities/[id]"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/opportunities/[id]/scan-confirm",
+      "file": "frontend/src/app/api/opportunities/[id]/scan-confirm/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/shift/[id]"
+      ],
+      "tests": [
+        "frontend/shift-flow.mjs",
+        "frontend/pa1895-flow.mjs"
+      ]
+    },
+    {
+      "url": "/api/opportunities/[id]/shift-preview",
+      "file": "frontend/src/app/api/opportunities/[id]/shift-preview/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/shift/[id]"
+      ],
+      "tests": [
+        "frontend/shift-flow.mjs"
+      ]
+    },
+    {
+      "url": "/api/opportunities/[id]/signup",
+      "file": "frontend/src/app/api/opportunities/[id]/signup/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/opportunities/[id]"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/organizations/[id]",
+      "file": "frontend/src/app/api/organizations/[id]/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": true,
+      "auth": "public",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/forms/pa-1938"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/organizations/[id]/audit-log",
+      "file": "frontend/src/app/api/organizations/[id]/audit-log/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/activity"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/organizations/[id]/domains",
+      "file": "frontend/src/app/api/organizations/[id]/domains/route.ts",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/organization/[id]/settings"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/organizations/[id]/domains/[domainId]/auto-join",
+      "file": "frontend/src/app/api/organizations/[id]/domains/[domainId]/auto-join/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/organization/[id]/settings"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/organizations/[id]/domains/[domainId]/verify",
+      "file": "frontend/src/app/api/organizations/[id]/domains/[domainId]/verify/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/organization/[id]/settings"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/organizations/[id]/join",
+      "file": "frontend/src/app/api/organizations/[id]/join/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/dashboard"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/organizations/[id]/locations",
+      "file": "frontend/src/app/api/organizations/[id]/locations/route.ts",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/organization/[id]/opportunities/new",
+        "/organization/[id]/settings"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/organizations/[id]/members",
+      "file": "frontend/src/app/api/organizations/[id]/members/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/activity",
+        "/activity/new",
+        "/forms/pa-1938"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/organizations/[id]/members/[membershipId]/activate",
+      "file": "frontend/src/app/api/organizations/[id]/members/[membershipId]/activate/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/activity"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/organizations/[id]/members/[membershipId]/approve-join",
+      "file": "frontend/src/app/api/organizations/[id]/members/[membershipId]/approve-join/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/activity"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/organizations/[id]/members/[membershipId]/ratify",
+      "file": "frontend/src/app/api/organizations/[id]/members/[membershipId]/ratify/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/activity"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/organizations/[id]/members/[membershipId]/reactivate",
+      "file": "frontend/src/app/api/organizations/[id]/members/[membershipId]/reactivate/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/activity"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/organizations/[id]/members/[membershipId]/suspend",
+      "file": "frontend/src/app/api/organizations/[id]/members/[membershipId]/suspend/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/activity"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/organizations/[id]/opportunities",
+      "file": "frontend/src/app/api/organizations/[id]/opportunities/route.ts",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/organization/[id]/opportunities/new"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/organizations/[id]/shifts",
+      "file": "frontend/src/app/api/organizations/[id]/shifts/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/organization/[id]/shifts/new"
+      ],
+      "tests": [
+        "frontend/shift-flow.mjs",
+        "frontend/pa1895-flow.mjs"
+      ]
+    },
+    {
+      "url": "/api/organizations/by-handle/[handle]",
+      "file": "frontend/src/app/api/organizations/by-handle/[handle]/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": true,
+      "auth": "public",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/activity/new",
+        "/forms/pa-1938"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/organizations/joinable",
+      "file": "frontend/src/app/api/organizations/joinable/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/dashboard",
+        "/forms/pa-1938"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/qr/[opaqueId]",
+      "file": "frontend/src/app/api/qr/[opaqueId]/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/qr"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/qr/[opaqueId]/render",
+      "file": "frontend/src/app/api/qr/[opaqueId]/render/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": false,
+      "auth": "public",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/opportunities/[id]",
+        "/qr"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/search",
+      "file": "frontend/src/app/api/search/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/activity/new",
+        "/activity/new-for-participant",
+        "/qr",
+        "/search"
+      ],
+      "tests": [
+        "frontend/smoke.mjs",
+        "frontend/pw-smoke.mjs"
+      ]
+    },
+    {
+      "url": "/api/settings/handle",
+      "file": "frontend/src/app/api/settings/handle/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/settings/handle"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/share-links",
+      "file": "frontend/src/app/api/share-links/route.ts",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/activity/[id]",
+        "/forms",
+        "/qr"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/share-links/[id]/revoke",
+      "file": "frontend/src/app/api/share-links/[id]/revoke/route.ts",
+      "methods": [
+        "POST"
+      ],
+      "db": true,
+      "auth": "session",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [],
+      "tests": []
+    },
+    {
+      "url": "/api/share/[token]",
+      "file": "frontend/src/app/api/share/[token]/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": true,
+      "auth": "url-token",
+      "demoGated": false,
+      "rateLimited": true,
+      "calledFrom": [],
+      "tests": []
+    },
+    {
+      "url": "/api/share/[token]/download",
+      "file": "frontend/src/app/api/share/[token]/download/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": true,
+      "auth": "url-token",
+      "demoGated": false,
+      "rateLimited": false,
+      "calledFrom": [
+        "/share/[token]"
+      ],
+      "tests": []
+    },
+    {
+      "url": "/api/verify/[id]",
+      "file": "frontend/src/app/api/verify/[id]/route.ts",
+      "methods": [
+        "GET"
+      ],
+      "db": true,
+      "auth": "public",
+      "demoGated": false,
+      "rateLimited": true,
+      "calledFrom": [],
+      "tests": []
+    }
+  ]
+}
