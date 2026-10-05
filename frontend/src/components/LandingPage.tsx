@@ -227,7 +227,7 @@ export default function LandingPage() {
               Log in
             </a>
             <a
-              href="/chris-demo"
+              href="/demo"
               className="rounded-lg px-4 py-2 text-sm font-semibold shadow-sm transition-opacity hover:opacity-90"
               style={{ backgroundColor: "hsl(164 60% 32%)", color: "hsl(0 0% 100%)" }}
             >
@@ -260,7 +260,7 @@ export default function LandingPage() {
 
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <a
-                href="./chris-demo"
+                href="./demo"
                 className="rounded-lg px-5 py-3 text-sm font-semibold shadow-sm transition-opacity hover:opacity-90"
                 style={{ backgroundColor: "hsl(164 60% 32%)", color: "hsl(0 0% 100%)" }}
               >
@@ -421,7 +421,7 @@ export default function LandingPage() {
             verification request.
           </p>
           <a
-            href="/chris-demo"
+            href="/demo"
             className="mt-7 inline-block rounded-lg px-6 py-3 text-sm font-semibold shadow-sm transition-opacity hover:opacity-90"
             style={{ backgroundColor: "hsl(164 55% 45%)", color: "hsl(222 30% 8%)" }}
           >
