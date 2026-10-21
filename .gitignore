@@ -36,3 +36,6 @@ CLAUDE.local.md
 # Docker), the intermediate WebM and per-beat stills are regenerated on demand.
 frontend/e2e/tours/output/*.webm
 frontend/e2e/tours/output/*.png
+
+# Copied from the installed PDF.js dependency by predev/build/postinstall.
+/frontend/public/pdf.worker.min.mjs
