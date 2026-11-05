@@ -72,6 +72,10 @@ export function middleware(request: NextRequest) {
   if (redirect) return redirect;
 
   const { pathname } = request.nextUrl;
+  // The PDF template is a public asset under the otherwise protected /forms
+  // prefix. It must remain fetchable without a session in local/full-app mode.
+  if (pathname === "/forms/pa-1938.pdf") return NextResponse.next();
+
   const isProtected = PROTECTED_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`));
 
   if (!isProtected) {
@@ -89,16 +93,6 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  // Broad on purpose: the canonical-host redirect has to reach paths the login
-  // gate deliberately ignores, above all /shift/* — a scanned shift URL must be
-  // moved to the canonical origin with its ?c= code intact, while still never
-  // being bounced through /login (see the note in src/app/shift/[id]/page.tsx).
-  // Login gating stays keyed off PROTECTED_PREFIXES, so widening this does not
-  // put any new path behind auth.
-  //
-  // /api is excluded so server-to-server callers and platform health checks are
-  // never redirected across origins.
-  matcher: [
-    "/((?!api/|_next/static|_next/image|_next/data|favicon\\.ico|robots\\.txt|sitemap\\.xml|.*\\.(?:png|jpg|jpeg|gif|svg|ico|webp|avif|css|js|map|woff|woff2|ttf|otf|pdf)$).*)",
-  ],
+  // Include APIs and file-like paths so the public-demo gate cannot be bypassed.
+  matcher: ["/:path*"],
 };

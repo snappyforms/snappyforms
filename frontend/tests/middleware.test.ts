@@ -44,10 +44,9 @@ assert.equal(
 const onOrigin = call(`${CANON}/dashboard`, { proto: "https", cookie: true });
 assert.notEqual(onOrigin.status, 308, "canonical origin over https should not redirect");
 
-// TLS terminates at the edge, so x-forwarded-proto is the only honest signal.
+// TLS terminates at the edge; do not loop on an internal HTTP proxy hop.
 const insecure = call(`${CANON}/dashboard`, { proto: "http", cookie: true });
-assert.equal(insecure.status, 308, "plain http should be upgraded");
-assert.equal(insecure.headers.get("location"), `${CANON}/dashboard`);
+assert.notEqual(insecure.status, 308, "canonical host must not redirect to itself behind a proxy");
 
 // Health checks and container-internal traffic must never be moved.
 assert.notEqual(
@@ -95,4 +94,13 @@ assert.notEqual(
   "no APP_BASE_URL means no canonical target",
 );
 
+// The public PDF template shares the /forms prefix with authenticated pages.
+assert.equal(call(`${HOSTED}/forms/pa-1938.pdf`).status, 200, "PDF template must not redirect to login");
+
+// Adding the prototype must not replace or block the existing demo/login flow.
+process.env.APP_BASE_URL = CANON;
+for (const path of ["/", "/demo", "/prototype", "/prototype?review=demo", "/login", "/forms/pa-1938.pdf"]) {
+  assert.equal(call(`${CANON}${path}`).status, 200, `${path} must remain available`);
+}
+assert.equal(call(`${HOSTED}/prototype?review=demo`).headers.get("location"), `${CANON}/prototype?review=demo`);
 console.log("middleware: all assertions passed");

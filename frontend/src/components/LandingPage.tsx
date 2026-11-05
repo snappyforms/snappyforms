@@ -213,6 +213,9 @@ export default function LandingPage() {
             <a href="#organizations" className="hover:text-current transition-colors">
               For organizations
             </a>
+            <a href="/prototype" className="hover:text-current transition-colors">
+              Form prototype
+            </a>
             <a href="#features" className="hover:text-current transition-colors">
               What's inside
             </a>
@@ -260,11 +263,11 @@ export default function LandingPage() {
 
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <a
-                href="./demo"
+                href="/prototype"
                 className="rounded-lg px-5 py-3 text-sm font-semibold shadow-sm transition-opacity hover:opacity-90"
                 style={{ backgroundColor: "hsl(164 60% 32%)", color: "hsl(0 0% 100%)" }}
               >
-                Create my demo account
+                Try the form prototype
               </a>
               <a
                 href="#how-it-works"
@@ -421,11 +424,11 @@ export default function LandingPage() {
             verification request.
           </p>
           <a
-            href="/demo"
+            href="/prototype"
             className="mt-7 inline-block rounded-lg px-6 py-3 text-sm font-semibold shadow-sm transition-opacity hover:opacity-90"
             style={{ backgroundColor: "hsl(164 55% 45%)", color: "hsl(222 30% 8%)" }}
           >
-            Create my demo account
+            Try the form prototype
           </a>
         </div>
       </section>
