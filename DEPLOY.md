@@ -1,3 +1,24 @@
+# Adding the form prototype
+
+The original marketing home page remains at `/`. Its form-prototype links open
+`/prototype`; the existing `/demo` and account flow remain unchanged. Review links
+and Reset demo use `/prototype`. No hosting mode or demo-login flags are changed.
+This remains a fictional-data demonstration, not a production personal-data service.
+
+From `frontend/`, validate with `npx tsc --noEmit`,
+`node --import tsx tests/middleware.test.ts`, and
+`node --import tsx tests/beneficiaryPdf.test.ts`.
+After rollout, verify the home page, `/demo`, `/prototype`, PDF preview/download,
+and Reset demo. Each browser has its own saved forms; review links require that
+same browser and origin. Reset removes saved prototype forms, not downloaded files.
+
+Push the feature branch, open a pull request into the backend's connected live
+branch, and merge after review. Confirm the live branch in Firebase App Hosting
+backend settings; the repository alone cannot confirm that console setting.
+No deployment is performed by these source changes.
+
+---
+
 # Deploying SnappyForms to Firebase App Hosting
 
 SnappyForms is a Next.js 14 (App Router) app backed by PostgreSQL via Prisma. Firebase

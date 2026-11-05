@@ -4,11 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "node scripts/migrate-on-build.mjs && next build",
+    "build": "node scripts/migrate-on-build.mjs && node scripts/copy-pdf-worker.mjs && next build",
     "migrate:on-build": "node scripts/migrate-on-build.mjs",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate",
+    "postinstall": "prisma generate && node scripts/copy-pdf-worker.mjs",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "db:seed": "tsx prisma/seed.ts",
@@ -29,7 +29,8 @@
     "e2e:maya": "node e2e/maya-confirmation-story.mjs",
     "e2e:shift": "node e2e/shift-qr-story.mjs",
     "docker:up": "docker compose up --build webapp",
-    "docker:down": "docker compose down -v"
+    "docker:down": "docker compose down -v",
+    "predev": "node scripts/copy-pdf-worker.mjs"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
@@ -49,6 +50,7 @@
     "nanoid": "^5.0.7",
     "next": "^14.2.35",
     "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^6.4.299",
     "qrcode": "^1.5.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
