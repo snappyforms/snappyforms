@@ -18,24 +18,14 @@ const U = (id: string, w: number) => `https://images.unsplash.com/photo-${id}?au
 
 const AUD: Record<
   Audience,
-  { sub: string; chips: [ReactNode, ReactNode, ReactNode]; img: { heroL: string; heroR: string; how: string } }
+  { sub: string; img: { heroL: string; heroR: string; how: string } }
 > = {
   vol: {
     sub: "Don't lose your benefits.",
-    chips: [
-      <><b>Saved for next time</b>Next month starts filled in</>,
-      <><b>Signed by Riverside Garden</b>Your form is ready to send</>,
-      <><b>Link sent to Ms. Lee</b>By text · expires in 7 days</>,
-    ],
     img: { heroL: U("1544928938-6852c1925194", 900), heroR: U("1758273237729-763de00eedd7", 900), how: U("1615897570286-da936a5dfb81", 1000) },
   },
   org: {
     sub: "Stop filling out forms.",
-    chips: [
-      <><b>6 of 7 parts filled in</b>You add only the gaps</>,
-      <><b>Signed in 2 minutes</b>Sent back to your volunteer</>,
-      <><b>No account needed</b>Sign from any phone</>,
-    ],
     img: { heroL: U("1743793174491-bcbdf1882ad5", 900), heroR: U("1791318219716-2ce5458c8257", 900), how: U("1743793174491-bcbdf1882ad5", 1000) },
   },
 };
@@ -219,7 +209,6 @@ export default function HomePage() {
 
   const copy = AUD[shown];
   const imgStyle = { opacity: swapping ? 0.25 : 1 };
-  const chipClass = (n: number) => `chip chip-${n}${swapping ? " swap-out" : ""}`;
 
   return (
     <div ref={rootRef} className={`sf-home ${poppins.variable} ${inter.variable}`}>
@@ -303,11 +292,14 @@ export default function HomePage() {
                     <div className="ps-steps">{Array.from({ length: 7 }, (_, i) => <span key={i} />)}</div>
                     <h4>Ready to send</h4>
                     <small>Your PA 1938 · saved for next time</small>
-                    <div className="ps-field"><label>Your name</label><div className="row">Jordan Rivera<Tick /></div></div>
-                    <div className="ps-field"><label>Address</label><div className="row">412 Elm St, Philadelphia<Tick /></div></div>
-                    <div className="ps-field"><label>Organization</label><div className="row">Riverside Community Garden<Tick /></div></div>
-                    <div className="ps-field todo"><label>Weekly schedule</label><div className="row">I don&apos;t know yet<span className="tag wait">Org fills</span></div></div>
-                    <div className="ps-field"><label>Send link to supervisor</label><div className="row">Text · (215) 555-0142<Tick /></div></div>
+                    <div className="ps-form">
+                      <div className="ps-form-head">PA 1938 · Volunteer verification</div>
+                      <div className="ps-field"><label>Your name</label><div className="row">Jordan Rivera<Tick /></div></div>
+                      <div className="ps-field"><label>Address</label><div className="row">412 Elm St, Philadelphia<Tick /></div></div>
+                      <div className="ps-field"><label>Organization</label><div className="row">Riverside Community Garden<Tick /></div></div>
+                      <div className="ps-field todo"><label>Weekly schedule</label><div className="row">I don&apos;t know yet<span className="tag wait">Org fills</span></div></div>
+                      <div className="ps-field"><label>Send link to supervisor</label><div className="row">Text · (215) 555-0142<Tick /></div></div>
+                    </div>
                     <div className="ps-btn"><Icon id="send" size={15} />Send link to organization</div>
                   </div>
                   <div className="ps" hidden={audience !== "org"}>
@@ -318,8 +310,11 @@ export default function HomePage() {
                     <div className="ps-sms"><b>Jordan Rivera</b> sent you a volunteer form to sign. <span className="ps-link">snappyforms.org/r/7KQ</span></div>
                     <h4 style={{ marginTop: 14 }}>Review &amp; sign</h4>
                     <small>PA 1938 · 6 of 7 parts already filled</small>
-                    <div className="ps-field"><label>Volunteer</label><div className="row">Jordan Rivera<Tick /></div></div>
-                    <div className="ps-field todo"><label>Weekly schedule · add this</label><div className="row">Sat 9–1:30, Tue 4–8<span className="tag wait">You</span></div></div>
+                    <div className="ps-form">
+                      <div className="ps-form-head">PA 1938 · Volunteer verification</div>
+                      <div className="ps-field"><label>Volunteer</label><div className="row">Jordan Rivera<Tick /></div></div>
+                      <div className="ps-field todo"><label>Weekly schedule · add this</label><div className="row">Sat 9–1:30, Tue 4–8<span className="tag wait">You</span></div></div>
+                    </div>
                     <div className="sig">
                       <svg width="130" height="32" viewBox="0 0 130 32" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M4 24c8-13 14-19 18-17s-6 17-2 17 10-15 16-15-2 13 4 13 8-11 14-11 0 9 6 9 10-7 18-9 14 2 26-2" /></svg>
                     </div>
@@ -328,10 +323,6 @@ export default function HomePage() {
                   </div>
                 </div>
               </div>
-
-              <div className={chipClass(1)}><span className="dot"><Icon id="save" size={16} /></span><div>{copy.chips[0]}</div></div>
-              <div className={chipClass(2)}><span className="dot sun"><Icon id="check" size={16} /></span><div>{copy.chips[1]}</div></div>
-              <div className={chipClass(3)}><span className="dot"><Icon id="link" size={16} /></span><div>{copy.chips[2]}</div></div>
             </div>
           </div>
         </section>

@@ -142,22 +142,6 @@ body:has(.sf-home) > div {
   transform: translateX(-50%); border-radius: 50%; background: var(--tint);
 }
 .sf-home .stage .phone { position: absolute; left: 50%; top: 0; transform: translateX(-50%); z-index: 4; }
-.sf-home .chip {
-  position: absolute; z-index: 5; background: #fff; border-radius: 16px; box-shadow: var(--shadow-lg);
-  padding: 13px 16px; display: flex; align-items: center; gap: 12px; text-align: left;
-  font: 500 14px/1.35 var(--b); color: var(--ink); max-width: 270px;
-  transition: opacity 0.35s, transform 0.35s;
-}
-.sf-home .chip b { display: block; font: 600 14.5px var(--h); color: var(--navy); }
-.sf-home .chip .dot {
-  width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; flex: none;
-  background: var(--tint); color: var(--brand);
-}
-.sf-home .chip .dot.sun { background: #fdefd0; color: var(--sun-ink); }
-.sf-home .chip-1 { left: 7%; top: 130px; }
-.sf-home .chip-2 { right: 5%; top: 250px; }
-.sf-home .chip-3 { left: 12%; bottom: 50px; }
-.sf-home .swap-out { opacity: 0; transform: translateY(8px); }
 
 /* ---------- Phone mock (decorative: no CTA colors in here) ---------- */
 .sf-home .phone { width: 262px; border-radius: 42px; background: #0e1511; padding: 11px; box-shadow: var(--shadow-lg); }
@@ -174,10 +158,19 @@ body:has(.sf-home) > div {
 .sf-home .ps-steps span { flex: 1; height: 4px; border-radius: 4px; background: var(--bright); }
 .sf-home .ps h4 { font: 600 18px/1.2 var(--h); color: var(--navy); margin-bottom: 4px; }
 .sf-home .ps small { font-size: 11.5px; color: var(--muted); display: block; }
-.sf-home .ps-field { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 8px 11px; margin-top: 8px; font-size: 12px; }
-.sf-home .ps-field label { display: block; font-size: 10px; color: var(--muted); margin-bottom: 1px; }
+/* One form sheet with ruled rows, not separate boxes. */
+.sf-home .ps-form { margin-top: 10px; border: 1px solid #cdd8c8; border-radius: 8px; background: #fff; overflow: hidden; }
+.sf-home .ps-form-head {
+  padding: 6px 10px; background: var(--tint2); border-bottom: 1px solid #cdd8c8;
+  font: 600 9.5px var(--h); letter-spacing: 0.06em; text-transform: uppercase; color: var(--deep);
+}
+.sf-home .ps-field { padding: 6px 10px 7px; border-bottom: 1px solid var(--line); font-size: 12px; }
+.sf-home .ps-field:last-child { border-bottom: 0; }
+.sf-home .ps-field label {
+  display: block; font-size: 9px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); margin-bottom: 1px;
+}
 .sf-home .ps-field .row { display: flex; justify-content: space-between; align-items: center; font-weight: 500; color: var(--ink); }
-.sf-home .ps-field.todo { border-style: dashed; border-color: #e9c27a; background: #fffbf2; }
+.sf-home .ps-field.todo { background: #fffbf2; box-shadow: inset 3px 0 0 #e9c27a; }
 .sf-home .tick { width: 16px; height: 16px; border-radius: 50%; background: var(--bright); color: #fff; display: grid; place-items: center; flex: none; }
 .sf-home .tag {
   font: 700 9px var(--b); letter-spacing: 0.05em; text-transform: uppercase;
@@ -370,9 +363,6 @@ body:has(.sf-home) > div {
   .sf-home .stage { height: 600px; }
   .sf-home .blob-l { width: 46%; left: -6%; }
   .sf-home .blob-r { width: 42%; right: -8%; }
-  .sf-home .chip-1 { left: 3%; top: 40px; }
-  .sf-home .chip-2 { right: 3%; top: 420px; }
-  .sf-home .chip-3 { display: none; }
   .sf-home .strip .wrap { grid-template-columns: 1fr; }
   .sf-home .how-card { padding: 44px 28px 48px; }
   .sf-home .how-grid, .sf-home .both, .sf-home .free, .sf-home .cta { grid-template-columns: 1fr; }
@@ -401,9 +391,6 @@ body:has(.sf-home) > div {
   .sf-home .blob-l { width: 62%; left: -18%; top: 120px; height: 340px; }
   .sf-home .blob-r { width: 58%; right: -20%; top: 200px; height: 320px; }
   .sf-home .blob-bg { width: 340px; height: 340px; top: 80px; }
-  .sf-home .chip { max-width: 220px; font-size: 13px; padding: 11px 13px; }
-  .sf-home .chip-1 { display: none; }
-  .sf-home .chip-2 { right: 0; top: auto; bottom: 0; }
   .sf-home .section, .sf-home .how { padding: 72px 0; }
   .sf-home .head { margin-bottom: 40px; }
   .sf-home .how-card { border-radius: 26px; padding: 36px 18px 40px; }
