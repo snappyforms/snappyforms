@@ -52,6 +52,15 @@ env:
     availability:
       - RUNTIME
 
+  # Formspree form that emails home-page sign-ups (src/lib/signupNotify.ts).
+  # The form itself sends to hello@snappyforms.org; that is set in Formspree.
+  # Not a secret: anyone can post to a Formspree form.
+  # Until this is set, sign-ups are logged but not emailed.
+  # - variable: SIGNUP_FORMSPREE_URL
+  #   value: https://formspree.io/f/<form id>
+  #   availability:
+  #     - RUNTIME
+
   # Demo-only features (seeded login buttons, /dev/inbox). Keep OFF in a real deploy.
   - variable: DEMO_MODE
     value: "true"
