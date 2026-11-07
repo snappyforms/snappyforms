@@ -258,7 +258,6 @@ export default function HomePage() {
             <a href="#faq">FAQ</a>
           </nav>
           <div className="nav-cta">
-            <a className="nav-login" href="/login">Log in</a>
             <a className="btn btn-cta" href="#join">Sign up</a>
           </div>
         </div>
@@ -268,21 +267,15 @@ export default function HomePage() {
         {/* =============== HERO =============== */}
         <section className="hero">
           <div className="wrap">
-            <AudienceToggle audience={audience} onChange={setAudience} label="Choose your view" labels={["I'm a volunteer", "I'm an organization"]} />
+            {/* The first screen shows only the message. The phone and the form come after a scroll. */}
+            <div className="hero-intro">
+              <AudienceToggle audience={audience} onChange={setAudience} label="Choose your view" labels={["I'm a volunteer", "I'm an organization"]} />
 
-            <h1>
-              Your digital SNAP<br />
-              <span className="hl">verification assistant.</span>
-            </h1>
-            <p className="hero-sub">{copy.sub}</p>
-
-            <SignupForm source="hero" role={role} />
-            <div className="hero-meta">
-              <span><Icon id="ccheck" />Free for everyone</span>
-              <span><Icon id="ccheck" />Works on any phone</span>
-              <span>
-                <a className="btn btn-link" href="/prototype">Try the demo <Icon id="arrow" size={16} /></a>
-              </span>
+              <h1>
+                Your digital SNAP<br />
+                <span className="hl">verification assistant.</span>
+              </h1>
+              <p className="hero-sub">{copy.sub}</p>
             </div>
 
             <div className="stage" aria-hidden="true">
@@ -335,6 +328,17 @@ export default function HomePage() {
                     <div className="ps-btn"><Icon id="pen" size={15} />Sign and return</div>
                   </div>
                 </div>
+              </div>
+            </div>
+
+            <div className="hero-signup">
+              <SignupForm source="hero" role={role} />
+              <div className="hero-meta">
+                <span><Icon id="ccheck" />Free for everyone</span>
+                <span><Icon id="ccheck" />Works on any phone</span>
+                <span>
+                  <a className="btn btn-link" href="/prototype">Try the demo <Icon id="arrow" size={16} /></a>
+                </span>
               </div>
             </div>
           </div>
@@ -555,7 +559,6 @@ export default function HomePage() {
             <ul>
               <li><a href="#how">How it works</a></li>
               <li><a href="/prototype">Try the demo</a></li>
-              <li><a href="/login">Log in</a></li>
             </ul>
           </div>
           <div>

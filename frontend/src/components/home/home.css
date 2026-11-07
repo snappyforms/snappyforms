@@ -87,8 +87,6 @@ body:has(.sf-home) > div {
 .sf-home .nav-links a:hover { color: var(--bright); }
 .sf-home .nav-cta { display: flex; align-items: center; gap: 18px; margin-left: 8px; }
 .sf-home .nav-cta .btn { height: 42px; padding: 0 18px; font-size: 15px; }
-.sf-home .nav-login { font: 500 15px var(--b); color: var(--navy); text-decoration: none; }
-.sf-home .nav-login:hover { text-decoration: underline; }
 .sf-home .bar {
   background: var(--navy); color: #fff; text-align: center; font: 500 15px var(--b);
   padding: 11px 16px; display: flex; justify-content: center; align-items: center; gap: 10px;
@@ -112,6 +110,14 @@ body:has(.sf-home) > div {
   margin: 26px auto 20px; max-width: 1060px;
 }
 .sf-home .hero-sub { font: 500 24px/1.4 var(--b); color: var(--muted); max-width: 640px; margin: 0 auto; }
+/* Fill the first screen below the bar, the nav and the hero top padding (184px), so only the text shows. */
+.sf-home .hero-intro {
+  min-height: calc(100svh - 184px); display: flex; flex-direction: column;
+  align-items: center; justify-content: center; padding-bottom: 24px;
+}
+.sf-home .hero-intro h1 { margin-top: 30px; }
+.sf-home .hero-signup { padding: 48px 0 72px; }
+.sf-home .hero-signup .signup-form { margin-top: 0; }
 .sf-home .signup-form { display: flex; gap: 10px; justify-content: center; margin: 30px auto 0; max-width: 560px; }
 .sf-home .field {
   flex: 1; min-width: 0; height: 56px; border-radius: 12px; border: 2px solid var(--line);
@@ -132,7 +138,7 @@ body:has(.sf-home) > div {
 .sf-home .hero-meta span { display: inline-flex; align-items: center; gap: 7px; }
 .sf-home .hero-meta svg { color: var(--bright); }
 
-.sf-home .stage { position: relative; height: 560px; margin-top: 56px; }
+.sf-home .stage { position: relative; height: 560px; margin-top: 0; }
 .sf-home .blob { position: absolute; overflow: hidden; box-shadow: var(--shadow-lg); }
 .sf-home .blob img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.45s; }
 .sf-home .blob-l { left: 0; top: 40px; width: 40%; height: 470px; border-radius: 46% 54% 42% 58% / 52% 44% 56% 48%; }
@@ -379,7 +385,6 @@ body:has(.sf-home) > div {
   .sf-home .nav .wrap { height: 64px; gap: 10px; }
   .sf-home .nav-cta { gap: 14px; }
   .sf-home .nav-cta .btn { height: 40px; padding: 0 14px; font-size: 14px; }
-  .sf-home .nav-login { font-size: 14px; }
   .sf-home .brand { font-size: 19px; }
   .sf-home .bar { font-size: 13.5px; }
   .sf-home .hero { padding-top: 40px; }
@@ -387,7 +392,9 @@ body:has(.sf-home) > div {
   .sf-home .hero-sub { font-size: 20px; }
   .sf-home .signup-form { flex-direction: column; }
   .sf-home .signup-form .field { flex: none; width: 100%; }
-  .sf-home .stage { height: 640px; margin-top: 40px; }
+  .sf-home .stage { height: 640px; margin-top: 0; }
+  .sf-home .hero-intro { min-height: calc(100svh - 150px); }
+  .sf-home .hero-signup { padding: 0 0 56px; }
   .sf-home .blob-l { width: 62%; left: -18%; top: 120px; height: 340px; }
   .sf-home .blob-r { width: 58%; right: -20%; top: 200px; height: 320px; }
   .sf-home .blob-bg { width: 340px; height: 340px; top: 80px; }
