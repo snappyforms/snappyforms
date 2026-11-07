@@ -1,11 +1,24 @@
 "use client";
 
 import { useEffect, useRef, useState, type FormEvent, type ReactNode, type RefObject } from "react";
-import { Inter, Poppins } from "next/font/google";
+import localFont from "next/font/local";
 import "./home.css";
 
-const poppins = Poppins({ subsets: ["latin"], weight: ["500", "600", "700"], variable: "--font-poppins" });
-const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-inter" });
+// Font files are in the repo (latin subset from Google Fonts). next/font/google
+// fetches at build time, and that fetch fails on the Firebase App Hosting builder.
+const poppins = localFont({
+  src: [
+    { path: "./fonts/poppins-500.woff2", weight: "500", style: "normal" },
+    { path: "./fonts/poppins-600.woff2", weight: "600", style: "normal" },
+    { path: "./fonts/poppins-700.woff2", weight: "700", style: "normal" },
+  ],
+  variable: "--font-poppins",
+});
+const inter = localFont({
+  src: "./fonts/inter-variable.woff2",
+  weight: "400 600",
+  variable: "--font-inter",
+});
 
 const CONTACT_EMAIL = "hello@snappyforms.org";
 
