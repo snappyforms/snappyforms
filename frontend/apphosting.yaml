@@ -36,6 +36,13 @@ env:
     secret: CASE_DATA_ENCRYPTION_KEY
     availability:
       - RUNTIME
+  # Resend API key for the home-page sign-up email (src/lib/signupNotify.ts).
+  # Create it BEFORE this config deploys, or the rollout fails:
+  #   firebase apphosting:secrets:set RESEND_API_KEY
+  - variable: RESEND_API_KEY
+    secret: RESEND_API_KEY
+    availability:
+      - RUNTIME
 
   # Direct (non-pooled) URL, used only by the build-time migration step. Kept
   # separate from DATABASE_URL because that one is pooled for the running app,
@@ -49,6 +56,12 @@ env:
   # --- Plain config ---
   - variable: APP_BASE_URL
     value: https://snappyforms.org
+    availability:
+      - RUNTIME
+
+  # Inbox that receives home-page sign-ups. Comma-separate for several.
+  - variable: SIGNUP_NOTIFY_EMAIL
+    value: hello@snappyforms.org
     availability:
       - RUNTIME
 
