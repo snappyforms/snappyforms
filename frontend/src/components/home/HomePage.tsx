@@ -279,7 +279,7 @@ export default function HomePage() {
               <span><Icon id="ccheck" />Free for everyone</span>
               <span><Icon id="ccheck" />Works on any phone</span>
               <span>
-                <a className="btn btn-link" href="/demo">Try the demo <Icon id="arrow" size={16} /></a>
+                <a className="btn btn-link" href="/prototype">Try the demo <Icon id="arrow" size={16} /></a>
               </span>
             </div>
 
@@ -528,7 +528,7 @@ export default function HomePage() {
                 </div>
                 <SignupForm source="cta" role={role} inputRef={ctaInput} />
                 <p style={{ marginTop: 18, fontSize: 16 }}>
-                  <a className="btn btn-link" href="/demo">Or try the demo first <Icon id="arrow" size={16} /></a>
+                  <a className="btn btn-link" href="/prototype">Or try the demo first <Icon id="arrow" size={16} /></a>
                 </p>
               </div>
               <div className="cta-photo">
@@ -550,7 +550,7 @@ export default function HomePage() {
             <h4>Product</h4>
             <ul>
               <li><a href="#how">How it works</a></li>
-              <li><a href="/demo">Try the demo</a></li>
+              <li><a href="/prototype">Try the demo</a></li>
               <li><a href="/login">Log in</a></li>
             </ul>
           </div>
