@@ -59,7 +59,8 @@
   box-shadow: 0 20px 70px #153c6b3b;
 }
 .paper > section:first-child { padding: 48px 48px 34px; background: linear-gradient(120deg, #fff 40%, #f1f7fd); }
-.paper h1 { font-size: clamp(36px, 5vw, 56px); line-height: 1.12; }
+/* .paper h1 { font-size: clamp(36px, 5vw, 56px); line-height: 1.12; } */
+.paper h1 { line-height: 1.12; }
 .paper h2 { color: #234d7d; }
 .paper strong { color: #254e7e; background: #fff0ca; padding: 0 3px; }
 .primaryAction {
@@ -79,7 +80,7 @@
 .paper nav { background: #f4f8fd; border-color: #e0eaf5; padding-left: 48px; padding-right: 48px; }
 .paper > div { padding: 0 48px 12px; }
 .paper section[id] { scroll-margin-top: 24px; }
-.paper section[id] > p:first-child { color: #9a511c; }
+/* .paper section[id] > p:first-child { color: #9a511c; } */
 .resourceLink { display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; color: #285d98; font-size: 14px; font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
 .resourceLink:hover { color: #904a14; }
 .searchSteps { margin: 20px 0 0; padding-left: 22px; list-style: decimal; font-size: 14px; line-height: 1.8; color: #52657e; }
@@ -94,6 +95,8 @@
 .section h2 + p, .extraResource p { margin-top: 12px; color: #586a80; font-size: 15px; line-height: 1.7; }
 .sectionAction { display: inline-flex; align-items: center; gap: 14px; min-height: 46px; margin-top: 20px; padding: 11px 18px; border-radius: 7px; background: #f6be58; color: #26364a; box-shadow: 0 3px 0 #dda13a; font-size: 14px; font-weight: 650; }
 .sectionAction:hover { background: #ffce77; }
+.sectionActionSecondary { display: inline-flex; align-items: center; gap: 14px; min-height: 46px; margin-top: 20px; padding: 11px 18px; border-radius: 7px; background: #2770c4; color: #ffff; box-shadow: 0 3px 0 #144986; font-size: 14px; font-weight: 650; }
+.sectionActionSecondary:hover { background: #3387e7; }
 .extraResource { margin-top: 24px; padding-left: 18px; border-left: 3px solid #edc170; }
 .extraResource h3 { font-size: 16px; font-weight: 650; }
 .extraResource p { margin-top: 5px; font-size: 14px; }
