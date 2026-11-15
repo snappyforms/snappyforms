@@ -13,6 +13,7 @@ const exemptionScreener = "https://qualtrics.pa.gov/jfe/form/SV_57usZPSZVouCn78"
 const cao = "https://www.pa.gov/agencies/dhs/contact/cao-information";
 const cls = "https://clsphila.org/highlights/snaplibrary/";
 const volunteerSearch = "https://pa-navigate.org/";
+const assistingOrgs = "./assisting-orgs";
 
 export default function SnapEducationPage() {
   return (
@@ -49,9 +50,9 @@ export default function SnapEducationPage() {
                 <h2>Help with SNAP applications</h2>
                 <p>Connect with your County Assistance Office (CAO) or a local non-profit for application assistance and questions about SNAP.</p>
                 <div className="grid grid-cols-2 justify-between gap-10">
-                <a href={cao} className={styles.sectionAction}>Find your county office <ArrowUpRight size={18} aria-hidden="true" /></a>
-                <a href={cao} className={styles.sectionActionSecondary}>Find local non-profits <ArrowUpRight size={18} aria-hidden="true" /></a>
-              </div>
+                  <a href={cao} className={styles.sectionAction}>Find your county office <ArrowUpRight size={18} aria-hidden="true" /></a>
+                  <a href={assistingOrgs} className={styles.sectionActionSecondary}>Find local organizations <ArrowUpRight size={18} aria-hidden="true" /></a>
+                </div>
               </div>
             </section>
 
@@ -88,11 +89,17 @@ export default function SnapEducationPage() {
                 <p className={styles.kicker}>MAKE A DIFFERENCE</p>
                 <h2>Find volunteer opportunities</h2>
                 <p>Search for opportunities near you with PA Navigate. Volunteering may count toward work requirements while helping your community.</p>
-                <a href={volunteerSearch} className={styles.primaryAction}>Find volunteer opportunities <ArrowUpRight size={18} aria-hidden="true" /></a>
-                <ol className={styles.searchSteps}>
-                  <li>Enter your <strong>ZIP code</strong> → Search.</li>
-                  <li>On the next page, search <strong>“snap work requirements”</strong> at the top left → click the magnifying glass.</li>
-                </ol>
+                <div className="grid grid-cols-2 justify-between gap-10">
+                  <div>
+                    <a href={volunteerSearch} target="_blank" className={styles.sectionAction}>Find volunteer opportunities <ArrowUpRight size={18} aria-hidden="true" /></a>
+                    <ol className={styles.searchSteps}>
+                      <li>Enter your <strong>ZIP code</strong> → Search.</li>
+                      <li>On the next page, search <strong>“snap work requirements”</strong> at the top left → click the magnifying glass.</li>
+                    </ol>
+                  </div>
+                  <a href={assistingOrgs} target="_blank" className={`h-fit ${styles.sectionActionSecondary}`}>Find local organizations <ArrowUpRight size={18} aria-hidden="true" /></a>
+
+                </div>
                 <p className={styles.smallNote}>Your caseworker can confirm what counts and how to report your hours.</p>
               </div>
             </section>
