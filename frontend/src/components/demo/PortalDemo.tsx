@@ -72,31 +72,31 @@ function Sidebar({
         type="button"
       />
       <aside
-        className="fixed bottom-0 left-0 top-10 z-40 flex w-[278px] max-w-[88vw] flex-col border-r border-[#DCE1DE] bg-[#F7F8F5] shadow-[10px_0_36px_rgba(22,42,43,0.14)]"
+        className="fixed bottom-0 left-0 top-10 z-40 flex w-[278px] max-w-[88vw] flex-col border-r border-[#d7dee6] bg-[#f4f6f9] shadow-[10px_0_36px_rgba(22,42,43,0.14)]"
       >
         <div className="flex items-center justify-between px-5 pb-6 pt-5">
           <BrandMark />
           <button
             aria-label="Close navigation"
-            className="rounded-md p-1.5 text-[#5E6B69] hover:bg-[#E9ECE8]"
+            className="rounded-md p-1.5 text-[#506379] hover:bg-[#e5eaef]"
             onClick={close}
             type="button"
           >
             <X className="h-5 w-5" />
           </button>
         </div>
-        <div className="mx-3 mb-6 rounded-xl border border-[#D8DFDA] bg-white p-3">
+        <div className="mx-3 mb-6 rounded-xl border border-[#d3dbe4] bg-white p-3">
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#DCE9E1] text-xs font-bold text-[#315F43]">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#d8e2ed] text-xs font-bold text-[#274669]">
               NC
             </div>
             <div className="min-w-0 flex-1">
               <p className="truncate text-xs font-semibold text-[#162A2B]">
                 Northside Community
               </p>
-              <p className="text-[11px] text-[#718080]">Administrator</p>
+              <p className="text-[11px] text-[#607791]">Administrator</p>
             </div>
-            <ChevronDown className="h-4 w-4 text-[#718080]" />
+            <ChevronDown className="h-4 w-4 text-[#607791]" />
           </div>
         </div>
         <nav aria-label="Portal navigation" className="flex-1 space-y-1 px-3">
@@ -106,8 +106,8 @@ function Sidebar({
               <button
                 className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium ${
                   page === item.page
-                    ? "bg-[#DDE9E2] text-[#244F39]"
-                    : "text-[#52605E] hover:bg-[#EBEEEA]"
+                    ? "bg-[#d9e2ed] text-[#1c3857]"
+                    : "text-[#46586c] hover:bg-[#e7ecf1]"
                 }`}
                 key={item.page}
                 onClick={() => {
@@ -127,20 +127,20 @@ function Sidebar({
             );
           })}
         </nav>
-        <div className="border-t border-[#DCE1DE] p-3">
+        <div className="border-t border-[#d7dee6] p-3">
           <button
-            className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-[#52605E] hover:bg-[#EBEEEA]"
+            className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-[#46586c] hover:bg-[#e7ecf1]"
             type="button"
           >
             <Settings className="h-[18px] w-[18px]" /> Settings
           </button>
           <div className="mt-2 flex items-center gap-3 px-3 py-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#E3E8E5] text-[11px] font-bold">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#dfe5ec] text-[11px] font-bold">
               RO
             </div>
             <div className="min-w-0 flex-1">
               <p className="truncate text-xs font-semibold">Renee Okafor</p>
-              <p className="truncate text-[10px] text-[#788482]">
+              <p className="truncate text-[10px] text-[#667c96]">
                 renee@northside.org
               </p>
             </div>
@@ -163,11 +163,11 @@ function Header({
   setView: (view: DemoView) => void;
 }) {
   return (
-    <header className="flex min-h-[68px] flex-wrap items-center gap-3 border-b border-[#E1E5E2] bg-white px-4 py-3 sm:flex-nowrap sm:px-7">
+    <header className="flex min-h-[68px] flex-wrap items-center gap-3 border-b border-[#dde3e9] bg-white px-4 py-3 sm:flex-nowrap sm:px-7">
       <div className="flex flex-1 items-center gap-3">
         <button
           aria-label="Open navigation"
-          className="rounded-lg border border-[#DCE1DE] p-2 text-[#43514F] hover:bg-[#F3F5F2] focus:outline-none focus:ring-2 focus:ring-[#275D7A] focus:ring-offset-2"
+          className="rounded-lg border border-[#d7dee6] p-2 text-[#39495b] hover:bg-[#f0f3f7] focus:outline-none focus:ring-2 focus:ring-[#275D7A] focus:ring-offset-2"
           onClick={openMenu}
           type="button"
         >
@@ -177,7 +177,7 @@ function Header({
         <div className="hidden sm:block"><BrandMark /></div>
       </div>
       <button
-        className="inline-flex items-center gap-1.5 rounded-lg border border-[#CBD5CF] bg-white px-3 py-2 text-xs font-semibold text-[#35554C] hover:bg-[#F3F6F3] focus:outline-none focus:ring-2 focus:ring-[#275D7A] focus:ring-offset-2"
+        className="inline-flex items-center gap-1.5 rounded-lg border border-[#c4cfdc] bg-white px-3 py-2 text-xs font-semibold text-[#2b435f] hover:bg-[#f2f4f7] focus:outline-none focus:ring-2 focus:ring-[#275D7A] focus:ring-offset-2"
         onClick={openShare}
         type="button"
       >
@@ -217,7 +217,7 @@ function ShareModal({ close }: { close: () => void }) {
       >
         <button
           aria-label="Close share dialog"
-          className="absolute right-4 top-4 rounded-md p-1.5 text-[#65726F] hover:bg-[#F1F3F1]"
+          className="absolute right-4 top-4 rounded-md p-1.5 text-[#566a81] hover:bg-[#eff2f5]"
           onClick={close}
           type="button"
         >
@@ -226,13 +226,13 @@ function ShareModal({ close }: { close: () => void }) {
         <h2 className="text-xl font-bold tracking-[-0.03em]" id="share-dialog-title">
           Share the volunteer form
         </h2>
-        <p className="mt-2 text-xs leading-5 text-[#6D7976]">
+        <p className="mt-2 text-xs leading-5 text-[#5d7289]">
           Northside Community Resource Center
         </p>
-        <div className="mx-auto mt-5 w-fit rounded-xl border border-[#E0E5E1] bg-white p-2">
+        <div className="mx-auto mt-5 w-fit rounded-xl border border-[#dce2e9] bg-white p-2">
           <QrPreview size={176} />
         </div>
-        <p className="mt-4 break-all rounded-lg bg-[#F3F5F2] px-3 py-2 text-[11px] text-[#5E6C69]">
+        <p className="mt-4 break-all rounded-lg bg-[#f0f3f7] px-3 py-2 text-[11px] text-[#50647a]">
           snappyforms.org/apply/northside-pa1938
         </p>
         <button
@@ -257,26 +257,26 @@ function SubmissionRow({
 }) {
   return (
     <button
-      className="grid w-full grid-cols-[auto_1fr_auto] items-center gap-3 border-t border-[#E6E9E6] px-4 py-4 text-left hover:bg-[#FAFBF9] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#275D7A] sm:grid-cols-[auto_minmax(150px,1fr)_minmax(120px,.7fr)_auto_auto] sm:px-5"
+      className="grid w-full grid-cols-[auto_1fr_auto] items-center gap-3 border-t border-[#e3e7ec] px-4 py-4 text-left hover:bg-[#f8fafc] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#275D7A] sm:grid-cols-[auto_minmax(150px,1fr)_minmax(120px,.7fr)_auto_auto] sm:px-5"
       onClick={onOpen}
       type="button"
     >
-      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#E4ECE7] text-xs font-bold text-[#315F43]">
+      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#e1e8ef] text-xs font-bold text-[#274669]">
         {submission.initials}
       </div>
       <div className="min-w-0">
         <p className="truncate text-sm font-semibold">{submission.name}</p>
-        <p className="mt-0.5 text-xs text-[#788482]">
+        <p className="mt-0.5 text-xs text-[#667c96]">
           {submission.id} · {submission.submitted}
         </p>
       </div>
-      <p className="hidden text-xs text-[#5F6C6B] sm:block">
+      <p className="hidden text-xs text-[#51647a] sm:block">
         {submission.serviceDates}
       </p>
       <div className="hidden sm:block">
         <StatusBadge status={submission.status} />
       </div>
-      <ArrowRight className="h-4 w-4 text-[#81908D]" />
+      <ArrowRight className="h-4 w-4 text-[#7087a1]" />
       <div className="col-span-2 col-start-2 sm:hidden">
         <StatusBadge status={submission.status} />
       </div>
@@ -295,22 +295,22 @@ function Overview({
     <div className="mx-auto w-full max-w-[1180px] px-4 py-7 sm:px-7 sm:py-9">
       <div>
         <div>
-          <p className="text-sm text-[#687573]">Thursday, October 1</p>
+          <p className="text-sm text-[#596d84]">Thursday, October 1</p>
           <h2 className="mt-1 text-2xl font-bold tracking-[-0.03em] sm:text-[28px]">
             Good morning, Renee.
           </h2>
-          <p className="mt-2 max-w-xl text-sm leading-6 text-[#65716F]">
+          <p className="mt-2 max-w-xl text-sm leading-6 text-[#566a80]">
             Three volunteer submissions need attention before they can move to
             signature.
           </p>
         </div>
       </div>
       <div className="mt-8">
-        <section className="overflow-hidden rounded-xl border border-[#DCE1DE] bg-white shadow-[0_2px_12px_rgba(22,42,43,0.05)]">
+        <section className="overflow-hidden rounded-xl border border-[#d7dee6] bg-white shadow-[0_2px_12px_rgba(22,42,43,0.05)]">
           <div className="flex items-center justify-between px-4 py-4 sm:px-5">
             <div>
               <h3 className="font-bold">Needs attention</h3>
-              <p className="mt-0.5 text-xs text-[#788482]">
+              <p className="mt-0.5 text-xs text-[#667c96]">
                 Newest submissions appear first
               </p>
             </div>
@@ -346,22 +346,22 @@ function Queue({
       <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
         <div>
           <h2 className="text-2xl font-bold tracking-[-0.03em]">Volunteer submissions</h2>
-          <p className="mt-2 text-sm text-[#687573]">
+          <p className="mt-2 text-sm text-[#596d84]">
             Review, return, approve, and sign submissions for your organization.
           </p>
         </div>
         <div className="flex items-center gap-2">
           <label className="relative flex-1 sm:w-52">
             <span className="sr-only">Search submissions</span>
-            <Search className="absolute left-3 top-2.5 h-4 w-4 text-[#7C8886]" />
+            <Search className="absolute left-3 top-2.5 h-4 w-4 text-[#6b8099]" />
             <input
-              className="h-9 w-full rounded-lg border border-[#D2DAD5] bg-white pl-9 pr-3 text-xs outline-none"
+              className="h-9 w-full rounded-lg border border-[#ccd5e0] bg-white pl-9 pr-3 text-xs outline-none"
               placeholder="Search name or number"
             />
           </label>
           <select
             aria-label="Filter by status"
-            className="h-9 rounded-lg border border-[#D2DAD5] bg-white px-3 text-xs font-medium"
+            className="h-9 rounded-lg border border-[#ccd5e0] bg-white px-3 text-xs font-medium"
             onChange={(event) => setFilter(event.target.value)}
             value={filter}
           >
@@ -374,7 +374,7 @@ function Queue({
           </select>
         </div>
       </div>
-      <div className="mt-7 overflow-hidden rounded-xl border border-[#DCE1DE] bg-white shadow-[0_2px_12px_rgba(22,42,43,0.05)]">
+      <div className="mt-7 overflow-hidden rounded-xl border border-[#d7dee6] bg-white shadow-[0_2px_12px_rgba(22,42,43,0.05)]">
         {visible.map((submission) => (
           <SubmissionRow
             key={submission.id}
@@ -390,8 +390,8 @@ function Queue({
 function DetailField({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <dt className="text-[11px] font-semibold text-[#7A8684]">{label}</dt>
-      <dd className="mt-1 text-sm font-medium leading-5 text-[#273A37]">{value}</dd>
+      <dt className="text-[11px] font-semibold text-[#687e98]">{label}</dt>
+      <dd className="mt-1 text-sm font-medium leading-5 text-[#202f41]">{value}</dd>
     </div>
   );
 }
@@ -411,14 +411,14 @@ function SubmissionDetail({
   return (
     <div className="mx-auto w-full max-w-[1120px] px-4 py-6 sm:px-7 sm:py-8">
       <button
-        className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#526562]"
+        className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#455a72]"
         onClick={goBack}
         type="button"
       >
         <ArrowLeft className="h-4 w-4" /> Back to submissions
       </button>
       <div className="mt-5 flex items-center gap-4">
-        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#DDE9E2] text-sm font-bold text-[#315F43]">
+        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#d9e2ed] text-sm font-bold text-[#274669]">
           {submission.initials}
         </div>
         <div>
@@ -428,7 +428,7 @@ function SubmissionDetail({
             </h2>
             <StatusBadge status={submission.status} />
           </div>
-          <p className="mt-1 text-xs text-[#718080]">
+          <p className="mt-1 text-xs text-[#607791]">
             {submission.id} · Submitted {submission.submitted}
           </p>
         </div>
@@ -476,11 +476,11 @@ function SubmissionDetail({
               </div>
             </dl>
           </DetailSection>
-          <div className="flex gap-3 rounded-xl border border-[#DCE1DE] bg-[#F9FAF7] p-5">
-            <ShieldCheck className="mt-0.5 h-5 w-5 text-[#3F6B58]" />
+          <div className="flex gap-3 rounded-xl border border-[#d7dee6] bg-[#f6f8fb] p-5">
+            <ShieldCheck className="mt-0.5 h-5 w-5 text-[#335377]" />
             <div>
               <h3 className="text-sm font-bold">Volunteer attestation</h3>
-              <p className="mt-2 text-xs leading-5 text-[#62706D]">
+              <p className="mt-2 text-xs leading-5 text-[#53687f]">
                 “I attest that the information in this submission is true and
                 complete to the best of my knowledge.”
               </p>
@@ -491,12 +491,12 @@ function SubmissionDetail({
           </div>
         </div>
         <aside className="space-y-5 lg:sticky lg:top-5">
-          <section className="rounded-xl border border-[#D4DDD7] bg-white p-5 shadow-[0_4px_18px_rgba(22,42,43,0.07)]">
+          <section className="rounded-xl border border-[#cfd8e2] bg-white p-5 shadow-[0_4px_18px_rgba(22,42,43,0.07)]">
             <h3 className="text-sm font-bold">Review decision</h3>
             {submission.status === "Submitted" && (
               <div className="mt-4 space-y-2.5">
                 <button
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#3F6B58] px-4 py-2.5 text-sm font-semibold text-white"
+                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#335377] px-4 py-2.5 text-sm font-semibold text-white"
                   onClick={() => updateStatus("Approved")}
                   type="button"
                 >
@@ -504,16 +504,16 @@ function SubmissionDetail({
                 </button>
                 <button
                   aria-expanded={showSecondaryActions}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2 text-xs font-semibold text-[#60706C] hover:bg-[#F3F5F2]"
+                  className="flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2 text-xs font-semibold text-[#51667f] hover:bg-[#f0f3f7]"
                   onClick={() => setShowSecondaryActions((value) => !value)}
                   type="button"
                 >
                   <MoreHorizontal className="h-4 w-4" /> More review actions
                 </button>
                 {showSecondaryActions && (
-                  <div className="rounded-lg border border-[#E0E5E1] bg-[#F7F8F6] p-2">
+                  <div className="rounded-lg border border-[#dce2e9] bg-[#f5f7f9] p-2">
                     <button
-                      className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-xs font-semibold text-[#40514E] hover:bg-white"
+                      className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-xs font-semibold text-[#36475b] hover:bg-white"
                       onClick={() => setShowChangeNote((value) => !value)}
                       type="button"
                     >
@@ -529,12 +529,12 @@ function SubmissionDetail({
                   </div>
                 )}
                 {showChangeNote && showSecondaryActions && (
-                  <div className="rounded-lg bg-[#F4F6F3] p-3">
+                  <div className="rounded-lg bg-[#f2f4f7] p-3">
                     <label className="text-xs font-semibold" htmlFor="change-note">
                       Message to volunteer
                     </label>
                     <textarea
-                      className="mt-2 min-h-20 w-full rounded-md border border-[#CBD4CF] bg-white p-2 text-xs"
+                      className="mt-2 min-h-20 w-full rounded-md border border-[#c4cfdb] bg-white p-2 text-xs"
                       defaultValue="Please confirm the total hours for this service period."
                       id="change-note"
                     />
@@ -563,15 +563,15 @@ function SubmissionDetail({
             {submission.status !== "Submitted" &&
               submission.status !== "Approved" &&
               submission.status !== "Ready to download" && (
-                <p className="mt-4 rounded-lg bg-[#F2F5F2] p-3 text-xs leading-5 text-[#53635F]">
+                <p className="mt-4 rounded-lg bg-[#f0f3f7] p-3 text-xs leading-5 text-[#465a70]">
                   This submission is {submission.status.toLowerCase()}. The
                   preview keeps this state only in the current browser tab.
                 </p>
               )}
           </section>
-          <section className="rounded-xl border border-[#DCE1DE] bg-white p-5">
+          <section className="rounded-xl border border-[#d7dee6] bg-white p-5">
             <h3 className="text-sm font-bold">History</h3>
-            <div className="mt-4 space-y-4 border-l border-[#D7DEDA] pl-4">
+            <div className="mt-4 space-y-4 border-l border-[#d2dae3] pl-4">
               {submission.status !== "Submitted" && (
                 <HistoryItem detail="Renee Okafor · just now" title={submission.status} />
               )}
@@ -595,9 +595,9 @@ function DetailSection({
   children: React.ReactNode;
 }) {
   return (
-    <section className="rounded-xl border border-[#DCE1DE] bg-white p-5 shadow-[0_2px_10px_rgba(22,42,43,0.04)] sm:p-6">
-      <div className="mb-5 flex items-center gap-2 border-b border-[#E4E8E5] pb-4">
-        <Icon className="h-4 w-4 text-[#4D6E64]" />
+    <section className="rounded-xl border border-[#d7dee6] bg-white p-5 shadow-[0_2px_10px_rgba(22,42,43,0.04)] sm:p-6">
+      <div className="mb-5 flex items-center gap-2 border-b border-[#e1e6eb] pb-4">
+        <Icon className="h-4 w-4 text-[#405c7b]" />
         <h3 className="text-sm font-bold">{title}</h3>
       </div>
       {children}
@@ -607,14 +607,14 @@ function DetailSection({
 
 function SignerPanel({ onSign }: { onSign: () => void }) {
   return (
-    <div className="mt-4 border-t border-[#E2E7E3] pt-4">
+    <div className="mt-4 border-t border-[#dee4eb] pt-4">
       <p className="text-xs font-bold">Authorized signer</p>
-      <p className="mt-1 text-[11px] leading-4 text-[#718080]">
+      <p className="mt-1 text-[11px] leading-4 text-[#607791]">
         Review the certification language before applying the organization
         signature.
       </p>
-      <label className="mt-3 flex items-start gap-2 text-[11px] leading-4 text-[#4E5E5B]">
-        <input className="mt-0.5 accent-[#3F6B58]" defaultChecked type="checkbox" />
+      <label className="mt-3 flex items-start gap-2 text-[11px] leading-4 text-[#42556a]">
+        <input className="mt-0.5 accent-[#335377]" defaultChecked type="checkbox" />
         I certify that I reviewed this submission as an authorized signer.
       </label>
       <button
@@ -630,9 +630,9 @@ function SignerPanel({ onSign }: { onSign: () => void }) {
 
 function HistoryItem({ title, detail }: { title: string; detail: string }) {
   return (
-    <div className="relative before:absolute before:-left-[21px] before:top-1 before:h-2.5 before:w-2.5 before:rounded-full before:border-2 before:border-[#7B9C8C] before:bg-white">
+    <div className="relative before:absolute before:-left-[21px] before:top-1 before:h-2.5 before:w-2.5 before:rounded-full before:border-2 before:border-[#6b89ac] before:bg-white">
       <p className="text-xs font-semibold">{title}</p>
-      <p className="mt-0.5 text-[11px] text-[#7A8684]">{detail}</p>
+      <p className="mt-0.5 text-[11px] text-[#687e98]">{detail}</p>
     </div>
   );
 }
@@ -642,28 +642,28 @@ function Intake({ openVolunteer }: { openVolunteer: () => void }) {
   return (
     <div className="mx-auto w-full max-w-[980px] px-4 py-7 sm:px-7 sm:py-9">
       <h2 className="text-2xl font-bold tracking-[-0.03em]">Intake link</h2>
-      <p className="mt-2 max-w-2xl text-sm leading-6 text-[#687573]">
+      <p className="mt-2 max-w-2xl text-sm leading-6 text-[#596d84]">
         Share one permanent link with volunteers. It opens the public PA 1938
         form without requiring an account.
       </p>
       <div className="mt-7 grid gap-6 md:grid-cols-[minmax(0,1fr)_320px]">
-        <section className="rounded-xl border border-[#DCE1DE] bg-white p-5 shadow-[0_2px_12px_rgba(22,42,43,0.05)] sm:p-7">
+        <section className="rounded-xl border border-[#d7dee6] bg-white p-5 shadow-[0_2px_12px_rgba(22,42,43,0.05)] sm:p-7">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <p className="text-xs font-semibold text-[#718080]">
+              <p className="text-xs font-semibold text-[#607791]">
                 PA 1938 volunteer verification
               </p>
-              <span className="mt-2 inline-flex rounded-full border border-[#B8D1BF] bg-[#EAF5ED] px-2.5 py-1 text-[11px] font-bold text-[#315F43]">
+              <span className="mt-2 inline-flex rounded-full border border-[#b0c3d9] bg-[#e8eff7] px-2.5 py-1 text-[11px] font-bold text-[#274669]">
                 Active
               </span>
             </div>
-            <MoreHorizontal className="h-5 w-5 text-[#63716E]" />
+            <MoreHorizontal className="h-5 w-5 text-[#546980]" />
           </div>
           <label className="mt-7 block text-xs font-semibold" htmlFor="intake-url">
             Permanent intake URL
           </label>
-          <div className="mt-2 flex items-center rounded-lg border border-[#CCD5D0] bg-[#F7F8F6] p-1.5 pl-3">
-            <Link2 className="mr-2 h-4 w-4 shrink-0 text-[#6F7D7A]" />
+          <div className="mt-2 flex items-center rounded-lg border border-[#c5d0dc] bg-[#f5f7f9] p-1.5 pl-3">
+            <Link2 className="mr-2 h-4 w-4 shrink-0 text-[#5e748e]" />
             <input
               className="min-w-0 flex-1 bg-transparent text-xs outline-none"
               id="intake-url"
@@ -682,7 +682,7 @@ function Intake({ openVolunteer }: { openVolunteer: () => void }) {
               {copied ? "Copied" : "Copy"}
             </button>
           </div>
-          <div className="mt-6 grid gap-4 rounded-lg bg-[#F3F5F2] p-4 sm:grid-cols-3">
+          <div className="mt-6 grid gap-4 rounded-lg bg-[#f0f3f7] p-4 sm:grid-cols-3">
             <MiniMetric label="Submissions" value="12" />
             <MiniMetric label="Link opens" value="38" />
             <MiniMetric label="Completion" value="74%" />
@@ -695,7 +695,7 @@ function Intake({ openVolunteer }: { openVolunteer: () => void }) {
             <ArrowRight className="h-4 w-4" /> Open volunteer form
           </button>
         </section>
-        <section className="rounded-xl bg-[#244F45] p-6 text-center text-white shadow-[0_8px_30px_rgba(36,79,69,0.16)]">
+        <section className="rounded-xl bg-[#1c3857] p-6 text-center text-white shadow-[0_8px_30px_rgba(36,79,69,0.16)]">
           <p className="text-sm font-bold">Scan to volunteer</p>
           <p className="mt-1 text-xs text-white/70">Northside Community Resource Center</p>
           <div className="mx-auto mt-5 w-fit rounded-xl bg-white p-2">
@@ -720,7 +720,7 @@ function MiniMetric({ value, label }: { value: string; label: string }) {
   return (
     <div>
       <p className="text-2xl font-bold">{value}</p>
-      <p className="text-[11px] text-[#75817F]">{label}</p>
+      <p className="text-[11px] text-[#647992]">{label}</p>
     </div>
   );
 }
@@ -738,26 +738,26 @@ function Documents({
   return (
     <div className="mx-auto w-full max-w-[980px] px-4 py-7 sm:px-7 sm:py-9">
       <h2 className="text-2xl font-bold tracking-[-0.03em]">Completed documents</h2>
-      <p className="mt-2 text-sm text-[#687573]">
+      <p className="mt-2 text-sm text-[#596d84]">
         Download completed forms and view their recorded document history.
       </p>
-      <div className="mt-7 overflow-hidden rounded-xl border border-[#DCE1DE] bg-white">
+      <div className="mt-7 overflow-hidden rounded-xl border border-[#d7dee6] bg-white">
         {ready.map((submission) => (
           <div
-            className="flex flex-col gap-4 border-b border-[#E5E9E6] p-5 last:border-b-0 sm:flex-row sm:items-center"
+            className="flex flex-col gap-4 border-b border-[#e2e7ec] p-5 last:border-b-0 sm:flex-row sm:items-center"
             key={submission.id}
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#E7F1EA] text-[#3F6B58]">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#e4ebf4] text-[#335377]">
               <FileCheck2 className="h-5 w-5" />
             </div>
             <div className="flex-1">
               <p className="text-sm font-semibold">PA 1938 · {submission.name}</p>
-              <p className="mt-1 text-xs text-[#788482]">
+              <p className="mt-1 text-xs text-[#667c96]">
                 {submission.id} · Prepared October 1, 2026
               </p>
             </div>
             <button
-              className="inline-flex items-center justify-center gap-2 rounded-lg border border-[#CCD5D0] px-3 py-2 text-xs font-semibold"
+              className="inline-flex items-center justify-center gap-2 rounded-lg border border-[#c5d0dc] px-3 py-2 text-xs font-semibold"
               onClick={() => openSubmission(submission)}
               type="button"
             >
@@ -776,7 +776,7 @@ function Team() {
       <div className="flex items-end justify-between gap-4">
         <div>
           <h2 className="text-2xl font-bold tracking-[-0.03em]">Team</h2>
-          <p className="mt-2 text-sm text-[#687573]">
+          <p className="mt-2 text-sm text-[#596d84]">
             Assign review and signature permissions separately.
           </p>
         </div>
@@ -784,21 +784,21 @@ function Team() {
           Invite member
         </button>
       </div>
-      <div className="mt-7 overflow-hidden rounded-xl border border-[#DCE1DE] bg-white">
+      <div className="mt-7 overflow-hidden rounded-xl border border-[#d7dee6] bg-white">
         {[
           ["Renee Okafor", "RO", "Administrator · Reviewer · Signer"],
           ["Jamie Rivera", "JR", "Reviewer"],
           ["Alicia Chen", "AC", "Authorized signer"],
         ].map(([name, initials, roles]) => (
           <div className="flex items-center gap-4 border-b p-5 last:border-b-0" key={name}>
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#E4ECE7] text-xs font-bold text-[#315F43]">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#e1e8ef] text-xs font-bold text-[#274669]">
               {initials}
             </div>
             <div className="flex-1">
               <p className="text-sm font-semibold">{name}</p>
-              <p className="mt-1 text-xs text-[#788482]">{roles}</p>
+              <p className="mt-1 text-xs text-[#667c96]">{roles}</p>
             </div>
-            <MoreHorizontal className="h-5 w-5 text-[#718080]" />
+            <MoreHorizontal className="h-5 w-5 text-[#607791]" />
           </div>
         ))}
       </div>
@@ -863,7 +863,7 @@ export default function PortalDemo({
   }
 
   return (
-    <div className="min-h-[calc(100vh-40px)] bg-[#F5F6F3]">
+    <div className="min-h-[calc(100vh-40px)] bg-[#f2f4f7]">
       <Sidebar
         close={() => setMobileOpen(false)}
         open={mobileOpen}

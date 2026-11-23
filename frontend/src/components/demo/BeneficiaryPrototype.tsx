@@ -1,6 +1,7 @@
 'use client';
+import SnappyWordmark from "@/components/SnappyWordmark";
 import { useEffect, useRef, useState } from 'react';
-import { ArrowRight, ArrowLeft, Check, Leaf, FileText, ShieldCheck, Plus, Download, Copy, CheckCircle2, ExternalLink, Maximize2, X, Send, UserRound } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Check, FileText, ShieldCheck, Plus, Download, Copy, CheckCircle2, ExternalLink, Maximize2, X, Send, UserRound } from 'lucide-react';
 import './beneficiary.css';
 import PdfPreview from './PdfPreview';
 type Answers = Record<string, string>;
@@ -216,7 +217,7 @@ export default function BeneficiaryPrototype() {
       <header className="sf-header">
         <div className="sf-header-inner">
           <a className="sf-brand" href="/" aria-label="SnappyForms home">
-            <span className="sf-logo"><Leaf size={22} aria-hidden="true"/></span>snappyforms
+            <SnappyWordmark />
           </a>
           <nav aria-label="Demo">
             <button type="button" className={screen === 'home' ? 'selected' : ''} onClick={() => { setScreen('home'); setMessage(''); }}>My forms</button>
@@ -288,7 +289,7 @@ export default function BeneficiaryPrototype() {
     } persist('Signed', { signature: signature.trim() }); setScreen('send'); setDestination(false); setError(''); }}>Sign demonstration form <Check size={17}/></button></>}{error && <p className="sf-error" role="alert">{error}</p>}<p className="sf-muted">After signing, you’ll confirm the county destination and send this form in a separate step.</p></section><PdfPanel pdf={pdf} busy={busy} generate={generatePdf}/></div></>}
   {screen === 'send' && active && locked && <><button className="sf-back" onClick={() => setScreen('shared')}><ArrowLeft size={16}/> Form status</button><div className="sf-page-heading"><div className="sf-eyebrow">FINAL STEP · SEND TO COUNTY</div><h1>Send the signed form</h1><p>Your signature is saved. Confirm the destination below to finish submitting your form.</p></div><div className="sf-review-grid"><section className="sf-card"><div className="sf-code-box"><strong><CheckCircle2 size={18}/> Signed by {active.signature}</strong><p>Signing saves the form. Sending delivers it to the county office.</p></div><h2>Send to your CAO</h2>{field('office', 'Confirmed county office')}{field('fax', 'Confirmed office fax number', 'tel')}<label className="sf-checkbox"><input type="checkbox" checked={destination} onChange={e => setDestination(e.target.checked)}/>I confirmed this is the correct destination for this form.</label><details className="sf-test-options"><summary>Demo presentation options</summary><label className="sf-checkbox"><input type="checkbox" checked={fail} onChange={e => setFail(e.target.checked)}/>Demonstrate a delivery failure</label></details>{error && <p className="sf-error" role="alert">{error}</p>}<button className="sf-primary sf-send-button" disabled={!destination || active.status === 'Delivered'} onClick={submit}><Send size={17}/>{active.status === 'Delivery failed' ? 'Retry sending to CAO (demo)' : 'Send to CAO (demo)'}</button><p className="sf-muted">Demo only: no fax is sent. The next screen shows simulated delivery and a downloadable receipt. Signature acceptance must be confirmed before a real pilot.</p></section><PdfPanel pdf={pdf} busy={busy} generate={generatePdf}/></div></>}
   <dialog ref={deleteDialog} className="sf-delete-dialog" aria-labelledby="sf-delete-title" onClose={() => setPendingDeleteId('')}><h2 id="sf-delete-title">Delete this draft?</h2><p>This removes your unfinished volunteer verification for {pendingDelete?.answers.org || pendingDelete?.answers.name || 'this organization'} from My forms. You can undo this after deleting.</p><div className="sf-actions"><button className="sf-secondary" autoFocus onClick={() => deleteDialog.current?.close()}>Keep draft</button><button className="sf-delete-confirm" onClick={deleteDraft}>Delete draft</button></div></dialog>
-  </main><footer className="sf-footer"><a className="sf-brand" href="/"><Leaf size={17} aria-hidden="true"/> snappyforms</a><span>PA-1938 volunteer verification demo</span></footer></div>;
+  </main><footer className="sf-footer"><a className="sf-brand" href="/"><SnappyWordmark /></a><span>PA-1938 volunteer verification demo</span></footer></div>;
 }
 function PdfPanel({ pdf, busy, generate }: { pdf: string; busy: boolean; generate: () => void }) {
     const dialog = useRef<HTMLDialogElement>(null);

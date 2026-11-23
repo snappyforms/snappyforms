@@ -1,24 +1,9 @@
 "use client";
 
+import SnappyWordmark from "@/components/SnappyWordmark";
 import { useEffect, useRef, useState, type FormEvent, type ReactNode, type RefObject } from "react";
-import localFont from "next/font/local";
+import { inter, poppins } from "./fonts";
 import "./home.css";
-
-// Font files are in the repo (latin subset from Google Fonts). next/font/google
-// fetches at build time, and that fetch fails on the Firebase App Hosting builder.
-const poppins = localFont({
-  src: [
-    { path: "./fonts/poppins-500.woff2", weight: "500", style: "normal" },
-    { path: "./fonts/poppins-600.woff2", weight: "600", style: "normal" },
-    { path: "./fonts/poppins-700.woff2", weight: "700", style: "normal" },
-  ],
-  variable: "--font-poppins",
-});
-const inter = localFont({
-  src: "./fonts/inter-variable.woff2",
-  weight: "400 600",
-  variable: "--font-inter",
-});
 
 const CONTACT_EMAIL = "hello@snappyforms.org";
 
@@ -226,7 +211,6 @@ export default function HomePage() {
   return (
     <div ref={rootRef} className={`sf-home ${poppins.variable} ${inter.variable}`}>
       <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden="true">
-        <symbol id="i-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" /><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" /></symbol>
         <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></symbol>
         <symbol id="i-ccheck" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><path d="m9 12 2 2 4-4" /></symbol>
         <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></symbol>
@@ -249,7 +233,7 @@ export default function HomePage() {
       <header className="nav">
         <div className="wrap">
           <a className="brand" href="/" aria-label="SnappyForms home">
-            <span className="brand-mark"><Icon id="leaf" /></span>snappyforms
+            <SnappyWordmark />
           </a>
           <nav className="nav-links" aria-label="Main">
             <a href="#how">How it works</a>
@@ -292,7 +276,7 @@ export default function HomePage() {
                   <div className="notch" />
                   <div className="ps" hidden={audience !== "vol"}>
                     <div className="ps-top">
-                      <span><i><Icon id="leaf" size={11} className="" /></i>snappyforms</span>
+                      <SnappyWordmark />
                       <span style={{ color: "var(--muted)", fontWeight: 500 }}>Step 7 of 7</span>
                     </div>
                     <div className="ps-steps">{Array.from({ length: 7 }, (_, i) => <span key={i} />)}</div>
@@ -310,7 +294,7 @@ export default function HomePage() {
                   </div>
                   <div className="ps" hidden={audience !== "org"}>
                     <div className="ps-top">
-                      <span><i><Icon id="leaf" size={11} className="" /></i>snappyforms</span>
+                      <SnappyWordmark />
                       <span style={{ color: "var(--muted)", fontWeight: 500 }}>No login needed</span>
                     </div>
                     <div className="ps-sms"><b>Jordan Rivera</b> sent you a volunteer form to sign. <span className="ps-link">snappyforms.org/r/7KQ</span></div>
@@ -337,7 +321,7 @@ export default function HomePage() {
                 <span><Icon id="ccheck" />Free for everyone</span>
                 <span><Icon id="ccheck" />Works on any phone</span>
                 <span>
-                  <a className="btn btn-link" href="/prototype">Try the demo <Icon id="arrow" size={16} /></a>
+                  <a className="btn btn-link demo-link" href="/prototype">Try the demo <Icon id="arrow" size={16} /></a>
                 </span>
               </div>
             </div>
@@ -550,7 +534,7 @@ export default function HomePage() {
       <footer>
         <div className="wrap">
           <div>
-            <a className="brand" href="/"><span className="brand-mark"><Icon id="leaf" /></span>snappyforms</a>
+            <a className="brand" href="/"><SnappyWordmark /></a>
             <p style={{ marginTop: 14, maxWidth: 340 }}>Your digital SNAP verification assistant.</p>
             <p style={{ marginTop: 12 }}><a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></p>
           </div>
