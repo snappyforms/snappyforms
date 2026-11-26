@@ -18,7 +18,7 @@ export default function ProductionMvpDemo() {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] overflow-auto bg-[#F5F6F3] text-[#162A2B]">
+    <div className="fixed inset-0 z-[100] overflow-auto bg-[#f2f4f7] text-[#162A2B]">
       <PrototypeBar onReset={reset} />
       {view === "portal" ? (
         <PortalDemo

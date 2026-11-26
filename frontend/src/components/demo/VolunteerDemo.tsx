@@ -13,7 +13,7 @@ import { BrandMark, DemoSwitcher, FormProgress } from "./DemoShared";
 import { DemoView } from "./demoData";
 
 const inputClass =
-  "mt-2 h-11 w-full rounded-lg border border-[#C8D2CC] bg-white px-3 text-sm text-[#263836] outline-none placeholder:text-[#A2AAA7] focus:border-[#275D7A] focus:ring-2 focus:ring-[#275D7A]/15";
+  "mt-2 h-11 w-full rounded-lg border border-[#c1ccd9] bg-white px-3 text-sm text-[#1f2e3f] outline-none placeholder:text-[#96a5b6] focus:border-[#275D7A] focus:ring-2 focus:ring-[#275D7A]/15";
 
 type VolunteerProps = {
   view: DemoView;
@@ -34,12 +34,12 @@ function Field({
 }) {
   return (
     <div>
-      <label className="block text-sm font-semibold text-[#2D403D]" htmlFor={id}>
+      <label className="block text-sm font-semibold text-[#253548]" htmlFor={id}>
         {label}
       </label>
       {children}
       {hint && (
-        <p className="mt-1.5 text-[11px] leading-4 text-[#75817F]">{hint}</p>
+        <p className="mt-1.5 text-[11px] leading-4 text-[#647992]">{hint}</p>
       )}
     </div>
   );
@@ -168,7 +168,7 @@ function Service({ hours, setHours }: { hours: string; setHours: (hours: string)
         <div className="sm:col-span-2">
           <Field id="tasks" label="Tasks performed">
             <textarea
-              className="mt-2 min-h-28 w-full rounded-lg border border-[#C8D2CC] bg-white p-3 text-sm leading-6 text-[#263836] outline-none focus:border-[#275D7A] focus:ring-2 focus:ring-[#275D7A]/15"
+              className="mt-2 min-h-28 w-full rounded-lg border border-[#c1ccd9] bg-white p-3 text-sm leading-6 text-[#1f2e3f] outline-none focus:border-[#275D7A] focus:ring-2 focus:ring-[#275D7A]/15"
               defaultValue="Prepared pantry orders, restocked shelves, and helped neighbors carry groceries to the pickup area."
               id="tasks"
               required
@@ -176,16 +176,16 @@ function Service({ hours, setHours }: { hours: string; setHours: (hours: string)
           </Field>
         </div>
         <fieldset className="sm:col-span-2">
-          <legend className="text-sm font-semibold text-[#2D403D]">
+          <legend className="text-sm font-semibold text-[#253548]">
             Did the organization provide transportation?
           </legend>
           <div className="mt-3 flex gap-3">
-            <label className="flex items-center gap-2 rounded-lg border border-[#C8D2CC] px-4 py-3 text-sm">
-              <input className="accent-[#3F6B58]" name="transport" type="radio" /> Yes
+            <label className="flex items-center gap-2 rounded-lg border border-[#c1ccd9] px-4 py-3 text-sm">
+              <input className="accent-[#335377]" name="transport" type="radio" /> Yes
             </label>
-            <label className="flex items-center gap-2 rounded-lg border border-[#3F6B58] bg-[#F0F6F2] px-4 py-3 text-sm">
+            <label className="flex items-center gap-2 rounded-lg border border-[#335377] bg-[#eef3f8] px-4 py-3 text-sm">
               <input
-                className="accent-[#3F6B58]"
+                className="accent-[#335377]"
                 defaultChecked
                 name="transport"
                 type="radio"
@@ -212,17 +212,17 @@ function Review({ name, hours }: { name: string; hours: string }) {
         description="Check the information below. Northside Community Resource Center will review it before signing."
         title="Review and attest"
       />
-      <div className="mt-6 divide-y divide-[#E2E7E3] rounded-xl border border-[#D7DFDA]">
+      <div className="mt-6 divide-y divide-[#dee4eb] rounded-xl border border-[#d2dae4]">
         {rows.map(([label, value]) => (
           <div className="grid gap-1 p-4 sm:grid-cols-[140px_1fr]" key={label}>
-            <span className="text-xs font-semibold text-[#7A8684]">{label}</span>
-            <span className="text-sm font-medium text-[#293C39]">{value}</span>
+            <span className="text-xs font-semibold text-[#687e98]">{label}</span>
+            <span className="text-sm font-medium text-[#223143]">{value}</span>
           </div>
         ))}
       </div>
-      <label className="mt-6 flex items-start gap-3 rounded-xl border border-[#BFD1C5] bg-[#F0F6F2] p-4 text-sm leading-6 text-[#344B44]">
+      <label className="mt-6 flex items-start gap-3 rounded-xl border border-[#b7c7d9] bg-[#eef3f8] p-4 text-sm leading-6 text-[#2b3e54]">
         <input
-          className="mt-1 h-4 w-4 accent-[#3F6B58]"
+          className="mt-1 h-4 w-4 accent-[#335377]"
           required
           type="checkbox"
         />
@@ -249,14 +249,14 @@ function FormHeading({ title, description }: { title: string; description: strin
   return (
     <div>
       <h1 className="text-2xl font-bold tracking-[-0.03em] text-[#162A2B]">{title}</h1>
-      <p className="mt-2 text-sm leading-6 text-[#687573]">{description}</p>
+      <p className="mt-2 text-sm leading-6 text-[#596d84]">{description}</p>
     </div>
   );
 }
 
 function OrganizationContext() {
   return (
-    <aside className="order-2 rounded-xl bg-[#244F45] p-5 text-white md:sticky md:top-6">
+    <aside className="order-2 rounded-xl bg-[#1c3857] p-5 text-white md:sticky md:top-6">
       <div className="flex items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/15">
           <Building2 className="h-5 w-5" />
@@ -290,21 +290,21 @@ function OrganizationContext() {
 
 function Confirmation({ setView }: { setView: (view: DemoView) => void }) {
   return (
-    <div className="min-h-[calc(100vh-40px)] bg-[#EEF3EF]">
+    <div className="min-h-[calc(100vh-40px)] bg-[#ecf0f5]">
       <div className="mx-auto flex min-h-[calc(100vh-40px)] max-w-lg items-center px-5 py-12">
-        <section className="w-full rounded-2xl border border-[#D2DDD6] bg-white p-7 text-center shadow-[0_14px_50px_rgba(31,64,54,0.12)] sm:p-10">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#DDEDE2] text-[#356247]">
+        <section className="w-full rounded-2xl border border-[#ccd7e3] bg-white p-7 text-center shadow-[0_14px_50px_rgba(31,64,54,0.12)] sm:p-10">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#d9e4f1] text-[#2a496d]">
             <CheckCircle2 className="h-7 w-7" />
           </div>
           <h1 className="mt-5 text-2xl font-bold tracking-[-0.03em] text-[#162A2B]">
             Your form was submitted.
           </h1>
-          <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-[#667370]">
+          <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-[#576b82]">
             Northside Community Resource Center will review your information. We
             sent a private status link to your email.
           </p>
-          <div className="mt-6 rounded-xl bg-[#F3F6F3] p-4">
-            <p className="text-[11px] font-semibold text-[#75817F]">
+          <div className="mt-6 rounded-xl bg-[#f2f4f7] p-4">
+            <p className="text-[11px] font-semibold text-[#647992]">
               Confirmation number
             </p>
             <p className="mt-1 text-xl font-bold tracking-[0.08em]">SF-24018</p>
@@ -346,8 +346,8 @@ export default function VolunteerDemo({
   if (complete) return <Confirmation setView={setView} />;
 
   return (
-    <div className="min-h-[calc(100vh-40px)] bg-[#EEF3EF]">
-      <header className="border-b border-[#D8E0DB] bg-white">
+    <div className="min-h-[calc(100vh-40px)] bg-[#ecf0f5]">
+      <header className="border-b border-[#d3dbe5] bg-white">
         <div className="mx-auto flex max-w-5xl flex-col items-stretch justify-between gap-3 px-4 py-4 sm:flex-row sm:items-center sm:px-6">
           <BrandMark />
           <DemoSwitcher setView={setView} view={view} />
@@ -355,13 +355,13 @@ export default function VolunteerDemo({
       </header>
       <main className="mx-auto grid max-w-5xl gap-7 px-4 py-7 sm:px-6 sm:py-10 md:grid-cols-[minmax(0,1fr)_270px] md:items-start">
         <form
-          className="order-1 overflow-hidden rounded-2xl border border-[#D4DDD7] bg-white shadow-[0_8px_35px_rgba(31,64,54,0.09)]"
+          className="order-1 overflow-hidden rounded-2xl border border-[#cfd8e2] bg-white shadow-[0_8px_35px_rgba(31,64,54,0.09)]"
           onSubmit={submit}
         >
-          <div className="flex items-center gap-2 border-b border-[#E2E7E3] bg-[#F3F7F4] px-5 py-3 text-xs font-semibold text-[#35564C] md:hidden">
+          <div className="flex items-center gap-2 border-b border-[#dee4eb] bg-[#f2f5f8] px-5 py-3 text-xs font-semibold text-[#2b4460] md:hidden">
             <Building2 className="h-4 w-4" /> Northside Community Resource Center
           </div>
-          <div className="border-b border-[#E2E7E3] px-5 py-6 sm:px-8">
+          <div className="border-b border-[#dee4eb] px-5 py-6 sm:px-8">
             <FormProgress step={step} />
           </div>
           <div className="px-5 py-7 sm:px-8 sm:py-8">
@@ -369,9 +369,9 @@ export default function VolunteerDemo({
             {step === 2 && <Service hours={hours} setHours={setHours} />}
             {step === 3 && <Review hours={hours} name={name} />}
           </div>
-          <div className="flex items-center justify-between border-t border-[#E2E7E3] bg-[#FAFBF9] px-5 py-4 sm:px-8">
+          <div className="flex items-center justify-between border-t border-[#dee4eb] bg-[#f8fafc] px-5 py-4 sm:px-8">
             <button
-              className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-semibold text-[#566562] ${step === 1 ? "invisible" : "hover:bg-[#EEF1EE]"}`}
+              className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-semibold text-[#495c72] ${step === 1 ? "invisible" : "hover:bg-[#eceff3]"}`}
               onClick={() => setStep(step - 1)}
               type="button"
             >

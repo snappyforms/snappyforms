@@ -40,7 +40,7 @@ export function BrandMark({ compact = false }: { compact?: boolean }) {
           <p className="text-[17px] font-bold tracking-[-0.02em] text-[#162A2B]">
             SnappyForms
           </p>
-          <p className="text-[10px] font-medium text-[#718080]">
+          <p className="text-[10px] font-medium text-[#607791]">
             Volunteer verification
           </p>
         </div>
@@ -59,14 +59,14 @@ export function DemoSwitcher({
   return (
     <div
       aria-label="Preview view"
-      className="inline-flex w-full rounded-lg border border-[#D6DCDA] bg-white p-1 shadow-sm sm:w-auto"
+      className="inline-flex w-full rounded-lg border border-[#d1d8e1] bg-white p-1 shadow-sm sm:w-auto"
     >
       {(["portal", "volunteer"] as const).map((option) => (
         <button
           className={`flex-1 whitespace-nowrap rounded-md px-2 py-1.5 text-xs font-semibold transition sm:flex-none sm:px-3 ${
             view === option
               ? "bg-[#162A2B] text-white"
-              : "text-[#5F6C6B] hover:bg-[#F2F4F2]"
+              : "text-[#51647a] hover:bg-[#f0f3f6]"
           }`}
           key={option}
           onClick={() => setView(option)}
@@ -156,25 +156,25 @@ export function FormProgress({ step }: { step: number }) {
           <li className="relative text-center" key={label}>
             {index > 0 && (
               <span
-                className={`absolute left-0 right-1/2 top-4 h-px ${number <= step ? "bg-[#3F6B58]" : "bg-[#D4DBD6]"}`}
+                className={`absolute left-0 right-1/2 top-4 h-px ${number <= step ? "bg-[#335377]" : "bg-[#ced7e1]"}`}
               />
             )}
             {index < 2 && (
               <span
-                className={`absolute left-1/2 right-0 top-4 h-px ${number < step ? "bg-[#3F6B58]" : "bg-[#D4DBD6]"}`}
+                className={`absolute left-1/2 right-0 top-4 h-px ${number < step ? "bg-[#335377]" : "bg-[#ced7e1]"}`}
               />
             )}
             <span
               className={`relative z-10 mx-auto flex h-8 w-8 items-center justify-center rounded-full border text-xs font-bold ${
                 complete || active
-                  ? "border-[#3F6B58] bg-[#3F6B58] text-white"
-                  : "border-[#C9D2CD] bg-white text-[#72807D]"
+                  ? "border-[#335377] bg-[#335377] text-white"
+                  : "border-[#c2cdd9] bg-white text-[#617791]"
               }`}
             >
               {complete ? <Check className="h-4 w-4" /> : number}
             </span>
             <span
-              className={`mt-2 block text-[11px] font-semibold ${active ? "text-[#315F43]" : "text-[#7A8684]"}`}
+              className={`mt-2 block text-[11px] font-semibold ${active ? "text-[#274669]" : "text-[#687e98]"}`}
             >
               {label}
             </span>
