@@ -242,6 +242,7 @@ export default function HomePage() {
             <a href="#faq">FAQ</a>
           </nav>
           <div className="nav-cta">
+            <a className="nav-education" href="/snap-education">SNAP Education</a>
             <a className="btn btn-cta" href="#join">Sign up</a>
           </div>
         </div>
